@@ -1,0 +1,15 @@
+{
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/ultracart/rest_api_v2_sdk_php.git"
+    }
+  ],
+  "require": {
+    "ultracart/rest_api_v2_sdk_php": "*@dev",
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "config": {
+    "discard-changes" : true
+  }
+}

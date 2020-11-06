@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <title>UltraCart Credit Card Entry Sample</title>
+
+    <!-- ===============================================================================    -->
+    <!-- BEGIN PCI 3.0 compliance code                                                      -->
+    <!-- What you might need to change:                                                     -->
+    <!--    the selector properties point to the two credit card fields.  If you change the -->
+    <!--    ids of the fields, you need to re-point those selectors at the fields properly. -->
+    <!-- See also:                                                                          -->
+    <!-- http://docs.ultracart.com/display/ucdoc/UltraCart+PCI+Compliance                   -->
+    <!-- ===============================================================================    -->
+    <style type="text/css">
+        /* it is important to set the border of the credit card fields explicitly (especially for google chrome) so
+           the PCI fields can mimic them correctly when overlaying them. */
+        select, input {
+            border: 1px solid rgb(169, 169, 169);
+        }
+        .left-td{text-align: left}
+        .right-td{text-align: right}
+    </style>
+
+    <!-- =============================================================================== -->
+    <!-- START PCI 3.0 compliance code                                                   -->
+    <!-- See: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1377775/UltraCart+Hosted+Credit+Card+Fields -->
+    <!-- =============================================================================== -->
+    <script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="https://token.ultracart.com/checkout/checkout-hosted-fields-1.0.js"></script>
+    <script type="text/javascript">
+
+        var merchantId = 'DEMO';  // <-- CHANGE THIS!
+
+        var hostedFields = null;
+
+        var creditCardCallback = function (cardInfo) {
+            if (cardInfo && cardInfo.token) {
+                jQuery('#creditCardToken').val(cardInfo.token);
+            } else {
+                jQuery('#creditCardToken').val('');
+            }
+        };
+
+        var cvvCallback = function (cardInfo) {
+            if (cardInfo && cardInfo.token) {
+                jQuery('#cvvToken').val(cardInfo.token);
+            } else {
+                jQuery('#cvvToken').val('');
+            }
+        };
+
+
+        // setup should be called each time the UI updates.
+        function setupSecureCreditCardFields(options) {
+            window.ultraCartHostedFieldsDebugMode = false; // set this to true to see verbose debugging.  usually only UltraCart support will use this.
+            hostedFields = UltraCartHostedFields.setup(jQuery, JSON, {
+                'sessionCredentials': {
+                    'merchantId': merchantId // we are not passing in ANY cart id here.  That is intentional.
+                },
+//    'cssUrls':['https://www.mysite.com/styles.css'],
+                'hostedFields': {
+                    'creditCardNumber': {
+                        'selector': '#creditCardNumber'
+                        , 'callback': (options && options.cardCallback ? options.cardCallback : null)
+                        , 'selectorContext': (options && options.selectorContext ? options.selectorContext : null)
+                    },
+                    'creditCardCvv2': {
+                        'selector': '#creditCardVerificationNumber'
+                        , 'callback': (options && options.cvvCallback ? options.cvvCallback : null)
+                        , 'selectorContext': (options && options.selectorContext ? options.selectorContext : null)
+                    }
+                }
+            });
+        }
+
+
+        jQuery(document).ready(function () {
+            var options = {
+                'cardCallback': creditCardCallback,
+                'cvvCallback': cvvCallback
+            };
+            setupSecureCreditCardFields(options);
+        });
+
+    </script>
+    <!-- =============================================================================== -->
+    <!-- END PCI 3.0 compliance code                                                -->
+    <!-- =============================================================================== -->
+
+
+</head>
+<body>
+
+<!-- Primary Page Layout
+================================================== -->
+
+<div>Card numbers will upload when the field loses focus. Successful uploads will display a token below.</div>
+<table>
+    <tr>
+        <td class="right-td">Credit Card #</td>
+        <td class="left-td"><input type="text" id="creditCardNumber" name="creditCardNumber" value=""/></td>
+    </tr>
+    <tr>
+        <td class="right-td">Card Verification #</td>
+        <td class="left-td"><input type="text" id="creditCardVerificationNumber" value="" name="creditCardVerification"/></td>
+    </tr>
+
+    <tr>
+        <td class="right-td">Credit Card Token:</td>
+        <td class="left-td"><input type="text" id="creditCardToken" value=""/></td>
+    </tr>
+    <tr>
+        <td class="right-td">CVV Token:</td>
+        <td class="left-td"><input type="text" id="cvvToken" value=""/></td>
+    </tr>
+</table>
+
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

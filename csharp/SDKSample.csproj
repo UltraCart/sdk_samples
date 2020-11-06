@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{465500E1-E175-49D5-9860-6E2A8E307FC8}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SdkSample</RootNamespace>
+    <AssemblyName>SdkSample</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AutoOrderUpdateTest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Api\CouponApi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Client\GlobalConfiguration.cs" />
+    <Compile Include="com.ultracart.admin.v2\Client\IReadableConfiguration.cs" />
+    <Compile Include="com.ultracart.admin.v2\Client\JsonSubTypes.cs" />
+    <Compile Include="com.ultracart.admin.v2\Client\SwaggerDateConverter.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CityStateZip.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\Coupon.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponAmountOffItems.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponAmountOffShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponAmountOffShippingWithItemsPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponAmountOffSubtotal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponAmountOffSubtotalAndShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponAmountOffSubtotalFreeShippingWithPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponAmountOffSubtotalWithBlockPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponAmountOffSubtotalWithItemsPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponCodesRequest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponCodesResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponDetails.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponDiscountItems.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponDiscountItemWithItemPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponEditorValues.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponFreeItemAndShippingWithSubtotal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponFreeItemsWithItemPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponFreeItemsWithMixMatchPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponFreeItemWithItemPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponFreeItemWithSubtotal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponFreeShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponFreeShippingSpecificItems.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponFreeShippingWithItemsPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponFreeShippingWithSubtotal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponMultipleAmountsOffItems.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponNoDiscount.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffItems.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffItemsAndFreeShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffItemsWithItemsPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffItemWithItemsQuantityPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffRetailPriceItems.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffSubtotal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffSubtotalAndFreeShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffSubtotalLimit.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffSubtotalWithItemsPurchase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponPercentOffSubtotalWithSubtotal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponQuery.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponsResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTierAmount.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTieredAmountOffItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTieredAmountOffSubtotal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTieredPercentOffItems.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTieredPercentOffShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTieredPercentOffSubtotal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTierItemDiscount.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTierPercent.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTierQuantity.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTierQuantityAmount.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CouponTierQuantityPercent.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CustomerAffiliate.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CustomerEditorValues.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CustomerQuery.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemsRequest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ModelString.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderQuery.cs" />
+    <Compile Include="CouponTests.cs" />
+    <Compile Include="CreateCustomerTest.cs" />
+    <Compile Include="GetOrdersTest.cs" />
+    <Compile Include="ItemStepBroken.cs" />
+    <Compile Include="QueryAutoOrderWithItemOptionsTest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Api\AutoorderApi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Api\ChargebackApi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Api\CheckoutApi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Api\CustomerApi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Api\FulfillmentApi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Api\ItemApi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Api\OauthApi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Api\OrderApi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Api\WebhookApi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Client\ApiClient.cs" />
+    <Compile Include="com.ultracart.admin.v2\Client\ApiException.cs" />
+    <Compile Include="com.ultracart.admin.v2\Client\ApiResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Client\Configuration.cs" />
+    <Compile Include="com.ultracart.admin.v2\Client\ExceptionFactory.cs" />
+    <Compile Include="com.ultracart.admin.v2\Client\IApiAccessor.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ApiUserApplicationProfile.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\AutoOrder.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\AutoOrderItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\AutoOrderItemOption.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\AutoOrderResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\AutoOrdersResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\BaseResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\Cart.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartAffiliate.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartBilling.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartBuysafe.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartCheckout.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartCoupon.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartCustomerProfile.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartCustomerProfileAddress.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartCustomerProfileCreditCard.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartFinalizeOrderRequest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartFinalizeOrderRequestOptions.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartFinalizeOrderResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartGift.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartGiftCertificate.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartItemAttribute.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartItemMultimedia.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartItemMultimediaThumbnail.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartItemOption.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartItemOptionValue.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartItemPhysical.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartItemVariationSelection.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartKitComponentOption.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartMarketing.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartPayment.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartPaymentAmazon.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartPaymentCheck.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartPaymentCreditCard.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartPaymentPurchaseOrder.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartProfileLoginRequest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartProfileLoginResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartProfileRegisterRequest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartProfileRegisterResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettings.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsBilling.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsGift.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsGiftWrap.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsPayment.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsPaymentAmazon.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsPaymentCreditCard.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsPaymentPayPal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsProvince.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsShippingCalendar.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsShippingEstimate.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsTaxes.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSettingsTerms.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartSummary.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartTaxes.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartUpsellAfter.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartValidationRequest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CartValidationResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ChargebackDispute.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ChargebackDisputeResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ChargebackDisputesResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CheckoutHandoffRequest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CheckoutHandoffResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CheckoutSetupBrowserKeyRequest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CheckoutSetupBrowserKeyResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\Currency.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\Customer.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CustomerBilling.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CustomerCard.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CustomerPricingTier.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CustomerResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CustomerShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\CustomersResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\Distance.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\DistributionCenter.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\DistributionCentersResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\Error.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ErrorResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\FulfillmentInventory.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\FulfillmentShipment.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\HTTPHeader.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\Item.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemAccounting.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemAmember.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemAutoOrder.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemAutoOrderStep.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemAutoOrderStepArbitraryUnitCostSchedule.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemAutoOrderStepGrandfatherPricing.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemCCBill.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemChannelPartnerMapping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemChargeback.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemChargebackAddendum.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemChargebackAdjustmentRequest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemCheckout.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemContent.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemContentAssignment.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemContentAttribute.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemContentMultimedia.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemContentMultimediaThumbnail.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemDigitalDelivery.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemDigitalItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemEbay.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemEbayCategorySpecific.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemEbayMarketListing.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemEbayMarketPlaceAnalysis.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemEmailNotifications.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemEnrollment123.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemGiftCertificate.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemGoogleProductSearch.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemIdentifiers.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemInstantPaymentNotification.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemInstantPaymentNotifications.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemInternal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemKitComponent.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemKitDefinition.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemOption.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemOptionValue.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemOptionValueAdditionalItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemOptionValueDigitalItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemPaymentProcessing.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemPhysical.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemPricing.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemPricingTier.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemPricingTierDiscount.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemPricingTierLimit.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemRealtimePricing.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemRelated.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemRelatedItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemReporting.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemRestriction.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemRestrictionItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemRevguard.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemReviews.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemSalesforce.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemShippingCase.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemShippingDestinationMarkup.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemShippingDestinationRestriction.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemShippingDistributionCenter.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemShippingMethod.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemShippingPackageRequirement.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemsResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemTax.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemTaxExemption.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemThirdPartyEmailMarketing.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemVariantItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemVariation.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemVariationOption.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ItemWishlistMember.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OauthRevokeSuccessResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OauthTokenResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\Order.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderAffiliate.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderAffiliateLedger.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderAutoOrder.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderBilling.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderBuysafe.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderChannelPartner.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderCheckout.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderCoupon.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderDigitalItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderDigitalOrder.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderEdi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderFraudScore.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderGift.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderGiftCertificate.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderInternal.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderItem.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderItemEdi.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderItemEdiIdentification.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderItemEdiLot.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderItemOption.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderItemOptionFileAttachment.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderLinkedShipment.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderMarketing.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderPayment.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderPaymentCheck.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderPaymentCreditCard.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderPaymentECheck.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderPaymentPurchaseOrder.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderPaymentTransaction.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderPaymentTransactionDetail.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderQuote.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderSalesforce.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderShipping.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrdersResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderSummary.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\OrderTaxes.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ResponseMetadata.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\ResultSet.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\TempMultimedia.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\TempMultimediaResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\Webhook.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\WebhookEventCategory.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\WebhookEventSubscription.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\WebhookLog.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\WebhookLogResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\WebhookLogSummariesResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\WebhookLogSummary.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\WebhookResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\WebhookSampleRequest.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\WebhookSampleRequestResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\WebhooksResponse.cs" />
+    <Compile Include="com.ultracart.admin.v2\Model\Weight.cs" />
+    <Compile Include="com.ultracart.admin.v2\Properties\AssemblyInfo.cs" />
+    <Compile Include="CustomerTests.cs" />
+    <Compile Include="GetttingStarted.cs" />
+    <Compile Include="HostedFields.cs" />
+    <Compile Include="PemKeyUtils.cs" />
+    <Compile Include="QueryAutoOrdersByEmail.cs" />
+    <Compile Include="UltraCartInit.cs" />
+    <Compile Include="UpdateCustomerCreditCard.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="com.ultracart.admin.v2, Version=3.0.10.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\com.ultracart.admin.v2.3.0.10\lib\net48\com.ultracart.admin.v2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JsonSubTypes, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176">
+      <HintPath>packages\JsonSubTypes.1.7.0\lib\net40\JsonSubTypes.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
+      <HintPath>packages\NUnit.3.7.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="com.ultracart.admin.v2\com.ultracart.admin.v2.csproj" />
+    <Content Include="com.ultracart.admin.v2\packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
