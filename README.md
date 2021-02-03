@@ -4,8 +4,9 @@ Our REST API is documented here: https://www.ultracart.com/api/#introduction.htm
 
 ### Our SDK Source Code
 
+
 | Language  | Repository                                                |
-|___________|___________________________________________________________|
+|-----------|-----------------------------------------------------------|
 | C#        | https://github.com/UltraCart/rest_api_v2_sdk_csharp       |
 | Java      | https://github.com/UltraCart/rest_api_v2_sdk_java         |
 | Javascript| https://github.com/UltraCart/rest_api_v2_sdk_javascript   |
@@ -15,8 +16,9 @@ Our REST API is documented here: https://www.ultracart.com/api/#introduction.htm
 
 ### Our SDK Packages
 
+
 | Language  | Package                                                        |
-|___________|________________________________________________________________|
+|-----------|----------------------------------------------------------------|
 | C#        | https://www.nuget.org/packages/com.ultracart.admin.v2/         |
 | Java      | https://mvnrepository.com/artifact/com.ultracart/rest-sdk      |
 | Javascript| https://www.npmjs.com/package/ultra_cart_rest_api_v2           | 
