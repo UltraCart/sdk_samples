@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+# git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+# gem 'com_ultracart_admin_v2', git: 'https://github.com/UltraCart/rest_api_v2_sdk_ruby.git'
+gem 'ultracart_api'
+
+# gem "rails"
