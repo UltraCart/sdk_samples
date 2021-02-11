@@ -1,0 +1,33 @@
+
+
+
+using System;
+using com.ultracart.admin.v2.Api;
+using com.ultracart.admin.v2.Model;
+using NUnit.Framework;
+
+namespace SdkSample.customer
+{
+    public class GetCustomerByEmail
+    {
+
+        [Test]
+        public void ExecuteTest()
+        {
+            string email = "test@test.com";
+            Customer customer = GetCustomerByEmailCall(email);
+            Console.WriteLine(customer.ToString());
+        }
+
+        public static Customer GetCustomerByEmailCall(string Email)
+        {
+            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
+            var api = new CustomerApi(simpleKey);
+            string expand = null; // I'm only checking for existence, I don't need the expanded Customer object.
+            var response = api.GetCustomerByEmail(Email, expand);
+            return response.Success == true ? response.Customer : null;
+        }
+
+
+    }
+}

@@ -93,6 +93,7 @@
     <Compile Include="coupon\UploadCouponCodes.cs" />
     <Compile Include="customer\DeleteCustomer.cs" />
     <Compile Include="customer\GetCustomer.cs" />
+    <Compile Include="customer\GetCustomerByEmail.cs" />
     <Compile Include="customer\GetCustomers.cs" />
     <Compile Include="customer\GetCustomersByQuery.cs" />
     <Compile Include="customer\GetCustomersForDataTables.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="customer\Introduction.cs" />
     <Compile Include="customer\UpdateCustomer.cs" />
     <Compile Include="customer\UpdateCustomerEmailLists.cs" />
+    <Compile Include="customer\ValidateEmail.cs" />
     <Compile Include="fulfillment\AcknowledgeOrders.cs" />
     <Compile Include="fulfillment\GetDistributionCenterOrders.cs" />
     <Compile Include="fulfillment\GetDistributionCenters.cs" />
@@ -343,8 +345,8 @@
     <Compile Include="webhook\UpdateWebhook.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="com.ultracart.admin.v2, Version=3.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\com.ultracart.admin.v2.3.1.0\lib\net48\com.ultracart.admin.v2.dll</HintPath>
+    <Reference Include="com.ultracart.admin.v2, Version=3.1.3.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\com.ultracart.admin.v2.3.1.3\lib\net48\com.ultracart.admin.v2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="JsonSubTypes, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176">

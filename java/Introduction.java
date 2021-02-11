@@ -8,5 +8,7 @@ public class Introduction{
   // Individual samples will be found throughout this project.
   // Please create an issue on github if you need additional samples
 
+  // The examples here are intentionally short and easily to copy.
+  // They're not necessarily the best practices, but merely.
 
 }
