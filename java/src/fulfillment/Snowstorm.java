@@ -49,7 +49,7 @@ public class Snowstorm {
         boolean needMoreRecords = true;
         while(needMoreRecords){
 
-            System.out.println("executing getOrders() iteration #" + iteration );
+//            System.out.println("executing getOrders() iteration #" + iteration );
             List<Order> blockOfOrders = getOrdersInShipping(orderApi, offset, limit);
             orders.addAll(blockOfOrders);
 
@@ -60,21 +60,31 @@ public class Snowstorm {
         }
 
 
+        System.out.println("Order ID,Changed,Orig ShipOn,Orig Delivery,New ShipOn, New Delivery,Comment");
+
         for (Order order : orders) {
 
             String shipOnDate = order.getShipping().getShipOnDate();
             String deliveryDate = order.getShipping().getDeliveryDate();
 
             if(shipOnDate == null || deliveryDate == null){
-                System.out.println("Warning: Order " + order.getOrderId() + " is missing a ShipOn or Delivery Date.  Could not adjust.");
+                System.out.println(order.getOrderId() + ",NO,,,,Missing ShipOn or Delivery Date. Cannot update.");
+                // System.out.println("Warning: Order "  + order.getOrderId() + " is missing a ShipOn or Delivery Date.  Could not adjust.");
                 continue;
             }
 
             OffsetDateTime shipDts = OffsetDateTime.parse( shipOnDate, df);
             if(shipDts.compareTo(newShipDts) >= 0){
-                System.out.println("Warning: Order " + order.getOrderId() + " skipping because it already ships on or after Monday.");
+                System.out.println(order.getOrderId() + ",NO," + shipOnDate +"," + deliveryDate + ",,,Already ships on or after Monday.");
+                // System.out.println("Warning: Order " + order.getOrderId() + ": skipping because it already ships on or after Monday.");
                 continue;
             }
+            if(shipDts.until(newShipDts, ChronoUnit.DAYS) > 10){
+                System.out.println(order.getOrderId() + ",NO," + shipOnDate +"," + deliveryDate + ",,,This order is too old to update.");
+                // System.out.println("Warning: Order " + order.getOrderId() + ": skipping because this order is really really old.");
+                continue;
+            }
+
 
             OffsetDateTime deliverDts = OffsetDateTime.parse( deliveryDate, df);
             long daysToDeliver = Math.abs(deliverDts.until(shipDts, ChronoUnit.DAYS)); // only need the abs for testing, really.
@@ -84,7 +94,8 @@ public class Snowstorm {
             String newShipOnDate = df.format(newShipDts);
             String newDeliveryDate = df.format(newDeliverDts);
 
-            System.out.println(order.getOrderId() + ": ShipOn " + shipOnDate + " => " + newShipOnDate + ", Delivery " + deliveryDate + " => " + newDeliveryDate);
+            System.out.println(order.getOrderId() + ",YES," + shipOnDate +"," + deliveryDate + "," + newShipOnDate + "," + newDeliveryDate + ",");
+//            System.out.println(order.getOrderId() + ": ShipOn " + shipOnDate + " => " + newShipOnDate + ", Delivery " + deliveryDate + " => " + newDeliveryDate);
 
             order.getShipping().setShipOnDate(newShipOnDate);
             order.getShipping().setDeliveryDate(newDeliveryDate);

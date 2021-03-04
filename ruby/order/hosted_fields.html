@@ -1,0 +1,98 @@
+<!doctype html>
+<!-- Did you see the note below about changing the Merchant ID? If not, this will not work for you. -->
+<!-- Search for 'DEMO' and change it to your Merchant ID -->
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Hosted Fields make E-Commerce Safe</title>
+    <meta name="description" content="UltraCart Hosted Fields example">
+    <meta name="author" content="UltraCart">
+    <style type="text/css">
+        .cc-table td, .cc-table th{
+            padding: 2px;
+            margin: 2px;
+        }
+
+        input.entry {
+            width:200px;
+        }
+
+        input.result {
+            width:300px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<script type="text/javascript" src="https://token.ultracart.com/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="https://token.ultracart.com/js/json3.min.js"></script>
+<script type="text/javascript">
+    // Take the version that we just included and scope it locally.  The noConflict will return $ and jQuery to their
+    // original values so that the version of jQuery used for the hosted fields does not conflict with any other existing
+    // version of jQuery or other JS library that use $ that are on the page.
+    var jQueryHostedFields = $.noConflict(true);
+    // Also make sure that we're providing consistent JSON functionality in browsers, but don't pollute existing libraries
+    // by running our version in noConflict mode.  This will restore whatever is there similar to jQuery.
+    // This will also make sure we have a JSON implementation in older versions of IE.
+    var jsonHostedFields = JSON3.noConflict();
+</script>
+<script type="text/javascript" src="https://token.ultracart.com/checkout/checkout-hosted-fields-1.0.js"></script>
+<!-- the following line is a redundant check to ensure the hosted fields file is loaded first -->
+<script type="text/javascript">window.UltraCartHostedFields || document.write('<script src="//token.ultracart.com/checkout/checkout-hosted-fields-1.0.js?r=' + new Date().getTime() + '"><\/script>')</script>
+<script type="text/javascript">
+
+    jQueryHostedFields(document).ready(function() {
+        UltraCartHostedFields.setup(jQueryHostedFields, jsonHostedFields, {
+            'sessionCredentials': {
+                'merchantId': 'DEMO' // Change to your merchant ID
+                // NOTE: This example if for a form post.  If you're using a javascript checkout, the session credentials
+                // also need the 'shoppingCartId'.  But ONLY for javascript checkouts.
+            },
+            'cssUrls':[
+//              'https://www.mysite.com/styles.css'
+            ],
+            'form': '#myForm',  // This is only needed for a form POST.  javascript checkouts should not be providing this.
+            'hostedFields':{
+                'creditCardNumber': {
+                    'selector': '#cardNumber',
+                    'tokenSelector': '#cardNumberToken' // This is only needed for a form POST.  javascript checkouts dont deal with tokens
+                },
+                'creditCardCvv2': {
+                    'selector': '#cvv2',
+                    'tokenSelector': '#cvv2Token' // This is only needed for a form POST.  javascript checkouts dont deal with tokens
+                }
+            }
+        });
+    });
+
+</script>
+
+<form action="https://secure.ultracart.com/cgi-bin/UCEditor" method="POST" id="myForm">
+
+    <table class="cc-table">
+        <tr><td colspan="2">Instructions: Enter your Credit Card Number and CVV, pressing tab after each.</td></tr>
+
+    <!-- Change the value of this input to your merchant ID -->
+    <tr><td>Merchant ID:</td><td><input type="text" name="merchantId" disabled="disabled" value="DEMO"></td></tr>
+
+        <tr><td colspan="2">Enter your CC information below.  Try 4444333322221111 and 123.</td></tr>
+        <tr><td>CC Number:</td><td><input type="text" class="entry" name="CreditCardNumber" id="cardNumber" value=""/></td></tr>
+        <tr><td>CVV:</td><td><input type="text" class="entry" name="CreditCardCVV2" id="cvv2"/></td></tr>
+
+        <tr><td colspan="2">&nbsp;</td></tr>
+
+        <!-- These are the two token values that you need to include in your API call when you create an order -->
+        <tr><td colspan="2">These two values are the results.</td></tr>
+        <tr><td>Card Token:</td><td><input type="text" class="result" name="CreditCardNumberToken" id="cardNumberToken"></td></tr>
+        <tr><td>CVV Token:</td><td><input type="text" class="result" name="CreditCardCvv2Token" id="cvv2Token"></td></tr>
+
+    </table>
+</form>
+
+</body>
+</html>

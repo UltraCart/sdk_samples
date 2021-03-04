@@ -1,0 +1,1 @@
+The fulfillment REST API provides all the functionality necessary to integrate your third party logistics system with UltraCart.  This is a replacement for the legacy Distribution Center Transport SOAP API.

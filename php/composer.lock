@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68e9be4473c3eebbb4cf157c9b83b8ec",
+    "content-hash": "61eb873c444f931bedc6bcb448b7804e",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -287,16 +287,16 @@
         },
         {
             "name": "symfony/polyfill-intl-idn",
-            "version": "v1.22.0",
+            "version": "v1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-idn.git",
-                "reference": "0eb8293dbbcd6ef6bf81404c9ce7d95bcdf34f44"
+                "reference": "2d63434d922daf7da8dd863e7907e67ee3031483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/0eb8293dbbcd6ef6bf81404c9ce7d95bcdf34f44",
-                "reference": "0eb8293dbbcd6ef6bf81404c9ce7d95bcdf34f44",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/2d63434d922daf7da8dd863e7907e67ee3031483",
+                "reference": "2d63434d922daf7da8dd863e7907e67ee3031483",
                 "shasum": ""
             },
             "require": {
@@ -367,20 +367,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-07T16:49:33+00:00"
+            "time": "2021-01-22T09:19:47+00:00"
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
-            "version": "v1.22.0",
+            "version": "v1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
-                "reference": "6e971c891537eb617a00bb07a43d182a6915faba"
+                "reference": "43a0283138253ed1d48d352ab6d0bdb3f809f248"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/6e971c891537eb617a00bb07a43d182a6915faba",
-                "reference": "6e971c891537eb617a00bb07a43d182a6915faba",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/43a0283138253ed1d48d352ab6d0bdb3f809f248",
+                "reference": "43a0283138253ed1d48d352ab6d0bdb3f809f248",
                 "shasum": ""
             },
             "require": {
@@ -448,11 +448,11 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-07T17:09:11+00:00"
+            "time": "2021-01-22T09:19:47+00:00"
         },
         {
             "name": "symfony/polyfill-php72",
-            "version": "v1.22.0",
+            "version": "v1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php72.git",
@@ -525,16 +525,16 @@
         },
         {
             "name": "ultracart/rest_api_v2_sdk_php",
-            "version": "3.1.0",
+            "version": "3.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UltraCart/rest_api_v2_sdk_php.git",
-                "reference": "5b0db291d4ec2a058153c1c42a092b981ea5abc9"
+                "reference": "5d8c5ac8b1db343a163c158c38024c4de6d188b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UltraCart/rest_api_v2_sdk_php/zipball/5b0db291d4ec2a058153c1c42a092b981ea5abc9",
-                "reference": "5b0db291d4ec2a058153c1c42a092b981ea5abc9",
+                "url": "https://api.github.com/repos/UltraCart/rest_api_v2_sdk_php/zipball/5d8c5ac8b1db343a163c158c38024c4de6d188b7",
+                "reference": "5d8c5ac8b1db343a163c158c38024c4de6d188b7",
                 "shasum": ""
             },
             "require": {
@@ -555,11 +555,7 @@
                     "ultracart\\v2\\": "lib/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "ultracart\\v2\\": "test/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -576,7 +572,7 @@
                 "sdk",
                 "ultracart"
             ],
-            "time": "2021-02-02T15:02:02+00:00"
+            "time": "2021-02-16T17:44:56+00:00"
         }
     ],
     "packages-dev": [],

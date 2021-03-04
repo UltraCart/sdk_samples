@@ -1,0 +1,1 @@
+The checkout API provides all the necessary functionality to implement custom checkouts with UltraCart.
