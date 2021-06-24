@@ -8,6 +8,8 @@ to the minimal amount possible to have optimal communication.  The following exp
 available.
 
 * items
+* items.future_schedules
+* items.sample_schedule
 * original_order
 * original_order.affiliate
 * original_order.affiliate.ledger
