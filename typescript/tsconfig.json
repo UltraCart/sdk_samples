@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "esnext",
+      "strict": true,
+      "jsx": "preserve",
+      "importHelpers": true,
+      "moduleResolution": "node",
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "sourceMap": false,
+      "baseUrl": "./"
+    },
+    "files": ["api.ts"],    
+    "include": [
+        "*.ts",
+        "**/*.ts"
+      ],
+      "exclude": [
+          "node_modules"
+      ]
+  }
