@@ -4,6 +4,8 @@
   "type": "module",
   "devDependencies": {
     "@types/node": "^17.0.21",
+    "@types/luxon": "^2.0.9",
+    "luxon": "^2.3.1",
     "typescript": "^4.6.0-dev.20220211",
     "ultracart_rest_api_v2_typescript": "^3.8.4"
   },

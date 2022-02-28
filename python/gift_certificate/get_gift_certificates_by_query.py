@@ -21,7 +21,7 @@ expand = 'ledger'
 
 def get_gift_certificates_chunk(offset=0, limit=200):
     gc_query = ultracart.GiftCertificateQuery()
-    gc_response = api_instance.get_gift_certificates_by_query(gc_query, offset=offset, limit=limit)
+    gc_response = api_instance.get_gift_certificates_by_query(gc_query, offset=offset, limit=limit, expand=expand)
     if gc_response.success:
         return gc_response.gift_certificates
     # if unsuccessful, return empty array
