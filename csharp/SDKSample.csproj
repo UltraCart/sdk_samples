@@ -71,6 +71,7 @@
     <Compile Include="checkout\SetupBrowserKey.cs" />
     <Compile Include="checkout\UpdateCart.cs" />
     <Compile Include="checkout\ValidateCart.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="coupon\DeleteCoupon.cs" />
     <Compile Include="coupon\DeleteCouponsByCode.cs" />
     <Compile Include="coupon\DeleteCouponsByOid.cs" />
@@ -110,6 +111,15 @@
     <Compile Include="fulfillment\Introduction.cs" />
     <Compile Include="fulfillment\ShipOrders.cs" />
     <Compile Include="fulfillment\UpdateInventory.cs" />
+    <Compile Include="gift_certificate\AddGiftCertificateLedgerEntry.cs" />
+    <Compile Include="gift_certificate\CreateGiftCertificate.cs" />
+    <Compile Include="gift_certificate\DeleteGiftCertificate.cs" />
+    <Compile Include="gift_certificate\GetGiftCertificateByCode.cs" />
+    <Compile Include="gift_certificate\GetGiftCertificateByOid.cs" />
+    <Compile Include="gift_certificate\GetGiftCertificatesByEmail.cs" />
+    <Compile Include="gift_certificate\GetGiftCertificatesByQuery.cs" />
+    <Compile Include="gift_certificate\Introduction.cs" />
+    <Compile Include="gift_certificate\UpdateGiftCertificate.cs" />
     <Compile Include="introduction.cs" />
     <Compile Include="item\DeleteItem.cs" />
     <Compile Include="item\GetItem.cs" />
@@ -334,6 +344,7 @@
     <Compile Include="user\Introduction.cs" />
     <Compile Include="user\UpdateGroup.cs" />
     <Compile Include="user\UpdateUser.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="webhook\DeleteWebhook.cs" />
     <Compile Include="webhook\DeleteWebhookByUrl.cs" />
     <Compile Include="webhook\GetWebhookLog.cs" />
@@ -345,8 +356,8 @@
     <Compile Include="webhook\UpdateWebhook.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="com.ultracart.admin.v2, Version=3.1.3.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\com.ultracart.admin.v2.3.1.3\lib\net48\com.ultracart.admin.v2.dll</HintPath>
+    <Reference Include="com.ultracart.admin.v2, Version=3.8.5.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\com.ultracart.admin.v2.3.8.5\lib\net48\com.ultracart.admin.v2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="JsonSubTypes, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176">
@@ -361,6 +372,10 @@
     <Reference Include="nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
       <HintPath>packages\NUnit.3.7.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="ObjectDumper, Version=1.0.0.12, Culture=neutral, PublicKeyToken=9e2fabf3af85dba9">
+      <HintPath>packages\ObjectDumper.1.0.0.12\lib\net35-Client\ObjectDumper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
     </Reference>
@@ -373,6 +388,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
