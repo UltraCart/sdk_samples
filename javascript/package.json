@@ -1,6 +1,7 @@
 {
   "name": "sdk_samples",
   "version": "1.0.0",
+  "type": "commonjs",
   "description": "UltraCart Rest SDK Samples",
   "main": "index.js",
   "scripts": {
@@ -8,16 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UltraCart/rest_api_v2_sdk_javascript.git"
+    "url": "git+https://github.com/UltraCart/sdk_samples.git"
   },
   "author": "UltraCart",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/UltraCart/rest_api_v2_sdk_javascript/issues"
+    "url": "https://github.com/UltraCart/sdk_samples/issues"
   },
-  "homepage": "https://github.com/UltraCart/rest_api_v2_sdk_javascript#readme",
+  "homepage": "https://github.com/UltraCart/sdk_samples#readme",
   "dependencies": {
+    "luxon": "^2.3.1",
     "ssl-root-cas": "^1.2.3",
-    "ultra_cart_rest_api_v2": "github:ultracart/rest_api_v2_sdk_javascript"
+    "ultra_cart_rest_api_v2": "^3.9.1"
   }
 }
