@@ -6,7 +6,7 @@ require_once '../vendor/autoload.php';
 require_once '../constants.php';
 
 
-$gift_certificate_api = ultracart\v2\api\GiftCertificateApi::usingApiKey(Constants::API_KEY, 120, false);
+$gift_certificate_api = ultracart\v2\api\GiftCertificateApi::usingApiKey(Constants::API_KEY);
 
 $expiration_dts = new DateTime('now');
 $expiration_dts->modify('+3 month'); // or you can use '-90 day' for deduct

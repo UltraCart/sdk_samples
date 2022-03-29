@@ -5,7 +5,7 @@
 
 require_once '../vendor/autoload.php';
 $simple_key = '109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00';
-$api = ultracart\v2\api\CouponApi::usingApiKey($simple_key, 30, false);
+$api = ultracart\v2\api\CouponApi::usingApiKey($simple_key);
 ?>
 
 <?php
