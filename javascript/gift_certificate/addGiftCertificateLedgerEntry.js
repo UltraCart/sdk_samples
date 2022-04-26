@@ -16,7 +16,7 @@ ledgerEntry.reference_order_id = 'BLAH-12345'; // if this ledger entry is relate
 
 
 // add ledger entry does not take an expansion variable.  it will return the entire object by default.
-let gcResponse = giftCertificateApi.addGiftCertificateLedgerEntry(giftCertificateOid, ledgerEntry, 
+giftCertificateApi.addGiftCertificateLedgerEntry(giftCertificateOid, ledgerEntry, 
     function(error, data, response){
         let giftCertificate = data.gift_certificate;    
         console.log('giftCertificate', giftCertificate);

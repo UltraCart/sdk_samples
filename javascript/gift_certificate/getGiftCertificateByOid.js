@@ -7,7 +7,7 @@ let giftCertificateOid = 676713;
 
 
 // by_oid does not take an expansion variable.  it will return the entire object by default.
-let gcResponse = giftCertificateApi.getGiftCertificateByOid(giftCertificateOid, 
+giftCertificateApi.getGiftCertificateByOid(giftCertificateOid, 
     function(error, data, response){
         let giftCertificate = data.gift_certificate;    
         console.log('giftCertificate', giftCertificate);

@@ -7,7 +7,7 @@ let code = 'NRQPHPCFVK';
 
 
 // by_code does not take an expansion variable.  it will return the entire object by default.
-let gcResponse = giftCertificateApi.getGiftCertificateByCode(code, 
+giftCertificateApi.getGiftCertificateByCode(code, 
     function(error, data, response){
         let giftCertificate = data.gift_certificate;    
         console.log('giftCertificate', giftCertificate);

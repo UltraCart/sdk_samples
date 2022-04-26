@@ -7,7 +7,7 @@ let email = 'support@ultracart.com';
 
 
 // by_email does not take an expansion variable.  it will return the entire object by default.
-let gcResponse = giftCertificateApi.getGiftCertificatesByEmail(email, 
+giftCertificateApi.getGiftCertificatesByEmail(email, 
     function(error, data, response){
         let giftCertificates = data.gift_certificates;    
         console.log('giftCertificates', giftCertificates);

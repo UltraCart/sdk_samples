@@ -14,7 +14,7 @@ gcCreateRequest.expiration_dts = luxon.DateTime.now().setZone('America/New_York'
 
 
 // create does not take an expansion variable.  it will return the entire object by default.
-let gcResponse = giftCertificateApi.createGiftCertificate(gcCreateRequest, 
+giftCertificateApi.createGiftCertificate(gcCreateRequest, 
     function(error, data, response){
         let giftCertificate = data.gift_certificate;    
         console.log('giftCertificate', giftCertificate);

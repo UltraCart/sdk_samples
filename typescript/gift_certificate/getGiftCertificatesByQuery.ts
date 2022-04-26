@@ -3,7 +3,6 @@ import { giftCertificateApi } from '../api.js';
 // import { giftCertificateApi } from '../api';
 
 import { GiftCertificate, GiftCertificateQuery } from 'ultracart_rest_api_v2_typescript';
-import { unwatchFile } from 'fs';
 
 let expansion = 'ledger';
 
