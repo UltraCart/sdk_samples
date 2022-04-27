@@ -138,6 +138,7 @@
     <Compile Include="order\AdjustOrderTotal.cs" />
     <Compile Include="order\CancelOrder.cs" />
     <Compile Include="order\DeleteOrder.cs" />
+    <Compile Include="order\DuplicateOrder.cs" />
     <Compile Include="order\FooBaby.cs" />
     <Compile Include="order\Format.cs" />
     <Compile Include="order\GenerateOrderToken.cs" />
@@ -356,8 +357,8 @@
     <Compile Include="webhook\UpdateWebhook.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="com.ultracart.admin.v2, Version=3.8.5.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\com.ultracart.admin.v2.3.8.5\lib\net48\com.ultracart.admin.v2.dll</HintPath>
+    <Reference Include="com.ultracart.admin.v2, Version=3.9.8.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\com.ultracart.admin.v2.3.9.8\lib\net48\com.ultracart.admin.v2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="JsonSubTypes, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176">

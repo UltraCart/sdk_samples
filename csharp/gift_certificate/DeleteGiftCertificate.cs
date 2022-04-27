@@ -7,11 +7,11 @@ namespace SdkSample.gift_certificate
     public class DeleteGiftCertificate
     {
         // uncomment to run.  C# projects can only have one main.
-        public static void Main()
-        {
-            var giftCertificate = DeleteGiftCertificateCall();
-            Utility.DumpObject(giftCertificate, "Gift Certificate");
-        }
+        // public static void Main()
+        // {
+        //     var giftCertificate = DeleteGiftCertificateCall();
+        //     Utility.DumpObject(giftCertificate, "Gift Certificate");
+        // }
 
         // ReSharper disable once MemberCanBePrivate.Global
         public static GiftCertificate DeleteGiftCertificateCall()

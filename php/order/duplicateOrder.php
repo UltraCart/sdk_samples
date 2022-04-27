@@ -15,8 +15,8 @@ require_once '../constants.php';
 $order_api = ultracart\v2\api\OrderApi::usingApiKey(Constants::API_KEY);
 
 $expansion = "items";   // for this example, we're going to change the items after we duplicate the order, so
-                        // the only expansion properties we need are the items.
-                        // See: https://www.ultracart.com/api/  for a list of all expansions.
+// the only expansion properties we need are the items.
+// See: https://www.ultracart.com/api/  for a list of all expansions.
 
 // Step 1. Duplicate the order
 $order_id_to_duplicate = 'DEMO-0009104436';
