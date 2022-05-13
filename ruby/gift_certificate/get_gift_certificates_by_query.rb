@@ -3,7 +3,7 @@ require 'yaml'
 require 'ultracart_api'
 require '../Constants'
 
-api = UltracartClient::GiftCertificateApi.new_using_api_key(Constants::API_KEY, false, false)
+api = UltracartClient::GiftCertificateApi.new_using_api_key(Constants::API_KEY)
 
 def get_gift_certificates_chuck(api, offset, limit)
   expansion = 'ledger'.freeze

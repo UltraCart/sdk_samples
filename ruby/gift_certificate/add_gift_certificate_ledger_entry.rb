@@ -5,7 +5,7 @@ require 'yaml'
 require 'ultracart_api'
 require '../Constants'
 
-api = UltracartClient::GiftCertificateApi.new_using_api_key(Constants::API_KEY, false, false)
+api = UltracartClient::GiftCertificateApi.new_using_api_key(Constants::API_KEY)
 
 gift_certificate_oid = 676_713
 
