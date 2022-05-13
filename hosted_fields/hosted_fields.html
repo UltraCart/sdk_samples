@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--
+    To run this example:
+    1) Change the window.ucMerchantId variable below.
+    2) Open the page in a browser.
+    3) Enter a fake credit card number (4444333322221111)
+    4) Enter a fake cvv (123)
+    Both token fields should populate.  Those are the values you need to submit with your cart or channel partner order.
+    -->
+
+
+    <meta charset="utf-8">
+    <title>Sample Hosted Fields</title>
+
+    <script type="text/javascript">
+        window.ucMerchantId = 'DEMO'; // CHANGE ME
+    </script>
+
+    <script type="text/javascript" src="https://secure.ultracart.com/js/json3.min.js"></script>
+    <script type="text/javascript" src="https://secure.ultracart.com/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="https://token.ultracart.com/checkout/checkout-hosted-fields-1.0.js"></script>
+
+    <!-- ===============================================================================    -->
+    <!-- BEGIN PCI 3.0 compliance code                                                      -->
+    <!-- What you might need to change:                                                     -->
+    <!--    the selector properties point to the two credit card fields.  If you change the -->
+    <!--    ids of the fields, you need to re-point those selectors at the fields properly. -->
+    <!-- See also:                                                                          -->
+    <!-- http://docs.ultracart.com/display/ucdoc/UltraCart+PCI+Compliance                   -->
+    <!-- ===============================================================================    -->
+    <style type="text/css">
+        /* it is important to set the border of the credit card fields explicitly (especially for google chrome) so
+           the PCI fields can mimic them correctly when overlaying them. */
+        select, input {
+            border: 1px solid rgb(169, 169, 169);
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        var hostedFields = null;
+
+        // setup should be called each time the UI updates.
+        function setupSecureCreditCardFields() {
+            window.ultraCartHostedFieldsDebugMode = false; // set this to true to see verbose debugging.  usually only UltraCart support will use this.
+            hostedFields = UltraCartHostedFields.setup(jQuery, JSON3, {
+                'sessionCredentials': {
+                    'merchantId': window.ucMerchantId //, 'shoppingCartId': uc.cart.cart_id
+                },
+//          'cssUrls':[
+//              'https://www.mysite.com/styles.css'
+//          ],
+//          'form': '#myForm',
+                'hostedFields': {
+                    'creditCardNumber': {
+                        'selector': '#cardNumber' // this gets uploaded
+                        ,'tokenSelector': '#cardNumberToken' // this gets populated with the return value (token)
+                    },
+                    'creditCardCvv2': {
+                        'selector': '#cvv2' // this gets uploaded
+                        ,'tokenSelector': '#cvv2Token' // this gets populated with the return value (token)
+                    }
+                }
+            });
+        }
+
+
+        // teardown should be called each time a UI needs destroying.
+        function teardownSecureCreditCardFields() {
+            if (hostedFields !== null) {
+                hostedFields.destroy();
+                hostedFields = null;
+            }
+        }
+
+    </script>
+    <!-- =============================================================================== -->
+    <!--   // END PCI 3.0 compliance code                                                -->
+    <!--   // ========================================================================== -->
+
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            setupSecureCreditCardFields();
+        });
+
+    </script>
+
+</head>
+<body id="home">
+<div id="content">
+    <div class='title-bar'>
+        <h1>Hosted Fields Example</h1>
+    </div>
+
+    <div class='form-panel'>
+        <table>
+            <tr>
+                <td><label for="cardNumber">Card Number:</label></td>
+                <td><input class='form-field' id="cardNumber" maxlength="30"/></td>
+            </tr>
+            <tr>
+                <td><label for="cardNumberToken">Card Token:</label></td>
+                <td><input class='form-field' id="cardNumberToken" maxlength="40" style="width:400px"/></td>
+            </tr>
+            <tr>
+                <td><label for="cvv2">CVV2 Number:</label></td>
+                <td><input id="cvv2" class='cvv-field' maxlength="30"/></td>
+            </tr>
+            <tr>
+                <td><label for="cvv2Token">CVV Token:</label></td>
+                <td><input class='form-field' id="cvv2Token" maxlength="40" style="width:400px"/></td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+</body>
+</html>

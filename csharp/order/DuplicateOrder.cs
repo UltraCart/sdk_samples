@@ -8,11 +8,11 @@ namespace SdkSample.order
     public class DuplicateOrder
     {
         // uncomment to run.  C# projects can only have one main.
-        public static void Main()
-        {
-            var order = DuplicateOrderCall();
-            Utility.DumpObject(order, "Order");
-        }
+        // public static void Main()
+        // {
+        //     var order = DuplicateOrderCall();
+        //     Utility.DumpObject(order, "Order");
+        // }
 
         // ReSharper disable once MemberCanBePrivate.Global
         public static Order DuplicateOrderCall()
