@@ -19,7 +19,7 @@ require_once '../vendor/autoload.php';
 require_once '../constants.php';
 
 
-$order_api = ultracart\v2\api\OrderApi::usingApiKey(Constants::API_KEY, 0, false);
+$order_api = ultracart\v2\api\OrderApi::usingApiKey(Constants::API_KEY);
 
 
 function getOrderChunk(OrderApi $order_api, int $offset, int $limit): array
@@ -48,7 +48,7 @@ function getOrderChunk(OrderApi $order_api, int $offset, int $limit): array
     $end_dts = date('Y-m-d', time()) . "T00:00:00+00:00";
     error_log($begin_dts);
     error_log($end_dts);
-    
+
     $query->setRefundDateBegin($begin_dts);
     $query->setRefundDateEnd($end_dts);
 

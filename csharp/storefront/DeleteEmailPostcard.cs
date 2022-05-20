@@ -14,7 +14,7 @@ namespace SdkSample.storefront
         [Test]
         public void ExecuteTest()
         {
-            //TODO-PT
+            // Please see the README.md in this directory for an explanation about StoreFrontApi samples.
         }
 
         public static void DeleteEmailPostcardCall()
