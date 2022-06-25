@@ -2,7 +2,7 @@
 import { giftCertificateApi } from '../api.js';
 // import { giftCertificateApi } from '../api';
 
-import { GiftCertificateCreateRequest } from 'ultracart_rest_api_v2_typescript';
+import { CreateGiftCertificateRequest, GiftCertificateCreateRequest } from 'ultracart_rest_api_v2_typescript';
 import { DateTime } from 'luxon';
 
 
@@ -13,9 +13,13 @@ gcCreateRequest.merchant_note = 'Problem Order: blah-12345\nIssued gift certific
 gcCreateRequest.email = 'support@ultracart.com';
 gcCreateRequest.expiration_dts = DateTime.now().setZone('America/New_York').plus({months:3}).endOf('day').toISO();
 
+let createGiftCertificateRequest: CreateGiftCertificateRequest = {
+    giftCertificateCreateRequest: gcCreateRequest
+};
+
 
 // create does not take an expansion variable.  it will return the entire object by default.
-let gcResponse = await giftCertificateApi.createGiftCertificate(gcCreateRequest);
+let gcResponse = await giftCertificateApi.createGiftCertificate(createGiftCertificateRequest);
 let giftCertificate = gcResponse.gift_certificate;
 
 console.log(giftCertificate);

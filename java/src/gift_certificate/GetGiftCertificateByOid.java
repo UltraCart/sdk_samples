@@ -10,7 +10,7 @@ public class GetGiftCertificateByOid{
 
   public static void main(String ... args) throws Exception {
 
-    GiftCertificateApi giftCertificateApi = new GiftCertificateApi(Constants.API_KEY);
+    GiftCertificateApi giftCertificateApi = new GiftCertificateApi(Constants.API_KEY, Constants.VERIFY_SSL_FLAG, Constants.DEBUG_MODE);
 
     int giftCertificateOid = 676713;
 

@@ -1,7 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-
 /*
  * OrderApi.cancelOrder() will do just that.  It will cancel an order by rejecting it.
  * However, the following restrictions apply:
@@ -11,13 +9,10 @@ ini_set('display_errors', 1);
  * 4) If the order is queued for transmission to a distribution center, this call will fail.
  */
 
-use ultracart\v2\api\OrderApi;
-
 require_once '../vendor/autoload.php';
-require_once '../constants.php';
+require_once '../samples.php';
 
-
-$order_api = OrderApi::usingApiKey(Constants::API_KEY);
+$order_api = Samples::getOrderApi();
 
 $order_id = 'DEMO-0009104390';
 $api_response = $order_api->cancelOrder($order_id);

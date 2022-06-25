@@ -1,31 +1,24 @@
 # retrieve all items using chunking if necessary
-import ultracart
+
+from ultracart.apis import GiftCertificateApi
+from ultracart.model.gift_certificate_query import GiftCertificateQuery
 from ultracart.rest import ApiException
-from ultracart import ApiClient
-from pprint import pprint
+from samples import api_client
 import time
 
-
-config = ultracart.Configuration()
-# this key is valid only in the UltraCart development system.  You need to supply a valid simple key here.
-config.api_key['x-ultracart-simple-key'] \
-    = 'a84dba2b20613c017eff4a1185380100a385a6ff6f6939017eff4a1185380100'
-config.debug = False
-config.verify_ssl = False  # Development only.  Set to True for production.
-
-api_client = ApiClient(configuration=config, header_name='X-UltraCart-Api-Version', header_value='2017-03-01')
-api_instance = ultracart.GiftCertificateApi(api_client)
+api_instance = GiftCertificateApi(api_client())
 
 expand = 'ledger'
 
 
-def get_gift_certificates_chunk(offset=0, limit=200):
-    gc_query = ultracart.GiftCertificateQuery()
-    gc_response = api_instance.get_gift_certificates_by_query(gc_query, offset=offset, limit=limit, expand=expand)
+def get_gift_certificates_chunk(_offset=0, _limit=200):
+    gc_query = GiftCertificateQuery()
+    gc_response = api_instance.get_gift_certificates_by_query(gc_query, offset=_offset, limit=_limit, expand=expand)
     if gc_response.success:
         return gc_response.gift_certificates
     # if unsuccessful, return empty array
     return []
+
 
 gift_certificates = []
 try:

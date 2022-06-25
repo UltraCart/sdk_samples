@@ -12,7 +12,7 @@ public class GetGiftCertificatesByEmail {
 
   public static void main(String... args) throws Exception {
 
-    GiftCertificateApi giftCertificateApi = new GiftCertificateApi(Constants.API_KEY);
+    GiftCertificateApi giftCertificateApi = new GiftCertificateApi(Constants.API_KEY, Constants.VERIFY_SSL_FLAG, Constants.DEBUG_MODE);
 
     String email = "support@ultracart.com";
 

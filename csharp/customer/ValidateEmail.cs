@@ -44,7 +44,7 @@ namespace SdkSample.customer
             EmailVerifyTokenValidateRequest validateRequest 
                 = new EmailVerifyTokenValidateRequest(){Token = Token};
             EmailVerifyTokenValidateResponse response = api.ValidateEmailVerificationToken(validateRequest);
-            return response.Success ?? false;
+            return response.Success;
         }
         
         

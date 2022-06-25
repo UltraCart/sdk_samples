@@ -16,7 +16,8 @@ public class CreateGiftCertificate {
 
   public static void main(String... args) throws Exception {
 
-    GiftCertificateApi giftCertificateApi = new GiftCertificateApi(Constants.API_KEY);
+    // Don't use verifySsl=false in production.
+    GiftCertificateApi giftCertificateApi = new GiftCertificateApi(Constants.API_KEY, Constants.VERIFY_SSL_FLAG, Constants.DEBUG_MODE);
     DateTimeFormatter fmt = ISODateTimeFormat.dateTimeNoMillis();
 
     GiftCertificateCreateRequest createRequest = new GiftCertificateCreateRequest();

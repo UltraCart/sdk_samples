@@ -8,7 +8,7 @@ let expansion = 'ledger';
 
 async function getGiftCertificateChunk(offset: number = 0, limit: number = 200): Promise<GiftCertificate[]>{
     let query: GiftCertificateQuery = {}; // leaving this empty, so no filtering, and I should get all records returned.
-    let gcResponse = await giftCertificateApi.getGiftCertificatesByQuery(query, limit, offset, undefined, undefined, expansion);
+    let gcResponse = await giftCertificateApi.getGiftCertificatesByQuery({giftCertificateQuery: query, limit: limit, offset: offset, expand: expansion});
     if(gcResponse.success && gcResponse.gift_certificates !== undefined){
         return gcResponse.gift_certificates;
     }

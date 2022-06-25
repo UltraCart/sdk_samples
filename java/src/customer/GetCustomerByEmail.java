@@ -1,7 +1,7 @@
 package customer;
 
 import com.ultracart.admin.v2.CustomerApi;
-import com.ultracart.admin.v2.swagger.ApiException;
+import com.ultracart.admin.v2.util.ApiException;
 
 public class GetCustomerByEmail {
 

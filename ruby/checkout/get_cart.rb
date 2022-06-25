@@ -3,9 +3,9 @@
 require 'json'
 require 'yaml'
 require 'ultracart_api'
-require '../Constants'
+require_relative '../constants'
 
-api = UltracartClient::CheckoutApi.new_using_api_key(Constants::API_KEY, false, false)
+api = UltracartClient::CheckoutApi.new_using_api_key(Constants::API_KEY, Constants::VERIFY_SSL, Constants::DEBUG_MODE)
 
 # this example is the same for both get_cart.rb and get_cart_by_id.rb.  They work as a pair and are called
 # depending on the presence of an existing cart id or not.  For new carts, getCart() is used.  For existing

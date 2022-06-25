@@ -5,7 +5,7 @@ package order;
 import com.ultracart.admin.v2.OrderApi;
 import com.ultracart.admin.v2.models.Coupon;
 import com.ultracart.admin.v2.models.CouponResponse;
-import com.ultracart.admin.v2.swagger.ApiException;
+import com.ultracart.admin.v2.util.ApiException;
 
 public class AdjustOrderTotal {
 

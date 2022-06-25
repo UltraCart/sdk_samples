@@ -27,7 +27,7 @@ namespace SdkSample.order
             var newTotal = "217.93"; // notice this is a string
 
             BaseResponse result = api.AdjustOrderTotal(orderId, newTotal);
-            return result.Success.HasValue && result.Success.Value;
+            return result.Success && result.Success;
         }
     }
 }

@@ -1,7 +1,6 @@
 {
   "require": {
-    "ultracart/rest_api_v2_sdk_php": "3.10.3",
-    "guzzlehttp/guzzle": "6.5.5"
+    "ultracart/rest_api_v2_sdk_php": "4.0.25-RC"
   },
   "config": {
     "discard-changes" : true

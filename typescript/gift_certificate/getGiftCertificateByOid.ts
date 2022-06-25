@@ -6,7 +6,7 @@ import { giftCertificateApi } from '../api.js';
 let giftCertificateOid = 676713;
 
 // by_oid does not take an expansion variable.  it will return the entire object by default.
-let gcResponse = await giftCertificateApi.getGiftCertificateByOid(giftCertificateOid);
+let gcResponse = await giftCertificateApi.getGiftCertificateByOid({giftCertificateOid: giftCertificateOid});
 let giftCertificate = gcResponse.gift_certificate;
 
 console.log(giftCertificate);

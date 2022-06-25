@@ -3,9 +3,9 @@ require 'date'
 require 'json'
 require 'yaml'
 require 'ultracart_api'
-require '../Constants'
+require_relative '../constants'
 
-api = UltracartClient::GiftCertificateApi.new_using_api_key(Constants::API_KEY)
+api = UltracartClient::GiftCertificateApi.new_using_api_key(Constants::API_KEY, Constants::VERIFY_SSL, Constants::DEBUG_MODE)
 
 create_request = UltracartClient::GiftCertificateCreateRequest.new
 

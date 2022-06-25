@@ -3,7 +3,7 @@
 require 'json'
 require 'yaml'
 require 'ultracart_api'
-require '../Constants'
+require_relative '../constants'
 
 api = UltracartClient::OrderApi.new_using_api_key(Constants::API_KEY, false, false)
 
@@ -46,7 +46,7 @@ item.weight = weight
 
 items.push(item)
 new_order.items = items
-update_response = api.update_order(new_order, new_order.order_id, { '_expand': expansion })
+update_response = api.update_order(new_order.order_id, new_order, { '_expand': expansion })
 updated_order = update_response.order
 
 # Step 3. process the payment.

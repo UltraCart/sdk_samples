@@ -1,9 +1,8 @@
 <?php
 require_once '../vendor/autoload.php';
-require_once '../constants.php';
+require_once '../samples.php';
 
-
-$gift_certificate_api = ultracart\v2\api\GiftCertificateApi::usingApiKey(Constants::API_KEY);
+$gift_certificate_api = Samples::getGiftCertificateApi();
 
 $gift_certificate_oid = 676713;
 

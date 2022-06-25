@@ -1,7 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-
 /*
  * OrderApi.adjustOrderTotal() takes a desired order total and performs goal-seeking to adjust all items and taxes
  * appropriately.  This method was created for merchants dealing with Medicare and Medicaid.  When selling their
@@ -10,13 +8,10 @@ ini_set('display_errors', 1);
  * taxes to match the desired total.
  */
 
-use ultracart\v2\api\OrderApi;
-
 require_once '../vendor/autoload.php';
-require_once '../constants.php';
+require_once '../samples.php';
 
-
-$order_api = OrderApi::usingApiKey(Constants::API_KEY);
+$order_api = Samples::getOrderApi();
 
 $order_id = 'DEMO-0009104390';
 $desired_total = '21.99';

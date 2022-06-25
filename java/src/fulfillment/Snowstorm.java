@@ -6,7 +6,7 @@ import com.ultracart.admin.v2.OrderApi;
 import com.ultracart.admin.v2.models.Order;
 import com.ultracart.admin.v2.models.OrderQuery;
 import com.ultracart.admin.v2.models.OrdersResponse;
-import com.ultracart.admin.v2.swagger.ApiException;
+import com.ultracart.admin.v2.util.ApiException;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -99,7 +99,7 @@ public class Snowstorm {
 
             order.getShipping().setShipOnDate(newShipOnDate);
             order.getShipping().setDeliveryDate(newDeliveryDate);
-            orderApi.updateOrder(order, order.getOrderId(), expand);
+            orderApi.updateOrder(order.getOrderId(), order, expand);
             Thread.sleep(200); // sleep 1/2 second to avoid tripping rate limiter.
             
         }
@@ -117,7 +117,7 @@ public class Snowstorm {
         orderQuery.setCurrentStage(OrderQuery.CurrentStageEnum.SHIPPING_DEPARTMENT);
 
         OrdersResponse response = api.getOrdersByQuery(orderQuery, limit, offset, sort, expand);
-        if (response.isSuccess()) {
+        if (response.getSuccess() != null && response.getSuccess()) {
             return response.getOrders();
         }
 

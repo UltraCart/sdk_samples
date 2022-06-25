@@ -6,7 +6,7 @@ import { giftCertificateApi } from '../api.js';
 let email = 'support@ultracart.com';
 
 // by_email does not take an expansion variable.  it will return the entire object by default.
-let gcResponse = await giftCertificateApi.getGiftCertificatesByEmail(email);
+let gcResponse = await giftCertificateApi.getGiftCertificatesByEmail({email: email});
 let giftCertificates = gcResponse.gift_certificates;
 
 console.log(giftCertificates);

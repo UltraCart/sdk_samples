@@ -1,9 +1,9 @@
 require 'json'
 require 'yaml'
 require 'ultracart_api'
-require '../Constants'
+require_relative '../constants'
 
-api = UltracartClient::GiftCertificateApi.new_using_api_key(Constants::API_KEY)
+api = UltracartClient::GiftCertificateApi.new_using_api_key(Constants::API_KEY, Constants::VERIFY_SSL, Constants::DEBUG_MODE)
 
 def get_gift_certificates_chuck(api, offset, limit)
   expansion = 'ledger'.freeze

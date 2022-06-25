@@ -1,7 +1,16 @@
 <?php /** @noinspection DuplicatedCode */
 
+use ultracart\v2\api\OrderApi;
+use ultracart\v2\models\OrderItem;
+use ultracart\v2\models\Currency;
+use ultracart\v2\models\Weight;
+use ultracart\v2\models\OrderProcessPaymentRequest;
+
+
 require_once '../vendor/autoload.php';
-require_once '../constants.php';
+require_once '../samples.php';
+
+$order_api = Samples::getOrderApi();
 
 /*
  * OrderApi.duplicateOrder() does not accomplish much on its own.  The use-case for this method is to
@@ -16,13 +25,6 @@ require_once '../constants.php';
  * The OrderApi is for managing existing orders.
  */
 
-use ultracart\v2\api\OrderApi;
-use ultracart\v2\models\OrderItem;
-use ultracart\v2\models\Currency;
-use ultracart\v2\models\Weight;
-use ultracart\v2\models\OrderProcessPaymentRequest;
-
-$order_api = OrderApi::usingApiKey(Constants::API_KEY);
 
 $expansion = "items";   // for this example, we're going to change the items after we duplicate the order, so
 // the only expansion properties we need are the items.
@@ -53,7 +55,7 @@ $item->setWeight($weight);
 
 $items[] = $item;
 $new_order->setItems($items);
-$update_response = $order_api->updateOrder($new_order, $new_order->getOrderId(), $expansion);
+$update_response = $order_api->updateOrder($new_order->getOrderId(), $new_order, $expansion);
 
 $updated_order = $update_response->getOrder();
 

@@ -4,3 +4,5 @@
 **/*.js.map
 package-lock.json
 node_modules
+pnpm-lock.yml
+.vs

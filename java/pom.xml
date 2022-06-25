@@ -22,6 +22,44 @@
           <target>8</target>
         </configuration>
       </plugin>
+
+      <plugin>
+        <!-- Build an executable JAR -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.2</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>dependency-jars/</classpathPrefix>
+              <mainClass>EntryPoint</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+   				<groupId>org.apache.maven.plugins</groupId>
+   				<artifactId>maven-dependency-plugin</artifactId>
+   				<version>3.3.0</version>
+   				<executions>
+   				  <execution>
+   					<id>copy-dependencies</id>
+   					<phase>package</phase>
+   					<goals>
+   						<goal>copy-dependencies</goal>
+   					</goals>
+   					<configuration>
+   					  <!-- exclude junit, we need runtime dependency only -->
+   					  <includeScope>runtime</includeScope>
+   					  <outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory>
+   					</configuration>
+   				  </execution>
+   				</executions>
+   			</plugin>
+
+
     </plugins>
   </build>
 
@@ -29,7 +67,7 @@
     <dependency>
       <groupId>com.ultracart</groupId>
       <artifactId>rest-sdk</artifactId>
-      <version>3.9.5</version>
+      <version>4.0.23-RC</version>
     </dependency>
     <dependency>
       <groupId>joda-time</groupId>

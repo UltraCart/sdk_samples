@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('packages\NUnit.3.11.0\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -45,6 +46,11 @@
     <Compile Include="auto_order\Introduction.cs" />
     <Compile Include="auto_order\UpdateAutoOrder.cs" />
     <Compile Include="auto_order\UpdateAutoOrdersBatch.cs" />
+    <Compile Include="channel_partner\CancelOrderByChannelPartnerOrderId.cs" />
+    <Compile Include="channel_partner\CancelOrderByUltraCartOrderId.cs" />
+    <Compile Include="channel_partner\EstimateShippingForChannelPartnerOrder.cs" />
+    <Compile Include="channel_partner\ImportChannelPartnerOrder.cs" />
+    <Compile Include="channel_partner\Introduction.cs" />
     <Compile Include="chargeback\DeleteChargeback.cs" />
     <Compile Include="chargeback\GetChargebackDispute.cs" />
     <Compile Include="chargeback\GetChargebackDisputes.cs" />
@@ -105,6 +111,7 @@
     <Compile Include="customer\UpdateCustomer.cs" />
     <Compile Include="customer\UpdateCustomerEmailLists.cs" />
     <Compile Include="customer\ValidateEmail.cs" />
+    <Compile Include="EntryPoint.cs" />
     <Compile Include="fulfillment\AcknowledgeOrders.cs" />
     <Compile Include="fulfillment\GetDistributionCenterOrders.cs" />
     <Compile Include="fulfillment\GetDistributionCenters.cs" />
@@ -357,9 +364,8 @@
     <Compile Include="webhook\UpdateWebhook.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="com.ultracart.admin.v2, Version=3.9.8.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\com.ultracart.admin.v2.3.9.8\lib\net48\com.ultracart.admin.v2.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="com.ultracart.admin.v2, Version=4.0.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\com.ultracart.admin.v2.4.0.14-RC\lib\net48\com.ultracart.admin.v2.dll</HintPath>
     </Reference>
     <Reference Include="JsonSubTypes, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176">
       <HintPath>packages\JsonSubTypes.1.7.0\lib\net40\JsonSubTypes.dll</HintPath>
@@ -370,8 +376,8 @@
       <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
-      <HintPath>packages\NUnit.3.7.1\lib\net45\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="ObjectDumper, Version=1.0.0.12, Culture=neutral, PublicKeyToken=9e2fabf3af85dba9">
       <HintPath>packages\ObjectDumper.1.0.0.12\lib\net35-Client\ObjectDumper.dll</HintPath>
@@ -393,6 +399,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\NUnit.3.11.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\NUnit.3.11.0\build\NUnit.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

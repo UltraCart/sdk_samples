@@ -3,7 +3,7 @@
 package auto_order;
 
 import com.ultracart.admin.v2.AutoOrderApi;
-import com.ultracart.admin.v2.swagger.ApiException;
+import com.ultracart.admin.v2.util.ApiException;
 
 public class GetAutoOrder {
 

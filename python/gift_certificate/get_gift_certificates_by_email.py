@@ -1,19 +1,11 @@
 # get a gift certificate by gift_certificate_oid.
 
-import ultracart
+from ultracart.apis import GiftCertificateApi
 from ultracart.rest import ApiException
-from ultracart import ApiClient
 from pprint import pprint
+from samples import api_client
 
-config = ultracart.Configuration()
-# this key is valid only in the UltraCart development system.  You need to supply a valid simple key here.
-config.api_key['x-ultracart-simple-key'] \
-    = 'a84dba2b20613c017eff4a1185380100a385a6ff6f6939017eff4a1185380100'
-config.debug = False
-config.verify_ssl = False  # Development only.  Set to True for production.
-
-api_client = ApiClient(configuration=config, header_name='X-UltraCart-Api-Version', header_value='2017-03-01')
-api_instance = ultracart.GiftCertificateApi(api_client)
+api_instance = GiftCertificateApi(api_client())
 
 try:
 

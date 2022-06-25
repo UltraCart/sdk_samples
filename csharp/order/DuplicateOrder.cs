@@ -51,7 +51,7 @@ namespace SdkSample.order
             Currency cost = new Currency
             {
                 CurrencyCode = "USD",
-                Value = (decimal?)9.99
+                Value = (decimal)9.99
             };
             item.Cost = cost;
 
@@ -63,7 +63,7 @@ namespace SdkSample.order
             item.Weight = weight;
 
             newOrder.Items = orderItems;
-            OrderResponse updateResponse = orderApi.UpdateOrder(newOrder, newOrder.OrderId, expansion);
+            OrderResponse updateResponse = orderApi.UpdateOrder(newOrder.OrderId, newOrder, expansion);
             Order updatedOrder = updateResponse.Order;
 
             // Step 3. process the payment.

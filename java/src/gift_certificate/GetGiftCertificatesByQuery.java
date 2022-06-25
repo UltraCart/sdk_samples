@@ -4,7 +4,7 @@ import com.ultracart.admin.v2.GiftCertificateApi;
 import com.ultracart.admin.v2.models.GiftCertificate;
 import com.ultracart.admin.v2.models.GiftCertificateQuery;
 import com.ultracart.admin.v2.models.GiftCertificatesResponse;
-import com.ultracart.admin.v2.swagger.ApiException;
+import com.ultracart.admin.v2.util.ApiException;
 import common.Constants;
 import common.JSON;
 
@@ -27,7 +27,7 @@ public class GetGiftCertificatesByQuery{
 
   public static void main(String ... args) throws Exception {
 
-    GiftCertificateApi giftCertificateApi = new GiftCertificateApi(Constants.API_KEY);
+    GiftCertificateApi giftCertificateApi = new GiftCertificateApi(Constants.API_KEY, Constants.VERIFY_SSL_FLAG, Constants.DEBUG_MODE);
 
     ArrayList<GiftCertificate> giftCertificates = new ArrayList<>();
     int iteration = 1;

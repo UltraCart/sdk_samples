@@ -9,7 +9,7 @@ var limit = 200;
 
 function finished(){
     console.log('giftCertificates', giftCertificates);
-    console.log("count of certificates: ", giftCertificates.length);            
+    console.log("count of certificates: ", giftCertificates.length);
 }
 
 function getGiftCertificateChunk(){

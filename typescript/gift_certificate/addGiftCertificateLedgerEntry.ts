@@ -2,7 +2,7 @@
 import { giftCertificateApi } from '../api.js';
 // import { giftCertificateApi } from '../api';
 
-import { GiftCertificateLedgerEntry } from 'ultracart_rest_api_v2_typescript';
+import { AddGiftCertificateLedgerEntryRequest, GiftCertificateLedgerEntry } from 'ultracart_rest_api_v2_typescript';
 import { DateTime } from 'luxon';
 
 
@@ -18,8 +18,13 @@ ledgerEntry.gift_certificate_oid = giftCertificateOid  // this is an existing gi
 ledgerEntry.reference_order_id = 'BLAH-12345'; // if this ledger entry is related to an order, add it here, else use null.
 
 
+const addGiftCertificateLedgerEntryRequest: AddGiftCertificateLedgerEntryRequest = {
+    giftCertificateOid: giftCertificateOid,
+    giftCertificateLedgerEntry: ledgerEntry
+};
+
 // add ledger entry method does not take an expansion variable.  it will return the entire object by default.
-let gcResponse = await giftCertificateApi.addGiftCertificateLedgerEntry(giftCertificateOid, ledgerEntry);
+let gcResponse = await giftCertificateApi.addGiftCertificateLedgerEntry(addGiftCertificateLedgerEntryRequest);
 let giftCertificate = gcResponse.gift_certificate;
 
 console.log(giftCertificate);
