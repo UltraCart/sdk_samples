@@ -1,6 +1,6 @@
 {
   "require": {
-    "ultracart/rest_api_v2_sdk_php": "4.0.25-RC"
+    "ultracart/rest_api_v2_sdk_php": "4.0.57-RC"
   },
   "config": {
     "discard-changes" : true
