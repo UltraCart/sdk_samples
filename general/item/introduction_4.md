@@ -40,6 +40,7 @@ available.
 * restriction
 * revguard
 * reviews
+* reviews.individual_reviews
 * salesforce
 * shipping
 * shipping.cases
