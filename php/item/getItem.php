@@ -17,8 +17,8 @@ require_once './item_functions.php'; // <-- see this file for details
 try {
 
     $item_id = insertSampleItem();
-
     $item_api = Samples::getItemApi();
+    $customer_api = Samples::getCustomerApi(); // only needed for accessing reviewer information below.
     // the _expand variable is null in the following call.  we just need the base object this time.
     $api_response = $item_api->getItemByMerchantItemId($item_id, null, false);
     $item = $api_response->getItem(); // assuming this succeeded
@@ -85,6 +85,23 @@ try {
     $item_reviews = $item->getReviews();
     $individual_reviews = $item_reviews->getIndividualReviews();
     // do whatever you wish with the reviews.  iterate them, print them, etc.
+    // if you need the reviewer information
+    foreach ($individual_reviews as $individual_review) {
+
+        // if you need reviewer profile questions, such as "How often do you use this product?", access the
+        // rating names and scores.  these are configurable by merchant, so we do not know what your questions may be.
+        // See Home -> Configuration -> Items -> Reviews -> Settings
+        // Or this URL: https://secure.ultracart.com/merchant/item/review/reviewSettingsLoad.do
+        $individual_review->getRatingName1(); // <-- this will not be the full question, but a key string.
+        $individual_review->getRatingScore1();
+
+        // if you need the review information, access that via their customer object.  Be careful.  This can result
+        // in a LOT of API calls and exhaust your limit.  You may wish to add 'sleep' calls to your loop and cache
+        // these results daily or weekly.
+        $customer_response = $customer_api->getCustomer($individual_review->getCustomerProfileOid(), "reviewer");
+        $customer = $customer_response->getCustomer();
+        $reviewer = $customer->getReviewer();
+    }
 
     echo 'The following item was retrieved via getItem():';
     var_dump($item);
