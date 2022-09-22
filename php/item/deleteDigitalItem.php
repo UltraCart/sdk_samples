@@ -8,13 +8,11 @@ require_once './item_functions.php'; // <-- see this file for details
 
 try {
 
-    $item_id = insertSampleItem();
-    deleteSampleItem($item_id);
+    $digital_item_oid = insertSampleDigitalItem();
+    deleteSampleDigitalItem($digital_item_oid);
 
 } catch (ApiException $e) {
     echo 'An ApiException occurred.  Please review the following error:';
     var_dump($e); // <-- change_me: handle gracefully
     die(1);
 }
-
-
