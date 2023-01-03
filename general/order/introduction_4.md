@@ -25,6 +25,7 @@ communication.  The following expansion operations are available.
 * marketing
 * payment
 * payment.transaction
+* point_of_sale
 * quote
 * salesforce
 * shipping
