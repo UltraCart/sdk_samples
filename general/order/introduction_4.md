@@ -32,3 +32,4 @@ communication.  The following expansion operations are available.
 * shipping.tracking_number_details
 * summary
 * taxes
+* utms
