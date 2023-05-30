@@ -80,10 +80,10 @@ try {
 
         echo "executing iteration " . $iteration . '<br>';
 
-        $chunk_of_orders = getItemChunk($item_api, $offset, $limit);
-        $orders = array_merge($items, $chunk_of_orders);
+        $chunk_of_items = getItemChunk($item_api, $offset, $limit);
+        $orders = array_merge($items, $chunk_of_items);
         $offset = $offset + $limit;
-        $more_records_to_fetch = count($chunk_of_orders) == $limit;
+        $more_records_to_fetch = count($chunk_of_items) == $limit;
         $iteration++;
     }
 } catch (ApiException $e) {
