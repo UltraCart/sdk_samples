@@ -7,6 +7,7 @@ object are returned.  We encourage you to limit the amount of information that y
 to the minimal amount possible to have optimal communication.  The following expansion operations are
 available.
 
+* add_ons
 * items
 * items.future_schedules
 * items.sample_schedule
