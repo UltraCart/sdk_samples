@@ -15,6 +15,7 @@ available.
 * orders_summary
 * pricing_tiers
 * privacy
+* properties
 * quotes_summary
 * reviewer
 * shipping
