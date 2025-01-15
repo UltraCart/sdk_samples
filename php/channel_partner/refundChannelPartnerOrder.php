@@ -21,7 +21,7 @@ require_once '../vendor/autoload.php';
 require_once '../constants.php';
 
 
-$channel_partner_api = ChannelPartnerApi::usingApiKey(Constants::CHANNEL_PARTNER_API_KEY, 30, false, false);
+$channel_partner_api = ChannelPartnerApi::usingApiKey(Constants::CHANNEL_PARTNER_API_KEY);
 // for a comment on this expansion, see getChannelPartnerOrder sample.
 $expansion = "item,summary,shipping";
 
@@ -57,7 +57,7 @@ $skip_customer_notifications = true;
 $auto_order_cancel = false; // if this was an auto order, and they wanted to cancel it, set this flag to true.
 // set $manual_refund to true if the actual refund happened outside the system, and you just want a record of it.
 // If UltraCart did not process this refund, $manual_refund should be true.
-$manual_refund = true;
+$manual_refund = false;
 $reverse_affiliate_transactions = true; // for a full refund, the affiliate should not get credit, or should they?
 $issue_store_credit = false;  // if true, the customer would receive store credit instead of a return on their credit card.
 $auto_order_cancel_reason = null;
