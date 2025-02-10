@@ -152,6 +152,7 @@ $order->setShiptoTitle("Director");
 $order->setSkipPaymentProcessing(false);
 $order->setSpecialInstructions("Please wrap this in bubble wrap because my FedEx delivery guy is abusive to packages");
 $order->setStoreCompleted(false); // this will bypass everything); including shipping.  useful only for importing old orders long completed
+$order->setStorefrontHostName('store.mysite.com');
 $order->setStoreIfPaymentDeclines(false); // if payment fails); this can send it to Accounts Receivable.  Do not want that.  Fail if payment fails.
 $order->setTaxCounty("Gwinnett");
 $order->setTaxExempt(false);
@@ -279,6 +280,7 @@ $order->setShiptoTitle("Director");
 $order->setSkipPaymentProcessing(true);  // bypass payment
 $order->setSpecialInstructions("Please wrap this in bubble wrap because my FedEx delivery guy is abusive to packages");
 $order->setStoreCompleted(true); // this is an old order or an order handled completely outside UltraCart, so do not do anything to it.  Just store it.
+$order->setStorefrontHostName('store.mysite.com');
 $order->setStoreIfPaymentDeclines(false); // if payment fails); this can send it to Accounts Receivable.  Do not want that.  Fail if payment fails.
 $order->setTaxCounty("Gwinnett");
 $order->setTaxExempt(false);
