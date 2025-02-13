@@ -3,9 +3,11 @@
 ini_set('display_errors', 1);
 
 /*
- * ChannelPartnerApi.getChannelPartnerOrder() retrieves a single order for a given order_id.  It is identical to the
- * OrderApi.getOrder() call, but allows for a restricted permission set.  The channel partner api assumes
- * a tie to a Channel Partner and only allows retrieval of orders created by that Channel Partner.
+ * ChannelPartnerApi.getChannelPartnerOrderByChannelPartnerOrderId() retrieves a single order for a given
+ * channel partner order_id.  This might be useful for call centers which only have their order ids and not UltraCart's.
+ * It is identical to the OrderApi.getOrder() call in functionality and result,
+ * but allows for a restricted permission set.  The channel partner api assumes a tie to a Channel Partner and
+ * only allows retrieval of orders created by that Channel Partner.
  */
 
 
@@ -41,8 +43,8 @@ $expansion = "item,summary,shipping";
 
 
 // This order MUST be an order associated with this channel partner or you will receive a 400 Bad Request.
-$order_id = 'DEMO-0009110366';
-$api_response = $channel_partner_api->getChannelPartnerOrder($order_id, $expansion);
+$channel_partner_order_id = 'MY-CALL-CENTER-BLAH-BLAH';
+$api_response = $channel_partner_api->getChannelPartnerOrderByChannelPartnerOrderId($channel_partner_order_id, $expansion);
 
 if ($api_response->getError() != null) {
     error_log($api_response->getError()->getDeveloperMessage());
