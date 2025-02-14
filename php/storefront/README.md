@@ -1,4 +1,4 @@
-*The StoreFrontApi isn't really a public API*.
+*The StoreFrontApi is an internal API*.
 
 The StoreFront API is a publicly available, but it was written for internal use.
 A few years ago, UltraCart decided to make our REST API our centerpiece and started 
