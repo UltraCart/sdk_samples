@@ -83,7 +83,7 @@ function deleteSampleItem(string $item_id) {
  * @return int the digital item oid for the newly created item
  * @throws ApiException
  */
-function insertSampleDigitalItem(): int{
+function insertSampleDigitalItem($externalId = null): int{
 
     $image_url = 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Earth_%2816530938850%29.jpg'; // picture of the earth
 
@@ -91,6 +91,9 @@ function insertSampleDigitalItem(): int{
     $digital_item->setImportFromUrl($image_url);
     $digital_item->setDescription("The Earth");
     $digital_item->setClickWrapAgreement("By purchasing this item, you agree that it is Earth");
+    if(!is_null($externalId)){
+        $digital_item->setExternalId($externalId);
+    }
 
     echo 'insertDigitalItem request object follows:';
     var_dump($digital_item);

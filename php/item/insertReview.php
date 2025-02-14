@@ -42,7 +42,7 @@ try {
     $item = $item_api->updateItem($item_oid, $item, $expand, null)->getItem();
 
 
-    // You will need to know what your
+    // You will need to know what your product review looks like.
     $review = new ultracart\v2\models\ItemReview();
     $review->setTitle('Best Product Ever!');
     $review->setReview("I loved this product.  I bought it for my wife and she was so happy she cried.  blah blah blah");

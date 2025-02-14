@@ -19,7 +19,15 @@ try {
 
     $digital_item_oid = insertSampleDigitalItem(); // create an item so I can get an item
     $item_api = Samples::getItemApi();
-    $api_response = $item_api->getDigitalItems($digital_item_oid);
+
+    $_limit = 100;
+    $_offset = 0;
+    $_since = null; //  digital items do not use since.  leave as null.
+    $_sort = null; // if null, use default of original_filename
+    $_expand = null; // digital items have no expansion.  leave as null.  this value is ignored
+    $_placeholders = null; // digital items have no placeholders. leave as null.
+
+    $api_response = $item_api->getDigitalItems($_limit, $_offset, $_since, $_sort, $_expand, $_placeholders);
     $digital_items = $api_response->getDigitalItems(); // assuming this succeeded
 
     echo 'The following items were retrieved via getDigitalItems():';
