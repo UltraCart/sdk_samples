@@ -2,6 +2,7 @@
 
 require_once '../vendor/autoload.php';
 require_once '../constants.php';
+// Reference Implementation: https://github.com/UltraCart/responsive_checkout
 
 // this example is the same for both getCart.php and getCartByCartId.php.  They work as a pair and are called
 // depending on the presence of an existing cart id or not.  For new carts, getCart() is used.  For existing
@@ -9,7 +10,20 @@ require_once '../constants.php';
 
 $checkout_api = ultracart\v2\api\CheckoutApi::usingApiKey(Constants::API_KEY);
 
-$expansion = "items"; // for this example, we're just getting a cart to insert some items into it.
+$expansion = "customer_profile,items,billing,shipping,coupons,checkout,payment,summary,taxes"; //
+// Possible Expansion Variables: (see https://www.ultracart.com/api/#resource_checkout.html
+/*
+affiliate                   checkout	                        customer_profile
+billing                     coupons                             gift
+gift_certificate	        items.attributes	                items.multimedia
+items	                    items.multimedia.thumbnails         items.physical
+marketing	                payment	                            settings.gift
+settings.billing.provinces	settings.shipping.deliver_on_date   settings.shipping.estimates
+settings.shipping.provinces	settings.shipping.ship_on_date	    settings.taxes
+settings.terms	            shipping	                        taxes
+summary	                    upsell_after
+ */
+
 
 $cart_id = null;
 if(isset($_COOKIE[Constants::CART_ID_COOKIE_NAME])){

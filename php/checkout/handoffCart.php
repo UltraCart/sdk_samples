@@ -3,6 +3,8 @@
 require_once '../vendor/autoload.php';
 require_once '../constants.php';
 
+// Reference Implementation: https://github.com/UltraCart/responsive_checkout
+
 // this example uses the getCart.php code as a starting point, because we must get a cart to handoff a cart.
 // here, we are handing off the cart to the ultracart engine with an operation of 'view', meaning that we
 // simply added some items to the cart and wish for UltraCart to gather the remaining customer information

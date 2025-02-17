@@ -2,6 +2,7 @@
 
 require_once '../vendor/autoload.php';
 require_once '../constants.php';
+// Reference Implementation: https://github.com/UltraCart/responsive_checkout
 
 // this example is the same for both getCart.php and getCartByCartId.php.  They work as a pair and are called
 // depending on the presence of an existing cart id or not.  For new carts, getCart() is used.  For existing
