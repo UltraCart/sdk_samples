@@ -38,7 +38,7 @@ namespace SdkSample.gift_certificate
         // ReSharper disable once MemberCanBePrivate.Global
         public static List<GiftCertificate> GetGiftCertificateByQueryCall()
         {
-            var api = new GiftCertificateApi(Constants.API_KEY);
+            var api = new GiftCertificateApi(Constants.ApiKey);
 
             List<GiftCertificate> giftCertificates = new List<GiftCertificate>();
 

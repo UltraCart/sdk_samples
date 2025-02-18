@@ -40,7 +40,7 @@ namespace SdkSample.channel_partner
         // ReSharper disable once MemberCanBePrivate.Global
         public static ChannelPartnerCancelResponse CancelOrderByUltraCartOrderIdCall()
         {
-            var api = new ChannelPartnerApi(Constants.API_KEY);
+            var api = new ChannelPartnerApi(Constants.ApiKey);
             var ultraCartOrderId = "DEMO-0009104458";
             var response = api.CancelOrderByUltraCartOrderId(ultraCartOrderId);
             return response;

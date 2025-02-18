@@ -1,28 +1,51 @@
-
-
-
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
 
 namespace SdkSample.coupon
 {
     public class InsertCoupons
     {
-
-        [Test]
-        public void ExecuteTest()
+        public static void Execute()
         {
-            //TODO-PT
+            Console.WriteLine("--- " + MethodBase.GetCurrentMethod()?.DeclaringType?.Name + " ---");
+            try
+            {
+                // Create coupon API instance using API key
+                CouponApi couponApi = new CouponApi(Constants.ApiKey);
+                
+                Coupon coupon1 = new Coupon();
+                coupon1.MerchantCode = "PennyOff";
+                coupon1.Description ="Test Coupon for InsertCoupons sample";
+                coupon1.AmountOffSubtotal = new CouponAmountOffSubtotal(); // see InsertCoupon for examples of types
+                coupon1.AmountOffSubtotal.DiscountAmount = 0.01m;
+
+                Coupon coupon2 = new Coupon();
+                coupon2.MerchantCode = "TwoPenniesOff";
+                coupon2.Description ="Test Coupon for InsertCoupons sample";
+                coupon2.AmountOffSubtotal = new CouponAmountOffSubtotal(); // see InsertCoupon for examples of types
+                coupon2.AmountOffSubtotal.DiscountAmount = 0.02m;
+                
+                CouponsRequest couponsRequest = new CouponsRequest();
+                couponsRequest.Coupons = new List<Coupon> { coupon1, coupon2 };
+                var apiResponse = couponApi.InsertCoupons(couponsRequest);
+                
+                Console.WriteLine(apiResponse);
+
+                foreach (Coupon coupon in apiResponse.Coupons)
+                {
+                    Console.WriteLine($"Deleting newly created coupon (Coupon OID {coupon.CouponOid}) to clean up.");
+                    couponApi.DeleteCoupon(coupon.CouponOid);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
+            }
         }
-
-        public static void InsertCouponsCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new CouponApi(simpleKey);
-        }
-
-
     }
 }

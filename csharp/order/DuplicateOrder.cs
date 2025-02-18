@@ -25,7 +25,7 @@ namespace SdkSample.order
             // As a reminder, if you wish to create a new order from scratch, use the CheckoutApi.
             // The OrderApi is for managing existing orders.
 
-            var orderApi = new OrderApi(Constants.API_KEY);
+            var orderApi = new OrderApi(Constants.ApiKey);
 
             string expansion = "items";
             // for this example, we're going to change the items after we duplicate the order, so

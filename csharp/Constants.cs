@@ -3,6 +3,6 @@ namespace SdkSample
 {
     public static class Constants
     {
-        public const string API_KEY = "a84dba2b20613c017eff4a1185380100a385a6ff6f6939017eff4a1185380100";
+        public const string ApiKey = "b4f9ff71e6cb18019519781aa400010097ece01e76d0f6019519781aa4000100";
     }
 }

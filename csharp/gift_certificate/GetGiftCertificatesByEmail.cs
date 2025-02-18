@@ -22,7 +22,7 @@ namespace SdkSample.gift_certificate
         // ReSharper disable once MemberCanBePrivate.Global
         public static List<GiftCertificate> GetGiftCertificatesByEmailCall()
         {
-            var api = new GiftCertificateApi(Constants.API_KEY);
+            var api = new GiftCertificateApi(Constants.ApiKey);
             
             const string email = "support@ultracart.com";
 

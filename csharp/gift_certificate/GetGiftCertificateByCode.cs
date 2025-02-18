@@ -16,7 +16,7 @@ namespace SdkSample.gift_certificate
         // ReSharper disable once MemberCanBePrivate.Global
         public static GiftCertificate GetGiftCertificateByCodeCall()
         {
-            var api = new GiftCertificateApi(Constants.API_KEY);
+            var api = new GiftCertificateApi(Constants.ApiKey);
             
             const string code = "X8PV761V2Z";
 

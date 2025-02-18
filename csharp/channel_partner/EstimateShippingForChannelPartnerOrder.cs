@@ -36,7 +36,7 @@ namespace SdkSample.channel_partner
         // and the items.
         public static ChannelPartnerEstimateShippingResponse EstimateShippingForChannelPartnerOrderCall()
         {
-            var api = new ChannelPartnerApi(Constants.API_KEY);
+            var api = new ChannelPartnerApi(Constants.ApiKey);
             
             // The spreadsheet import docs will serve you well here.
             // https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1377246/Channel+Partner+API+-+Spreadsheet+Import

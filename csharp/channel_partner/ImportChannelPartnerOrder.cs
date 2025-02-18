@@ -44,7 +44,7 @@ namespace SdkSample.channel_partner
         // both with payment and shipping.  
         public static ChannelPartnerImportResponse ImportChannelPartnerOrderThatStillNeedsPaymentCall()
         {
-            var api = new ChannelPartnerApi(Constants.API_KEY);
+            var api = new ChannelPartnerApi(Constants.ApiKey);
             
             // The spreadsheet import docs will serve you well here.
             // https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1377246/Channel+Partner+API+-+Spreadsheet+Import
@@ -193,7 +193,7 @@ namespace SdkSample.channel_partner
         // collecting payment or routing to shipping.
         public static ChannelPartnerImportResponse ImportChannelPartnerOrderAlreadyShippedCall()
         {
-            var api = new ChannelPartnerApi(Constants.API_KEY);
+            var api = new ChannelPartnerApi(Constants.ApiKey);
             
             // The spreadsheet import docs will serve you well here.
             // https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1377246/Channel+Partner+API+-+Spreadsheet+Import
