@@ -1,6 +1,7 @@
 ﻿using System;
 using SdkSample.auto_order;
 using SdkSample.channel_partner;
+using SdkSample.checkout;
 using SdkSample.coupon;
 using SdkSample.customer;
 using SdkSample.fulfillment;
@@ -50,6 +51,29 @@ namespace SdkSample
             InsertChannelPartnerShipToPreference.Execute();
             RefundChannelPartnerOrder.Execute();
             UpdateChannelPartnerShipToPreference.Execute();
+
+            Console.WriteLine("============================================");
+            Console.Out.WriteLine("--- Checkout ---");
+            Console.WriteLine("============================================");
+            CityState.Execute();
+            FinalizeOrder.Execute();
+            GetAffirmCheckout.Execute();
+            GetAllowedCountries.Execute();
+            GetCart.Execute();
+            GetCartByCartId.Execute();
+            GetCartByReturnCode.Execute();
+            GetCartByReturnToken.Execute();
+            GetStateProvincesForCountry.Execute();
+            HandoffCart.Execute();
+            Login.Execute();
+            Logout.Execute();
+            Register.Execute();
+            RegisterAffiliateClick.Execute();
+            RelatedItemsForCart.Execute();
+            RelatedItemsForItem.Execute();
+            SetupBrowserKey.Execute();
+            UpdateCart.Execute();
+            ValidateCart.Execute();            
             
             Console.WriteLine("============================================");
             Console.Out.WriteLine("--- Coupons ---");

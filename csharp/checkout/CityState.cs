@@ -1,28 +1,30 @@
-
-
-
 using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
 
 namespace SdkSample.checkout
 {
     public class CityState
     {
-
-        [Test]
-        public void ExecuteTest()
+        /// <summary>
+        /// Takes a postal code and returns back a city and state (US Only)
+        /// </summary>
+        public static void Execute()
         {
-            //TODO-PT
+            // Reference Implementation: https://github.com/UltraCart/responsive_checkout
+            // Takes a postal code and returns back a city and state (US Only)
+
+            CheckoutApi checkoutApi = new CheckoutApi(Constants.ApiKey);
+
+            String cartId = "123456789123456789123456789123456789";  // you should have the cart id from session or cookie.
+            Cart cart = new Cart();
+            cart.CartId = cartId; // required
+            cart.Shipping = new CartShipping();
+            cart.Shipping.PostalCode = "44233";
+
+            CityStateZip apiResponse = checkoutApi.CityState(cart);
+            Console.WriteLine("City: " + apiResponse.City);
+            Console.WriteLine("State: " + apiResponse.State);
         }
-
-        public static void CityStateCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new CheckoutApi(simpleKey);
-        }
-
-
     }
 }
