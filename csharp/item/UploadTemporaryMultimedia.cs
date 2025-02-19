@@ -1,28 +1,4 @@
-
-
-
-using System;
-using com.ultracart.admin.v2.Api;
-using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
-
-namespace SdkSample.item
-{
-    public class UploadTemporaryMultimedia
-    {
-
-        [Test]
-        public void ExecuteTest()
-        {
-            //TODO-PT
-        }
-
-        public static void UploadTemporaryMultimediaCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new ItemApi(simpleKey);
-        }
-
-
-    }
-}
+// This method is used internally by UltraCart.
+// We don't envision a scenario where a merchant would ever need to call this.
+// As such, we're not providing a sample for it.  If you can think of a use for this
+// method, contact us, and we'll help you work through it.

@@ -5,6 +5,7 @@ using SdkSample.coupon;
 using SdkSample.customer;
 using SdkSample.fulfillment;
 using SdkSample.gift_certificate;
+using SdkSample.item;
 using SdkSample.webhook;
 
 namespace SdkSample
@@ -114,6 +115,32 @@ namespace SdkSample
             GetGiftCertificatesByEmail.Execute();
             GetGiftCertificatesByQuery.Execute();
             UpdateGiftCertificate.Execute();          
+            
+            Console.WriteLine("============================================");
+            Console.Out.WriteLine("--- Item ---");
+            Console.WriteLine("============================================");
+            DeleteDigitalItem.Execute();
+            DeleteItem.Execute();
+            DeleteReview.Execute();
+            GetDigitalItem.Execute();
+            GetDigitalItems.Execute();
+            GetDigitalItemsByExternalId.Execute();
+            GetItem.Execute();
+            GetItemByMerchantItemId.Execute();
+            GetItems.Execute();
+            GetPricingTiers.Execute();
+            GetReview.Execute();
+            GetReviews.Execute();
+            GetUnassociatedDigitalItems.Execute();
+            InsertDigitalItem.Execute();
+            InsertItem.Execute();
+            InsertReview.Execute();
+            InsertUpdateItemContentAttribute.Execute();
+            UpdateDigitalItem.Execute();
+            UpdateItem.Execute();
+            UpdateItemMixMatchGroup.Execute();
+            UpdateItems.Execute();
+            UpdateReview.Execute();
             
             Console.WriteLine("============================================");
             Console.Out.WriteLine("--- Webhook ---");

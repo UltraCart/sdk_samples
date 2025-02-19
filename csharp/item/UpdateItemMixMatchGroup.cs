@@ -1,11 +1,11 @@
-using com.ultracart.admin.v2.Api;
+﻿using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
 using System;
 using com.ultracart.admin.v2.Client;
 
 namespace SdkSample.item
 {
-    public class UpdateItem
+    public class UpdateItemMixMatchGroup
     {
         public static void Execute()
         {
@@ -25,14 +25,14 @@ namespace SdkSample.item
                 // update the price of the item.
                 ItemPricing itemPricing = item.Pricing;
                 itemPricing.Cost = 12.99m;
+                itemPricing.MixAndMatchGroup = "test";
 
                 apiResponse = itemApi.UpdateItem(item.MerchantItemOid, item, expand, false);
                 Item updatedItem = apiResponse.Item;
 
                 // ensure the price was updated.
-                Console.WriteLine("Original Price: " + originalPrice);
-                Console.WriteLine("Updated Price: " + updatedItem.Pricing.Cost);
-
+                Console.WriteLine("This is the updated item.");
+                Console.WriteLine(updatedItem); // <-- change_me: handle gracefully
                 ItemFunctions.DeleteSampleItem(itemId);
             }
             catch (ApiException e)

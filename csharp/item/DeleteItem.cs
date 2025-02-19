@@ -1,28 +1,25 @@
-
-
-
 using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
+using SdkSample.item;
 
 namespace SdkSample.item
 {
     public class DeleteItem
     {
-
-        [Test]
-        public void ExecuteTest()
+        public static void Execute()
         {
-            //TODO-PT
+            try
+            {
+                int itemOid = ItemFunctions.InsertSampleItemAndGetOid();
+                ItemFunctions.DeleteSampleItemByOid(itemOid);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An Exception occurred. Please review the following error:");
+                Console.WriteLine(e); // <-- change_me: handle gracefully
+                Environment.Exit(1);
+            }
         }
-
-        public static void DeleteItemCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new ItemApi(simpleKey);
-        }
-
-
     }
 }

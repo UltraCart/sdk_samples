@@ -30,8 +30,8 @@ namespace SdkSample.customer
                 CustomerApi customerApi = new CustomerApi(Constants.ApiKey);
 
                 // create a few items first.
-                int firstItemOid = ItemFunctions.InsertSampleItem();
-                int secondItemOid = ItemFunctions.InsertSampleItem();
+                int firstItemOid = ItemFunctions.InsertSampleItemAndGetOid();
+                int secondItemOid = ItemFunctions.InsertSampleItemAndGetOid();
 
                 // create a customer
                 int customerOid = CustomerFunctions.InsertSampleCustomer();
@@ -67,8 +67,8 @@ namespace SdkSample.customer
 
                 // Clean up
                 CustomerFunctions.DeleteSampleCustomer(customerOid);
-                ItemFunctions.DeleteSampleItem(firstItemOid);
-                ItemFunctions.DeleteSampleItem(secondItemOid);
+                ItemFunctions.DeleteSampleItemByOid(firstItemOid);
+                ItemFunctions.DeleteSampleItemByOid(secondItemOid);
             }
             catch (Exception e)
             {

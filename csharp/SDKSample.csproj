@@ -310,9 +310,9 @@
     <Compile Include="item\Introduction_3.cs" />
     <Compile Include="item\Introduction_4.cs" />
     <Compile Include="item\ItemFunctions.cs" />
-    <Compile Include="item\RestItemInventorySnapshotResponse.cs" />
     <Compile Include="item\UpdateDigitalItem.cs" />
     <Compile Include="item\UpdateItem.cs" />
+    <Compile Include="item\UpdateItemMixMatchGroup.cs" />
     <Compile Include="item\UpdateItems.cs" />
     <Compile Include="item\UpdateReview.cs" />
     <Compile Include="item\UploadTemporaryMultimedia.cs" />
