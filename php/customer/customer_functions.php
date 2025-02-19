@@ -35,7 +35,7 @@ function insertSampleCustomer(string $email = null): int{
     $new_customer->setEmail($email);
     
     $billing = new CustomerBilling();
-    $new_customer->setBilling($billing);
+    $new_customer->setBilling([$billing]);
     $billing->setFirstName("First" . $rand);
     $billing->setLastName("Last" . $rand);
     $billing->setCompany("Company" . $rand);
@@ -46,7 +46,7 @@ function insertSampleCustomer(string $email = null): int{
     $billing->setAddress1("11960 Johns Creek Parkway");
 
     $shipping = new CustomerShipping();
-    $new_customer->setShipping($shipping);
+    $new_customer->setShipping([$shipping]);
     $shipping->setFirstName("First" . $rand);
     $shipping->setLastName("Last" . $rand);
     $shipping->setCompany("Company" . $rand);
