@@ -2,6 +2,8 @@
 using SdkSample.auto_order;
 using SdkSample.channel_partner;
 using SdkSample.coupon;
+using SdkSample.fulfillment;
+using SdkSample.gift_certificate;
 
 namespace SdkSample
 {
@@ -14,7 +16,7 @@ namespace SdkSample
             // Yes, hard coding all methods like this has drawbacks.
 
             Console.WriteLine("============================================");
-            Console.Out.WriteLine("---AutoOrders ---");
+            Console.Out.WriteLine("--- AutoOrders ---");
             Console.WriteLine("============================================");
             ConsolidateAutoOrders.Execute();
             EstablishAutoOrderByReferenceOrderId.Execute();
@@ -28,7 +30,7 @@ namespace SdkSample
             UpdateAutoOrdersBatch.Execute();
 
             Console.WriteLine("============================================");
-            Console.Out.WriteLine("---Channel Partner---");
+            Console.Out.WriteLine("--- Channel Partner ---");
             Console.WriteLine("============================================");
             CancelOrderByChannelPartnerOrderId.Execute();
             CancelOrderByUltraCartOrderId.Execute();
@@ -45,9 +47,8 @@ namespace SdkSample
             RefundChannelPartnerOrder.Execute();
             UpdateChannelPartnerShipToPreference.Execute();
             
-            
             Console.WriteLine("============================================");
-            Console.Out.WriteLine("---Coupons---");
+            Console.Out.WriteLine("--- Coupons ---");
             Console.WriteLine("============================================");
             DeleteCoupon.Execute();
             DeleteCouponsByCode.Execute();
@@ -66,7 +67,29 @@ namespace SdkSample
             GetCouponsByQuery.Execute();
             GenerateCouponCodes.Execute();
             GenerateOneTimeCodesByMerchantCode.Execute();
+            
+            Console.WriteLine("============================================");
+            Console.Out.WriteLine("--- Fulfillment ---");
+            Console.WriteLine("============================================");
+            AcknowledgeOrders.Execute();
+            GeneratePackingSlip.Execute();
+            GetDistributionCenterOrders.Execute();
+            GetDistributionCenters.Execute();
+            ShipOrders.Execute();
+            UpdateInventory.Execute();
 
+            Console.WriteLine("============================================");
+            Console.Out.WriteLine("--- Gift Certificates ---");
+            Console.WriteLine("============================================");
+            AddGiftCertificateLedgerEntry.Execute();
+            CreateGiftCertificate.Execute();
+            DeleteGiftCertificate.Execute();
+            GetGiftCertificateByCode.Execute();
+            GetGiftCertificateByOid.Execute();
+            GetGiftCertificatesByEmail.Execute();
+            GetGiftCertificatesByQuery.Execute();
+            UpdateGiftCertificate.Execute();            
+            
         }        
     }
 }

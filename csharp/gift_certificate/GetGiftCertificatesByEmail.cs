@@ -7,17 +7,16 @@ namespace SdkSample.gift_certificate
     // ReSharper disable once ClassNeverInstantiated.Global
     public class GetGiftCertificatesByEmail
     {
-        // uncomment to run.  C# projects can only have one main.
-        // public static void Main()
-        // {
-        //     var giftCertificates = GetGiftCertificatesByEmailCall();
-        //     Utility.DumpObject(giftCertificates, "Gift Certificates");
-        //     foreach (var gc in giftCertificates)
-        //     {
-        //         Utility.DumpObject(gc, "Gift Certificate");
-        //     }
-        //     
-        // }
+        public static void Execute()
+        {
+            var giftCertificates = GetGiftCertificatesByEmailCall();
+            Utility.DumpObject(giftCertificates, "Gift Certificates");
+            foreach (var gc in giftCertificates)
+            {
+                Utility.DumpObject(gc, "Gift Certificate");
+            }
+            
+        }
 
         // ReSharper disable once MemberCanBePrivate.Global
         public static List<GiftCertificate> GetGiftCertificatesByEmailCall()

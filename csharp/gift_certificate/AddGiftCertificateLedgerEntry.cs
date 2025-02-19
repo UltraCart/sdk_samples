@@ -7,12 +7,11 @@ namespace SdkSample.gift_certificate
     // ReSharper disable once ClassNeverInstantiated.Global
     public class AddGiftCertificateLedgerEntry
     {
-        // uncomment to run.  C# projects can only have one main.
-        // public static void Main()
-        // {
-        //     var giftCertificate = AddGiftCertificateLedgerEntryCall();
-        //     Utility.DumpObject(giftCertificate, "Gift Certificate");
-        // }
+        public static void Execute()
+        {
+            var giftCertificate = AddGiftCertificateLedgerEntryCall();
+            Utility.DumpObject(giftCertificate, "Gift Certificate");
+        }
 
         // ReSharper disable once MemberCanBePrivate.Global
         public static GiftCertificate AddGiftCertificateLedgerEntryCall()

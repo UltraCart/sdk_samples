@@ -350,6 +350,7 @@
     <Compile Include="order\UpdateAccountsReceivableRetryConfig.cs" />
     <Compile Include="order\UpdateOrder.cs" />
     <Compile Include="order\ValidateOrder.cs" />
+    <Compile Include="Samples.cs" />
     <Compile Include="sso\GetSsoSessionUser.cs" />
     <Compile Include="sso\Introduction.cs" />
     <Compile Include="sso\SsoAuthorize.cs" />
@@ -606,8 +607,8 @@
     <Compile Include="workflow\UpdateWorkflowTask.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="com.ultracart.admin.v2, Version=4.0.241.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\com.ultracart.admin.v2.4.0.241\lib\net48\com.ultracart.admin.v2.dll</HintPath>
+    <Reference Include="com.ultracart.admin.v2, Version=4.0.242.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\com.ultracart.admin.v2.4.0.242\lib\net48\com.ultracart.admin.v2.dll</HintPath>
     </Reference>
     <Reference Include="JsonSubTypes, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176">
       <HintPath>packages\JsonSubTypes.1.7.0\lib\net40\JsonSubTypes.dll</HintPath>

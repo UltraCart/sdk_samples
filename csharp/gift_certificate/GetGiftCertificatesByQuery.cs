@@ -5,17 +5,17 @@ using com.ultracart.admin.v2.Model;
 namespace SdkSample.gift_certificate
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class GetGiftCertificateByQuery
+    public class GetGiftCertificatesByQuery
     {
-        // uncomment to run.  C# projects can only have one main.
-        // public static void Main()
-        // {
-        //     var giftCertificates = GetGiftCertificateByQueryCall();
-        //     foreach (var giftCertificate in giftCertificates)
-        //     {
-        //         Utility.DumpObject(giftCertificate, "Gift Certificate");    
-        //     }
-        // }
+
+        public static void Execute()
+        {
+            var giftCertificates = GetGiftCertificateByQueryCall();
+            foreach (var giftCertificate in giftCertificates)
+            {
+                Utility.DumpObject(giftCertificate, "Gift Certificate");    
+            }
+        }
 
 
         private static List<GiftCertificate> GetGiftCertificateChunk(GiftCertificateApi api, int offset, int limit)
