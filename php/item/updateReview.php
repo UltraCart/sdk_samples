@@ -17,7 +17,7 @@ try {
     $review_oid = 123456; // this is the particular oid you wish to update.
 
     $item_api = Samples::getItemApi(); // convenience fuction for getting an api handle.
-    $review = $item_api->getReview($merchant_item_oid, $review_oid);
+    $review = $item_api->getReview($merchant_item_oid, $review_oid)->getReview();
 
     // You will need to know what your product review looks like.
     $review->setTitle('Best Product Ever!');

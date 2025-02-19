@@ -31,8 +31,8 @@ try {
     $customer_api = CustomerApi::usingApiKey(Constants::API_KEY);
 
     // create a few items first.
-    $first_item_oid = insertSampleItem();
-    $second_item_oid = insertSampleItem();
+    $first_item_oid = insertSampleItemAndGetOid();
+    $second_item_oid = insertSampleItemAndGetOid();
 
     // create a customer
     $customer_oid = insertSampleCustomer();
@@ -68,8 +68,8 @@ try {
 
     // Clean up
     deleteSampleCustomer($customer_oid);
-    deleteSampleItem($first_item_oid);
-    deleteSampleItem($second_item_oid);
+    deleteSampleItemByOid($first_item_oid);
+    deleteSampleItemByOid($second_item_oid);
 
 } catch (ApiException $e) {
     echo 'An ApiException occurred.  Please review the following error:';

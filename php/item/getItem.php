@@ -19,6 +19,7 @@ try {
     $item_id = insertSampleItem();
     $item_api = Samples::getItemApi();
     $customer_api = Samples::getCustomerApi(); // only needed for accessing reviewer information below.
+
     // the _expand variable is null in the following call.  we just need the base object this time.
     $api_response = $item_api->getItemByMerchantItemId($item_id, null, false);
     $item = $api_response->getItem(); // assuming this succeeded
@@ -106,7 +107,7 @@ try {
     echo 'The following item was retrieved via getItem():';
     var_dump($item);
 
-    deleteSampleItem($item_id);
+    deleteSampleItem($item_oid);
 
 } catch (ApiException $e) {
     echo 'An ApiException occurred.  Please review the following error:';

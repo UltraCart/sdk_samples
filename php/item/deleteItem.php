@@ -8,8 +8,8 @@ require_once './item_functions.php'; // <-- see this file for details
 
 try {
 
-    $item_id = insertSampleItem();
-    deleteSampleItem($item_id);
+    $item_oid = insertSampleItem();
+    deleteSampleItem($item_oid);
 
 } catch (ApiException $e) {
     echo 'An ApiException occurred.  Please review the following error:';

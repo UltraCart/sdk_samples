@@ -56,6 +56,56 @@ function insertSampleItem(): string{
 }
 
 
+function insertSampleItemAndGetOid(): string{
+
+    /** @noinspection SpellCheckingInspection */
+    $item_id = 'sample_' . str_shuffle('ABCDEFGH');
+    echo 'insertSampleItem will attempt to create item ' . $item_id;
+    $item_api = Samples::getItemApi();
+
+    $new_item = new Item();
+    $new_item->setMerchantItemId($item_id);
+
+    $pricing = new ItemPricing();
+    $pricing->setCost(9.99);
+    $new_item->setPricing($pricing);
+
+    $new_item->setDescription('Sample description for item ' . $item_id);
+
+    $multimedia = new ItemContentMultimedia();
+    $multimedia->setUrl('https://upload.wikimedia.org/wikipedia/en/7/73/Mr._Clean_logo.png');
+    $multimedia->setCode('default'); // <-- use 'default' to make this the default item.
+    $multimedia->setDescription('Some random image i nabbed from wikipedia');
+
+
+    $content = new ItemContent();
+    $content->setMultimedia([$multimedia]); // <- notice this is an array
+    $new_item->setContent($content);
+
+    $expand = 'content.multimedia'; // I want to see the multimedia returned on the newly created object.
+
+    echo 'insertItem request object follows:';
+    var_dump($new_item);
+    $api_response = $item_api->insertItem($new_item, $expand);
+    echo 'insertItem response object follows:';
+    var_dump($api_response);
+
+    return $api_response->getItem()->getMerchantItemOid();
+}
+
+
+/**
+ * @param $item_id string item to be deleted
+ * @return void
+ * @throws ApiException
+ */
+function deleteSampleItemByOid(int $merchant_item_oid) {
+    $item_api = Samples::getItemApi();
+    echo 'calling deleteItem(' . $merchant_item_oid . ')';
+    $item_api->deleteItem($merchant_item_oid);
+}
+
+
 /**
  * @param $item_id string item to be deleted
  * @return void
