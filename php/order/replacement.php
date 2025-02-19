@@ -48,7 +48,7 @@ $replacement_options->setCustomField4('More Whatever');
 $replacement_options->setAdditionalMerchantNotesNewOrder('Replacement order for spoiled ice cream');
 $replacement_options->setAdditionalMerchantNotesOriginalOrder('This order was replaced.');
 
-$api_response = $order_api->replacement($replacement_options);
+$api_response = $order_api->replacement($order_id_to_replace, $replacement_options);
 
 
 echo '<html lang="en"><body><pre>';

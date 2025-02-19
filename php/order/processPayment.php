@@ -55,7 +55,7 @@ $item->setWeight($weight);
 
 $items[] = $item;
 $new_order->setItems($items);
-$update_response = $order_api->updateOrder($new_order, $new_order->getOrderId(), $expansion);
+$update_response = $order_api->updateOrder($new_order->getOrderId(), $new_order, $expansion);
 
 $updated_order = $update_response->getOrder();
 

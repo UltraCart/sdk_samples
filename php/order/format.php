@@ -44,12 +44,6 @@ $order_id = 'DEMO-0009104390';
 
 $api_response = $order_api->format($order_id, $format_options);
 
-if (!$api_response->valid()) {
-    error_log($api_response->getError()->getDeveloperMessage());
-    error_log($api_response->getError()->getUserMessage());
-    exit();
-}
-
 $formatted_result = $api_response->getFormattedResult();
 echo '<html lang="en">';
 echo '<head>';

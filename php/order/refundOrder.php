@@ -40,8 +40,8 @@ $consider_manual_refund_done_externally = false; // no, I want an actual refund 
 $reverse_affiliate_transactions = true; // can't let my affiliates get money on a refunded order.  bad business.
 
 /** @noinspection PhpConditionAlreadyCheckedInspection */
-$api_response = $order_api->refundOrder($order, $order_id, $reject_after_refund, $skip_customer_notification,
-    $cancel_associated_auto_orders, $consider_manual_refund_done_externally, $reverse_affiliate_transactions, $expansion);
+$api_response = $order_api->refundOrder($order_id, $order, $reject_after_refund, $skip_customer_notification,
+    $cancel_associated_auto_orders, $consider_manual_refund_done_externally, $reverse_affiliate_transactions, false, null, $expansion);
 
 $refunded_order = $api_response->getOrder();
 
