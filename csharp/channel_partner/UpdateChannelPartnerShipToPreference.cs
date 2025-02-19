@@ -18,7 +18,7 @@ namespace SdkSample.channel_partner
         ///    "Invalid channel_partner_oid specified.  Your REST API key may only interact with channel_partner_oid: 12345"
         /// Supplying a bad channel partner oid: "Invalid channel_partner_oid specified."
         /// </summary>
-        public void Execute()
+        public static void Execute()
         {
             ChannelPartnerApi channelPartnerApi = new ChannelPartnerApi(Constants.ChannelPartnerApiKey);
             int channelPartnerOid = 12345;

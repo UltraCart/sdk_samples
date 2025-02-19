@@ -19,7 +19,7 @@ namespace SdkSample.channel_partner
         /// NOTE: refund amounts are positive numbers. If any item total cost is $20.00, a full refunded amount would also be positive $20.00
         /// See the ChannelPartnerApi.getChannelPartnerOrder() sample for details on that method.
         /// </summary>
-        public void Execute()
+        public static void Execute()
         {
             // Create channel partner API instance
             ChannelPartnerApi channelPartnerApi = new ChannelPartnerApi(Constants.ChannelPartnerApiKey);
