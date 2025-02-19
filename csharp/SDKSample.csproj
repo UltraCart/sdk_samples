@@ -223,6 +223,7 @@
     <Compile Include="customer\AddCustomerStoreCredit.cs" />
     <Compile Include="customer\AdjustCashbackBalance.cs" />
     <Compile Include="customer\AdjustInternalCertificate.cs" />
+    <Compile Include="customer\CustomerFunctions.cs" />
     <Compile Include="customer\DeleteCustomer.cs" />
     <Compile Include="customer\DeleteWishListItem.cs" />
     <Compile Include="customer\GetCustomer.cs" />
@@ -251,7 +252,6 @@
     <Compile Include="customer\UpdateCustomer.cs" />
     <Compile Include="customer\UpdateCustomerEmailLists.cs" />
     <Compile Include="customer\UpdateWishListItem.cs" />
-    <Compile Include="customer\ValidateEmail.cs" />
     <Compile Include="customer\ValidateEmailVerificationToken.cs" />
     <Compile Include="datawarehouse\DeleteReport.cs" />
     <Compile Include="datawarehouse\DryRunReportQueries.cs" />
@@ -309,6 +309,7 @@
     <Compile Include="item\Introduction_2.cs" />
     <Compile Include="item\Introduction_3.cs" />
     <Compile Include="item\Introduction_4.cs" />
+    <Compile Include="item\ItemFunctions.cs" />
     <Compile Include="item\RestItemInventorySnapshotResponse.cs" />
     <Compile Include="item\UpdateDigitalItem.cs" />
     <Compile Include="item\UpdateItem.cs" />

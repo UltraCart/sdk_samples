@@ -2,8 +2,10 @@
 using SdkSample.auto_order;
 using SdkSample.channel_partner;
 using SdkSample.coupon;
+using SdkSample.customer;
 using SdkSample.fulfillment;
 using SdkSample.gift_certificate;
+using SdkSample.webhook;
 
 namespace SdkSample
 {
@@ -67,6 +69,29 @@ namespace SdkSample
             GetCouponsByQuery.Execute();
             GenerateCouponCodes.Execute();
             GenerateOneTimeCodesByMerchantCode.Execute();
+
+            Console.WriteLine("============================================");
+            Console.Out.WriteLine("--- Customers ---");
+            Console.WriteLine("============================================");
+            AddCustomerStoreCredit.Execute();
+            AdjustInternalCertificate.Execute();
+            DeleteCustomer.Execute();
+            DeleteWishListItem.Execute();
+            GetCustomer.Execute();
+            GetCustomerByEmail.Execute();
+            GetCustomers.Execute();
+            GetCustomersByQuery.Execute();
+            GetCustomerStoreCredit.Execute();
+            GetCustomerWishList.Execute();
+            GetCustomerWishListItem.Execute();
+            GetEmailVerificationToken.Execute();
+            GetMagicLink.Execute();
+            InsertCustomer.Execute();
+            InsertWishListItem.Execute();
+            MergeCustomer.Execute();
+            UpdateCustomer.Execute();
+            UpdateWishListItem.Execute();
+            ValidateEmailVerificationToken.Execute();            
             
             Console.WriteLine("============================================");
             Console.Out.WriteLine("--- Fulfillment ---");
@@ -88,7 +113,19 @@ namespace SdkSample
             GetGiftCertificateByOid.Execute();
             GetGiftCertificatesByEmail.Execute();
             GetGiftCertificatesByQuery.Execute();
-            UpdateGiftCertificate.Execute();            
+            UpdateGiftCertificate.Execute();          
+            
+            Console.WriteLine("============================================");
+            Console.Out.WriteLine("--- Webhook ---");
+            Console.WriteLine("============================================");
+            DeleteWebhook.Execute();
+            DeleteWebhookByUrl.Execute();
+            GetWebhookLog.Execute();
+            GetWebhookLogSummaries.Execute();
+            GetWebhooks.Execute();
+            InsertWebhook.Execute();
+            ResendEvent.Execute();
+            UpdateWebhook.Execute();            
             
         }        
     }

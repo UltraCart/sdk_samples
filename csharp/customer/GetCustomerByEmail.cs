@@ -1,33 +1,40 @@
-
-
-
 using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
 
 namespace SdkSample.customer
 {
     public class GetCustomerByEmail
     {
-
-        [Test]
-        public void ExecuteTest()
+        /**
+         * Of the two GetCustomer methods, you'll probably always use this one over GetCustomer.
+         * Most customer logic revolves around the email, not the customer oid. The latter is only meaningful as a primary
+         * key in the UltraCart databases. But our sample functions return back the oid, so we'll ignore that and just
+         * use the email that we create.
+         */
+        public static void Execute()
         {
-            string email = "test@test.com";
-            Customer customer = GetCustomerByEmailCall(email);
-            Console.WriteLine(customer.ToString());
+            try
+            {
+                string email = CustomerFunctions.CreateRandomEmail();
+                int customerOid = CustomerFunctions.InsertSampleCustomer(email);
+                CustomerApi customerApi = Samples.GetCustomerApi();
+
+                // the _expand variable is set to return just the address fields.
+                // see CustomerFunctions for a list of expansions, or consult the source: https://www.ultracart.com/api/
+                CustomerResponse apiResponse = customerApi.GetCustomerByEmail(email, "billing,shipping");
+                Customer customer = apiResponse.Customer; // assuming this succeeded
+
+                Console.WriteLine(customer);
+
+                CustomerFunctions.DeleteSampleCustomer(customerOid);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("An Exception occurred. Please review the following error:");
+                Console.Error.WriteLine(ex); // <-- change_me: handle gracefully
+                Environment.Exit(1);
+            }
         }
-
-        public static Customer GetCustomerByEmailCall(string Email)
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new CustomerApi(simpleKey);
-            string expand = null; // I'm only checking for existence, I don't need the expanded Customer object.
-            var response = api.GetCustomerByEmail(Email, expand);
-            return response.Success == true ? response.Customer : null;
-        }
-
-
     }
 }

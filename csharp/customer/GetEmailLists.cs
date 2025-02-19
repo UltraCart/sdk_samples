@@ -1,28 +1,3 @@
-
-
-
-using System;
-using com.ultracart.admin.v2.Api;
-using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
-
-namespace SdkSample.customer
-{
-    public class GetEmailLists
-    {
-
-        [Test]
-        public void ExecuteTest()
-        {
-            //TODO-PT
-        }
-
-        public static void GetEmailListsCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new CustomerApi(simpleKey);
-        }
-
-
-    }
-}
+// This is an internal method used by our Email workflow engines.  It returns back all the email lists a customer
+// is currently subscribed to.  It's geared towards our UI needs, so the data returned may appear cryptic.
+//  We're not including a sample for it because we don't envision it being valuable to a merchant.

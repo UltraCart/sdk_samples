@@ -1,28 +1,3 @@
-
-
-
-using System;
-using com.ultracart.admin.v2.Api;
-using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
-
-namespace SdkSample.customer
-{
-    public class GetEditorValues
-    {
-
-        [Test]
-        public void ExecuteTest()
-        {
-            //TODO-PT
-        }
-
-        public static void GetEditorValuesCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new CustomerApi(simpleKey);
-        }
-
-
-    }
-}
+// This is an internal method used by our Customer management screen.  It returns back all the static data needed
+// for our dropdown lists, such as lists of state and countries.  You can call it if you like, but the data won't be
+// of much use.

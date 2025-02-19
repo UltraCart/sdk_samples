@@ -1,28 +1,23 @@
-
-
-
 using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
 
 namespace SdkSample.webhook
 {
     public class DeleteWebhook
     {
-
-        [Test]
-        public void ExecuteTest()
+        public static void Execute()
         {
-            //TODO-PT
+            /*
+             * Deletes a webhook
+             *
+             * You will need the webhook_oid to call this method. Call getWebhooks() if you don't know your oid.
+             * Returns status code 204 (No Content) on success
+             */
+
+            WebhookApi webhookApi = new WebhookApi(Constants.ApiKey);
+            int webhookOid = 123456789; // call getWebhooks if you don't know this.
+            webhookApi.DeleteWebhook(webhookOid);
         }
-
-        public static void DeleteWebhookCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new WebhookApi(simpleKey);
-        }
-
-
     }
 }

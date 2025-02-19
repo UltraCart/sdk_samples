@@ -1,28 +1,34 @@
-
-
-
 using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
 
 namespace SdkSample.webhook
 {
     public class DeleteWebhookByUrl
     {
-
-        [Test]
-        public void ExecuteTest()
+        public static void Execute()
         {
-            //TODO-PT
+            /*
+             * This method can be confusing due to its payload. The method does indeed delete a webhook by url, but you need to
+             * pass a webhook object in as the payload. However, only the url is used. UltraCart does this to avoid any confusion
+             * with the rest url versus the webhook url.
+             *
+             * To use:
+             * Get your webhook url.
+             * Create a Webhook object.
+             * Set the Webhook url property.
+             * Pass the webhook to deleteWebhookByUrl()
+             *
+             * Returns status code 204 (No Content) on success
+             */
+
+            WebhookApi webhookApi = new WebhookApi(Constants.ApiKey);
+
+            string webhookUrl = "https://www.mywebiste.com/page/to/call/when/this/webhook/fires.php";
+            Webhook webhook = new Webhook();
+            webhook.WebhookUrl = webhookUrl;
+
+            webhookApi.DeleteWebhookByUrl(webhook);
         }
-
-        public static void DeleteWebhookByUrlCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new WebhookApi(simpleKey);
-        }
-
-
     }
 }
