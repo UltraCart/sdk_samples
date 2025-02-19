@@ -1,49 +1,76 @@
 using System;
+using System.Reflection;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
 
 namespace SdkSample.channel_partner
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
     public class CancelOrderByUltraCartOrderId
     {
-        // uncomment to run.  C# projects can only have one main.
-        // To run channel partner examples, you will need:
-        // 1) An API Key: https://secure.ultracart.com/merchant/configuration/apiManagementApp.do
-        // 2) That API Key must be assigned to a channel partner: https://secure.ultracart.com/merchant/configuration/customChannelPartnerListLoad.do
-        // public static void Main()
-        // {
-        //     var result = CancelOrderByUltraCartOrderIdCall();
-        //     if (result.Success == true)
-        //     {
-        //         Console.WriteLine("Order was deleted successfully.");
-        //     }
-        //     else
-        //     {
-        //         if (result.CancelErrors != null)
-        //         {
-        //             Console.WriteLine("Order was not deleted.  Cancel Errors follow:");
-        //             foreach (var error in result.CancelErrors)
-        //             {
-        //                 Console.WriteLine(error);
-        //             }
-        //         }
-        //
-        //         if (result.Error != null)
-        //         {
-        //             Console.WriteLine("System Error, if any: " + result.Error.DeveloperMessage);    
-        //         }
-        //     }
-        //     
-        // }
+        /*
+        cancelOrderByUltraCartOrderId takes an UltraCart order id and attempts to 'cancel' the order.
+        UltraCart doesn't have a cancel order state, so this needs some explanation of what happens.
 
-        // ReSharper disable once MemberCanBePrivate.Global
-        public static ChannelPartnerCancelResponse CancelOrderByUltraCartOrderIdCall()
+        Here is the logic of the cancel process:
+        If the Order stage is [this] then do [that]:
+            'Completed Order'       -> Error: "Order has already been completed."
+            'Rejected'              -> Error: "Order has already been rejected."
+            'Accounts Receivable'   -> Success: order is rejected.
+            'Preordered'            -> Success: order is rejected.
+            'Quote Sent'            -> Success: order is rejected.
+            'Quote Requested'       -> Success: order is rejected.
+
+        The remaining stages are Fraud Review and Shipping Department.  Orders in these stages have already completed payment.
+        From this point, complex logic determines if the order has already shipped, or is queued to ship in a way that cannot be canceled.
+        Here is the logic for those stages, but the gist of it all is this:  If you receive any of the errors below, the order has progressed past a point where it can be canceled.
+        SHIPPING LOGIC:
+        Iterate through each item and consider it's shipping status:
+            Item has already been transmitted to fulfillment center (contains a transmitted dts) -> Error: "The order has already had an item that has been transmitted to the distribution center."
+            Does item DC (distribution center) have a transmission mechanism configured?
+                YES -> Does the transmission have schedules? If NO -> Error: "The distribution center does not have any schedules so it would be an immediate transmission."
+                NO -> Error: "Cant tell if we can cancel because the DC doesnt have a transport configured."
+
+        If the above logic completes without errors, the following conditions must be met:
+        Order has DC activity records.  If NO -> Error: "There is no activity in the DC queue when there should be."
+        There must be at least 5 minutes before the next DC transmission. If NO -> Error: "Activity record is not at least 5 minutes away so we need to bail."
+
+        At this point, the order will be canceled with the following activity:
+        1) Distribution Center activity is cleared
+        2) The order is refunded.  If the order is less than 24 hours old, a void is attempted instead.
+
+
+        Other Possible Errors:
+        System errors -> "Internal error.  Please contact UltraCart Support."
+        Order does not exist -> "Invalid order ID specified."
+        During refunding, original transaction could not be found -> "Unable to find original transaction on the order."
+        During refunding, original transaction was found, but transaction id could not be found -> "Unable to locate original transaction reference number."
+        During refunding, PayPal was used by no longer configured -> "PayPal is no longer configured on your account to refund against."
+        Gateway does not support refunds -> [GatewayName] does not support refunds at this time.
+        */
+        public static void Execute()
         {
-            var api = new ChannelPartnerApi(Constants.ApiKey);
-            var ultraCartOrderId = "DEMO-0009104458";
-            var response = api.CancelOrderByUltraCartOrderId(ultraCartOrderId);
-            return response;
+            Console.WriteLine("--- " + MethodBase.GetCurrentMethod()?.DeclaringType?.Name + " ---");
+            
+            try
+            {
+                // Create channel partner API instance using API key
+                ChannelPartnerApi channelPartnerApi = new ChannelPartnerApi(Constants.ChannelPartnerApiKey);
+                
+                string ultracartOrderId = "DEMO-12345678980";
+                var cancelResult = channelPartnerApi.CancelOrderByUltraCartOrderId(ultracartOrderId);
+                
+                if (!cancelResult.Success)
+                {
+                    foreach (string error in cancelResult.CancelErrors)
+                    {
+                        Console.WriteLine(error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);  // Dumps all exception information
+            }
         }
     }
 }
