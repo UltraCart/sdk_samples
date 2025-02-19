@@ -74,12 +74,12 @@ function getCouponChunk(CouponApi $coupon_api, int $offset, int $limit): array
     $query = new CouponQuery();
     $query->setMerchantCode('10OFF'); // supports partial matching
     $query->setDescription('Saturday'); // supports partial matching
-    // $query->setCouponType(); // see the note at the top of this sample.
+    // $query->setCouponType(null); // see the note at the top of this sample.
     // $query->setStartDtsBegin(date('Y-m-d', strtotime('-2000 days')) . "T00:00:00+00:00"); // yes, that 2,000 days.
     // $query->setStartDtsEnd(date('Y-m-d', time()) . "T00:00:00+00:00");
-    // $query->setExpirationDtsBegin();
-    // $query->setExpirationDtsEnd();
-    // $query->setAffiliateOid(); // this requires an affiliate_oid.  If you need help finding an affiliate's oid, contact support.
+    // $query->setExpirationDtsBegin(null);
+    // $query->setExpirationDtsEnd(null);
+    // $query->setAffiliateOid(0); // this requires an affiliate_oid.  If you need help finding an affiliate's oid, contact support.
     $query->setExcludeExpired(true);
 
     $_expand = null; // coupons do not have expansions

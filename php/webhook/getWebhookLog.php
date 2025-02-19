@@ -21,7 +21,7 @@ require_once '../constants.php';
 $webhook_api = WebhookApi::usingApiKey(Constants::API_KEY);
 
 $webhook_oid = 123456789; // call getWebhooks if you don't know this.
-$request_id = 987654321;  // call getWebhookLogSummaries if you don't know this.
+$request_id = '987654321';  // call getWebhookLogSummaries if you don't know this.
 
 $api_response = $webhook_api->getWebhookLog($webhook_oid, $request_id);
 $webhook_log = $api_response->getWebhookLog();

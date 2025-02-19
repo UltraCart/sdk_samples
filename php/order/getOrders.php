@@ -66,28 +66,15 @@ function getOrderChunk(OrderApi $order_api, int $offset, int $limit): array
     $current_stage = null;
     $channel_partner_code = null;
     $channel_partner_order_id = null;
-    $customer_profile_oid = null;
-    $refund_date_begin = null;
-    $refund_date_end = null;
-    $custom_field_1 = null;
-    $custom_field_2 = null;
-    $custom_field_3 = null;
-    $custom_field_4 = null;
-    $custom_field_5 = null;
-    $custom_field_6 = null;
-    $custom_field_7 = null;
-    $ship_on_date_begin = null;
-    $ship_on_date_end = null;
     $_sort = null;
+
 
     // see all these parameters?  that is why you should use getOrdersByQuery() instead of getOrders()
     $api_response = $order_api->getOrders($order_id, $payment_method, $company, $first_name, $last_name, $city,
         $state_region, $postal_code, $country_code, $phone, $email, $cc_email, $total, $screen_branding_theme_code,
         $storefront_host_name, $creation_date_begin, $creation_date_end, $payment_date_begin, $payment_date_end,
         $shipment_date_begin, $shipment_date_end, $rma, $purchase_order_number, $item_id, $current_stage,
-        $channel_partner_code, $channel_partner_order_id, $customer_profile_oid, $refund_date_begin, $refund_date_end,
-        $custom_field_1, $custom_field_2, $custom_field_3, $custom_field_4, $custom_field_5, $custom_field_6,
-        $custom_field_7, $ship_on_date_begin, $ship_on_date_end, $limit, $offset, $_sort, $expansion);
+        $channel_partner_code, $channel_partner_order_id, $limit, $offset, $_sort, $expansion);
 
     if($api_response->getOrders() != null){
         return $api_response->getOrders();

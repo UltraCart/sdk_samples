@@ -17,6 +17,7 @@ $gc_create_request->setInitialLedgerDescription("Issued instead of refund");
 $gc_create_request->setMerchantNote('Problem Order: blah-12345\nIssued gift certificate due to stale product.\nIssued By: Customer Service Rep Joe Smith');
 $gc_create_request->setEmail('support@ultracart.com');
 $gc_create_request->setExpirationDts($expiration_dts->format('c'));
+$gc_create_request->setMerchantNote("This is my merchant note.");
 
 
 // create does not take an expansion variable.  it will return the entire object by default.

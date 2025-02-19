@@ -6,6 +6,7 @@ use ultracart\v2\api\CustomerApi;
 use ultracart\v2\api\GiftCertificateApi;
 use ultracart\v2\api\OrderApi;
 use ultracart\v2\api\ItemApi;
+use ultracart\v2\api\FulfillmentApi;
 use ultracart\v2\api\AutoOrderApi;
 
 class Samples
@@ -41,6 +42,13 @@ class Samples
     public static function getAutoOrderApi(): AutoOrderApi
     {
         return AutoOrderApi::usingApiKey(Constants::API_KEY, Constants::MAX_RETRY_SECONDS,
+            Constants::VERIFY_SSL, Constants::DEBUG);
+    }
+
+
+    public static function getFulfillmentApi(): FulfillmentApi
+    {
+        return FulfillmentApi::usingApiKey(Constants::API_KEY, Constants::MAX_RETRY_SECONDS,
             Constants::VERIFY_SSL, Constants::DEBUG);
     }
 
