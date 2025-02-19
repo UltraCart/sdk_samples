@@ -32,7 +32,7 @@ if ($api_response->getError() != null) {
     exit();
 }
 
-$preferences = $api_response->getChannelPartners();
+$preferences = $api_response->getShipToPreferences();
 
 echo '<html lang="en"><body><pre>';
 foreach ($preferences as $preference) {

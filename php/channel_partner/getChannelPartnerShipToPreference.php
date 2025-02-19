@@ -34,7 +34,7 @@ if ($api_response->getError() != null) {
     exit();
 }
 
-$preference = $api_response->getChannelPartner();
+$preference = $api_response->getShipToPreference();
 
 echo '<html lang="en"><body><pre>';
 var_dump($preference);
