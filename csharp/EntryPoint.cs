@@ -1,5 +1,6 @@
 ﻿using System;
 using SdkSample.auto_order;
+using SdkSample.channel_partner;
 using SdkSample.coupon;
 
 namespace SdkSample
@@ -13,7 +14,7 @@ namespace SdkSample
             // Yes, hard coding all methods like this has drawbacks.
 
             Console.WriteLine("============================================");
-            Console.Out.WriteLine("---AutoOrders---");
+            Console.Out.WriteLine("---AutoOrders ---");
             Console.WriteLine("============================================");
             ConsolidateAutoOrders.Execute();
             EstablishAutoOrderByReferenceOrderId.Execute();
@@ -25,6 +26,24 @@ namespace SdkSample
             GetAutoOrdersByQuery.Execute();
             UpdateAutoOrder.Execute();
             UpdateAutoOrdersBatch.Execute();
+
+            Console.WriteLine("============================================");
+            Console.Out.WriteLine("---Channel Partner---");
+            Console.WriteLine("============================================");
+            CancelOrderByChannelPartnerOrderId.Execute();
+            CancelOrderByUltraCartOrderId.Execute();
+            DeleteChannelPartnerShipToPreference.Execute();
+            EstimateShippingForChannelPartnerOrder.Execute();
+            EstimateTaxForChannelPartnerOrder.Execute();
+            GetChannelPartnerOrder.Execute();
+            GetChannelPartnerOrderByChannelPartnerOrderId.Execute();
+            GetChannelPartners.Execute();
+            GetChannelPartnerShipToPreference.Execute();
+            GetChannelPartnerShipToPreferences.Execute();
+            ImportChannelPartnerOrder.Execute();
+            InsertChannelPartnerShipToPreference.Execute();
+            RefundChannelPartnerOrder.Execute();
+            UpdateChannelPartnerShipToPreference.Execute();
             
             
             Console.WriteLine("============================================");
