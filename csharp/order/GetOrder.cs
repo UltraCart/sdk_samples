@@ -1,31 +1,51 @@
 using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
+using Newtonsoft.Json;
 
 namespace SdkSample.order
 {
     public class GetOrder
     {
-
-        [Test]
-        public void ExecuteTest()
+        /*
+         * OrderApi.getOrder() retrieves a single order for a given order_id.
+         */
+        public static void Execute()
         {
-            Order order = GetOrderCall();
-            Console.WriteLine(order.ToJson());
+            OrderApi orderApi = new OrderApi(Constants.ApiKey);
+
+            // The expansion variable instructs UltraCart how much information to return.  The order object is large and
+            // while it's easily manageable for a single order, when querying thousands of orders, is useful to reduce
+            // payload size.
+            // see www.ultracart.com/api/ for all the expansion fields available (this list below may become stale)
+            /*
+            Possible Order Expansions:
+            affiliate           affiliate.ledger                    auto_order
+            billing             channel_partner                     checkout
+            coupon              customer_profile                    digital_order
+            edi                 fraud_score                         gift
+            gift_certificate    internal                            item
+            linked_shipment     marketing                           payment
+            payment.transaction quote                               salesforce
+            shipping            shipping.tracking_number_details    summary
+            taxes
+            */
+            string expansion = "item,summary,billing,shipping,shipping.tracking_number_details";
+
+            string orderId = "DEMO-0009104390";
+            OrderResponse apiResponse = orderApi.GetOrder(orderId, expansion);
+
+            if (apiResponse.Error != null)
+            {
+                Console.Error.WriteLine(apiResponse.Error.DeveloperMessage);
+                Console.Error.WriteLine(apiResponse.Error.UserMessage);
+                Environment.Exit(1);
+            }
+
+            Order order = apiResponse.Order;
+            Console.WriteLine(JsonConvert.SerializeObject(order, new JsonSerializerSettings { Formatting = Formatting.Indented}));
+            
         }
 
-        public static Order GetOrderCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";      
-            var api = new OrderApi(simpleKey);
-            const string expansion = "item,summary";
-            const string orderId = "DEMO-0009104309";
-
-            OrderResponse res = api.GetOrder(orderId, expansion);
-            return res.Order;
-        }
-        
-        
     }
 }

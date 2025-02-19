@@ -6,6 +6,7 @@ using SdkSample.customer;
 using SdkSample.fulfillment;
 using SdkSample.gift_certificate;
 using SdkSample.item;
+using SdkSample.order;
 using SdkSample.webhook;
 
 namespace SdkSample
@@ -141,6 +142,33 @@ namespace SdkSample
             UpdateItemMixMatchGroup.Execute();
             UpdateItems.Execute();
             UpdateReview.Execute();
+
+            Console.WriteLine("============================================");
+            Console.Out.WriteLine("--- Order ---");
+            Console.WriteLine("============================================");
+            AdjustOrderTotal.Execute();
+            CancelOrder.Execute();
+            DeleteOrder.Execute();
+            DuplicateOrder.Execute();
+            Format.Execute();
+            GenerateInvoice.Execute();
+            GenerateOrderToken.Execute();
+            GeneratePackingSlipAllDC.Execute();
+            GeneratePackingSlipSpecificDC.Execute();
+            GetOrder.Execute();
+            GetOrderByToken.Execute();
+            GetOrderEdiDocuments.Execute();
+            GetOrders.Execute();
+            GetOrdersBatch.Execute();
+            GetOrdersByQuery.Execute();
+            IsRefundableOrder.Execute();
+            ProcessPayment.Execute();
+            RefundOrder.Execute();
+            Replacement.Execute();
+            ResendReceipt.Execute();
+            ResendShipmentConfirmation.Execute();
+            UpdateOrder.Execute();
+            ValidateOrder.Execute();            
             
             Console.WriteLine("============================================");
             Console.Out.WriteLine("--- Webhook ---");

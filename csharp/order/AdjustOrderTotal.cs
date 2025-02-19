@@ -1,3 +1,4 @@
+using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
 
@@ -5,29 +6,33 @@ namespace SdkSample.order
 {
     public class AdjustOrderTotal
     {
-        // uncomment to run.  C# projects can only have one main.
-        // public static void Main()
-        // {
-        //     var result = AdjustOrderTotalCall();
-        //     Console.WriteLine($"Result of OrderAPI.AdjustOrderTotal was {result}");
-        // }
-
-        // Comments about AdjustOrderTotal
-        public static bool AdjustOrderTotalCall()
+        /**
+         * OrderApi.adjustOrderTotal() takes a desired order total and performs goal-seeking to adjust all items and taxes
+         * appropriately.  This method was created for merchants dealing with Medicare and Medicaid.  When selling their
+         * medical devices, they would often run into limits approved by Medicare.  As such, they needed to adjust the
+         * order total to match the approved amount.  This is a convenience method to adjust individual items and their
+         * taxes to match the desired total.
+         */
+        public static void Execute()
         {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new OrderApi(simpleKey);
+            OrderApi orderApi = new OrderApi(Constants.ApiKey);
 
-            // this order's original subtotal was around $314.93 and a quantity of 7 items.
-            // We'll reduce the price by a multiplier of one item, although that is not a requirement.
-            // The new total must be less than the current and greater than zero.
-            // If the result is false, the order was still updated, but the target was not achieved.
-            // This will happen if the algorithm reaches the maximum iteration and is still a few pennies off.
-            var orderId = "DEMO-0009104402";
-            var newTotal = "217.93"; // notice this is a string
+            string orderId = "DEMO-0009104390";
+            string desiredTotal = "21.99";
+            BaseResponse apiResponse = orderApi.AdjustOrderTotal(orderId, desiredTotal);
 
-            BaseResponse result = api.AdjustOrderTotal(orderId, newTotal);
-            return result.Success && result.Success;
+            if (apiResponse.Error != null)
+            {
+                Console.Error.WriteLine(apiResponse.Error.DeveloperMessage);
+                Console.Error.WriteLine(apiResponse.Error.UserMessage);
+                Console.WriteLine("Order could not be adjusted. See error log.");
+                return;
+            }
+
+            if (apiResponse.Success)
+            {
+                Console.WriteLine("Order was adjusted successfully. Use GetOrder() to retrieve the order if needed.");
+            }
         }
     }
 }

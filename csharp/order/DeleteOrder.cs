@@ -1,28 +1,24 @@
-
-
-
 using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
 
 namespace SdkSample.order
 {
     public class DeleteOrder
     {
-
-        [Test]
-        public void ExecuteTest()
+        /**
+         * OrderApi.DeleteOrder() will do just that.  It will delete an order.
+         * You might find it more useful to reject an order rather than delete it in order to leave an audit trail.
+         * However, deleting test orders will be useful to keep your order history tidy.  Still, any order
+         * may be deleted.
+         */
+        public static void Execute()
         {
-            //TODO-PT
+            OrderApi orderApi = new OrderApi(Constants.ApiKey);
+
+            string orderId = "DEMO-0008104390";
+            orderApi.DeleteOrder(orderId);
+            Console.WriteLine("Order was deleted successfully.");
         }
-
-        public static void DeleteOrderCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new OrderApi(simpleKey);
-        }
-
-
     }
 }

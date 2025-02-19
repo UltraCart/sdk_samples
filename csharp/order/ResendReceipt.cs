@@ -1,28 +1,38 @@
-
-
-
 using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
 
 namespace SdkSample.order
 {
     public class ResendReceipt
     {
-
-        [Test]
-        public void ExecuteTest()
+        /*
+         * OrderApi.resendReceipt() will resend (email) a receipt to a customer.
+         */
+        public static void Execute()
         {
-            //TODO-PT
+            OrderApi orderApi = new OrderApi(Constants.ApiKey);
+
+            string orderId = "DEMO-0009104436";
+
+            BaseResponse apiResponse = orderApi.ResendReceipt(orderId);
+
+            if (apiResponse.Error != null)
+            {
+                Console.Error.WriteLine(apiResponse.Error.DeveloperMessage);
+                Console.Error.WriteLine(apiResponse.Error.UserMessage);
+                Console.WriteLine("Order receipt could not be resent. See error log.");
+                return;
+            }
+
+            if (apiResponse.Success)
+            {
+                Console.WriteLine("Receipt was resent.");
+            }
+            else
+            {
+                Console.WriteLine("Failed to resend receipt.");
+            }
         }
-
-        public static void ResendReceiptCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new OrderApi(simpleKey);
-        }
-
-
     }
 }

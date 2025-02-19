@@ -1,28 +1,38 @@
-
-
-
 using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using NUnit.Framework;
 
 namespace SdkSample.order
 {
     public class ResendShipmentConfirmation
     {
-
-        [Test]
-        public void ExecuteTest()
+        /*
+         * OrderApi.resendShipmentConfirmation() will resend (email) a shipment confirmation to a customer.
+         */
+        public static void Execute()
         {
-            //TODO-PT
+            OrderApi orderApi = new OrderApi(Constants.ApiKey);
+
+            string orderId = "DEMO-0009104436";
+
+            BaseResponse apiResponse = orderApi.ResendShipmentConfirmation(orderId);
+
+            if (apiResponse.Error != null)
+            {
+                Console.Error.WriteLine(apiResponse.Error.DeveloperMessage);
+                Console.Error.WriteLine(apiResponse.Error.UserMessage);
+                Console.WriteLine("Order could not be adjusted. See error log.");
+                return;
+            }
+
+            if (apiResponse.Success)
+            {
+                Console.WriteLine("Shipment confirmation was resent.");
+            }
+            else
+            {
+                Console.WriteLine("Failed to resend shipment confirmation.");
+            }
         }
-
-        public static void ResendShipmentConfirmationCall()
-        {
-            const string simpleKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-            var api = new OrderApi(simpleKey);
-        }
-
-
     }
 }
