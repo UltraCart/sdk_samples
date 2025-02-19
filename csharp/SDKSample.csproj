@@ -606,17 +606,16 @@
     <Compile Include="workflow\UpdateWorkflowTask.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="com.ultracart.admin.v2, Version=4.0.14.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\com.ultracart.admin.v2.4.0.14-RC\lib\net48\com.ultracart.admin.v2.dll</HintPath>
+    <Reference Include="com.ultracart.admin.v2, Version=4.0.241.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\com.ultracart.admin.v2.4.0.241\lib\net48\com.ultracart.admin.v2.dll</HintPath>
     </Reference>
     <Reference Include="JsonSubTypes, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176">
       <HintPath>packages\JsonSubTypes.1.7.0\lib\net40\JsonSubTypes.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
