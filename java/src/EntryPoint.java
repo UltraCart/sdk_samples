@@ -1,3 +1,7 @@
+import auto_order.*;
+import gift_certificate.*;
+import order.DuplicateOrder;
+
 public class EntryPoint {
 
   public static void main(String ... args) throws Throwable {
@@ -5,18 +9,29 @@ public class EntryPoint {
     // No, I'm not using unit tests to do this.
     // Yes, hard coding all methods like this has drawbacks.
 
-    System.out.println("---Gift Certificate---");
-    gift_certificate.AddGiftCertificateLedgerEntry.main();
-    gift_certificate.CreateGiftCertificate.main();
-    gift_certificate.DeleteGiftCertificate.main();
-    gift_certificate.GetGiftCertificateByCode.main();
-    gift_certificate.GetGiftCertificateByOid.main();
-    gift_certificate.GetGiftCertificatesByEmail.main();
-    gift_certificate.GetGiftCertificatesByQuery.main();
-    gift_certificate.UpdateGiftCertificate.main();
+    System.out.println("--- Auto Order ---");
+    ConsolidateAutoOrders.execute();
+    EstablishAutoOrderByReferenceOrderId.execute();
+    GetAutoOrder.execute();
+    GetAutoOrderByCode.execute();
+    GetAutoOrderByReferenceOrderId.execute();
+    GetAutoOrders.execute();
+    GetAutoOrdersBatch.execute();
+    UpdateAutoOrder.execute();
+    UpdateAutoOrdersBatch.execute();
 
-    System.out.println("---Order---");
-    order.DuplicateOrder.main();
+    System.out.println("--- Gift Certificate ---");
+    AddGiftCertificateLedgerEntry.execute();
+    CreateGiftCertificate.execute();
+    DeleteGiftCertificate.execute();
+    GetGiftCertificateByCode.execute();
+    GetGiftCertificateByOid.execute();
+    GetGiftCertificatesByEmail.execute();
+    GetGiftCertificatesByQuery.execute();
+    UpdateGiftCertificate.execute();
+
+    System.out.println("--- Order ---");
+    DuplicateOrder.execute();
 
   }
 

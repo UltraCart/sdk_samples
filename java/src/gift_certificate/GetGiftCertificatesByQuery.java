@@ -25,7 +25,7 @@ public class GetGiftCertificatesByQuery{
     return new ArrayList<>();
   }
 
-  public static void main(String ... args) throws Exception {
+  public static void execute() throws Exception {
 
     GiftCertificateApi giftCertificateApi = new GiftCertificateApi(Constants.API_KEY, Constants.VERIFY_SSL_FLAG, Constants.DEBUG_MODE);
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DuplicateOrder{
 
-  public static void main(String ... args) throws Exception {
+  public static void execute() throws Exception {
 
     // These are the steps for cloning an existing order and charging the customer for it.
     // 1. duplicateOrder
