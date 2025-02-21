@@ -1,13 +1,30 @@
+"""
+This is a helper function for call centers to calculate the shipping cost on an order. In a typical flow, the call center
+will collect all the shipping information and items being purchased into a ChannelPartnerOrder object.
+They will then call this method, passing in the order object. The response will contain the shipping estimates
+that the call center can present to the customer. Once the customer selects a particulate estimate,
+they can then plug that cost into their call center application and complete the order.
+
+Possible Errors:
+Using an API key that is not tied to a channel partner: "This API Key does not have permission to interact with channel partner orders. Please review your Channel Partner configuration."
+Order has invalid channel partner code: "Invalid channel partner code"
+Order has no items: "null order.items passed." or "order.items array contains a null entry."
+Order has no channel partner order id: "order.channelPartnerOrderId must be specified."
+Order channel partner order id is a duplicate: "order.channelPartnerOrderId [XYZ] already used."
+Channel Partner is inactive: "partner is inactive."
+"""
+
 from ultracart.apis import ChannelPartnerApi
 from ultracart.models import ChannelPartnerOrder, ChannelPartnerOrderItem, ChannelPartnerOrderItemOption
 from samples import channel_partner_api_client
+from datetime import datetime, timedelta
 
 channel_partner_api = ChannelPartnerApi(channel_partner_api_client())
 
 order = ChannelPartnerOrder()
 order.channel_partner_order_id = "widget-1245-abc-1"
 order.coupons = ["10OFF"]
-# DeliveryDate will impact shipping estimates if there is a delivery deadline.
+# Delivery date will impact shipping estimates if there is a delivery deadline.
 # order.delivery_date = (datetime.now() + timedelta(days=14)).isoformat()
 
 item = ChannelPartnerOrderItem()
