@@ -1,22 +1,36 @@
-
-
 package customer;
 
 import com.ultracart.admin.v2.CustomerApi;
-import com.ultracart.admin.v2.models.Coupon;
-import com.ultracart.admin.v2.models.CouponResponse;
+import com.ultracart.admin.v2.models.Customer;
+import com.ultracart.admin.v2.models.CustomerResponse;
 import com.ultracart.admin.v2.util.ApiException;
+import common.Constants;
 
 public class UpdateCustomer {
+    public static void execute() {
+        try {
+            int customerOid = CustomerFunctions.insertSampleCustomer();
 
-    public static void main(String[] args) throws ApiException {
+            CustomerApi customerApi = new CustomerApi(Constants.API_KEY);
+            // just want address fields.  see https://www.ultracart.com/api/#resource_customer.html for all expansion values
+            String expand = "billing,shipping";
+            Customer customer = customerApi.getCustomer(customerOid, expand).getCustomer();
+            
+            // TODO: do some edits to the customer.  Here we will change some billing fields.
+            customer.getBilling().get(0).address2("Apartment 101");
 
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        CustomerApi customerApi = new CustomerApi(apiKey);
+            // notice expand is passed to update as well since it returns back an updated customer object.
+            // we use the same expansion, so we get back the same fields and can do comparisons.
+            CustomerResponse apiResponse = customerApi.updateCustomer(customerOid, customer, expand);
 
-        // TODO-PT
+            // verify the update
+            System.out.println(apiResponse.getCustomer());
 
+            CustomerFunctions.deleteSampleCustomer(customerOid);
+        } catch (ApiException e) {
+            System.err.println("An ApiException occurred. Please review the following error:");
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
-
 }

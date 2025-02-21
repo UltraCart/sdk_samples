@@ -1,22 +1,3 @@
-
-
-package customer;
-
-import com.ultracart.admin.v2.CustomerApi;
-import com.ultracart.admin.v2.models.Coupon;
-import com.ultracart.admin.v2.models.CouponResponse;
-import com.ultracart.admin.v2.util.ApiException;
-
-public class GetEditorValues {
-
-    public static void main(String[] args) throws ApiException {
-
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        CustomerApi customerApi = new CustomerApi(apiKey);
-
-        // TODO-PT
-
-    }
-
-}
+// This is an internal method used by our Customer management screen.  It returns back all the static data needed
+// for our dropdown lists, such as lists of state and countries.  You can call it if you like, but the data won't be
+// of much use.
