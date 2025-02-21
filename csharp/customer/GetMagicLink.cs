@@ -1,9 +1,8 @@
 using System;
 using com.ultracart.admin.v2.Api;
 using com.ultracart.admin.v2.Model;
-using System.Collections.Generic;
+using System.Web;
 using com.ultracart.admin.v2.Client;
-using RestSharp.Extensions.MonoHttp;
 
 namespace SdkSample.customer
 {

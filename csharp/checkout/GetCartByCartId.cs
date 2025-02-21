@@ -28,8 +28,7 @@ namespace SdkSample.checkout
             Cart cart = apiResponse.Cart;
 
             // TODO: set or re-set the cart cookie if this is part of a multi-page process. two weeks is a generous cart id time.
-            HttpCookie cookie = new HttpCookie();
-            cookie.Name = Constants.CartIdCookieName;
+            HttpCookie cookie = new HttpCookie(Constants.CartIdCookieName);
             cookie.Value = cart.CartId;
             cookie.Expires = DateTime.Now.AddDays(14); // 1209600 seconds = 14 days
             cookie.Path = "/";
