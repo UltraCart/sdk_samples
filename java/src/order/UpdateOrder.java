@@ -1,20 +1,37 @@
-
-
 package order;
 
 import com.ultracart.admin.v2.OrderApi;
+import com.ultracart.admin.v2.models.*;
 import com.ultracart.admin.v2.util.ApiException;
 
 public class UpdateOrder {
+   public static void execute() throws ApiException {
+       OrderApi orderApi = new OrderApi(common.Constants.API_KEY);
 
-    public static void main(String[] args) throws ApiException {
+       String expansion = "checkout"; // see the getOrder sample for expansion discussion
 
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        OrderApi orderApi = new OrderApi(apiKey);
+       String orderId = "DEMO-0009104976";
+       Order order = orderApi.getOrder(orderId, expansion).getOrder();
 
-        // TODO-PT
+       System.out.println("Original Order follows:");
+       System.out.println(order.toString());
 
-    }
+       // TODO: do some updates to the order.
+       // For example:
+       // order.getBillingAddress().setFirstName("John");
+       // order.getBillingAddress().setLastName("Smith");
 
+       OrderResponse apiResponse = orderApi.updateOrder(orderId, order, expansion);
+
+       if (apiResponse.getError() != null) {
+           System.err.println(apiResponse.getError().getDeveloperMessage());
+           System.err.println(apiResponse.getError().getUserMessage());
+           return;
+       }
+
+       Order updatedOrder = apiResponse.getOrder();
+
+       System.out.println("Updated Order follows:");
+       System.out.println(updatedOrder.toString());
+   }
 }
