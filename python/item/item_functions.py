@@ -1,128 +1,202 @@
 import random
+import string
+from typing import Optional
 
 from ultracart.apis import ItemApi
-from ultracart.model.item_digital_item import ItemDigitalItem
-
 from samples import api_client
-from ultracart.model.item import Item
-from ultracart.model.item_pricing import ItemPricing
-from ultracart.model.item_content_multimedia import ItemContentMultimedia
-from ultracart.model.item_content import ItemContent
-from ultracart.model.item_shipping import ItemShipping
-from ultracart.model.item_shipping_distribution_center import ItemShippingDistributionCenter
+from ultracart.models import (
+    Item,
+    ItemContent,
+    ItemContentMultimedia,
+    ItemPricing,
+    ItemDigitalItem
+)
 
-from pprint import pprint
 
-## In an effort to be repeatable, this script will delete the item created.
-## If you wish to inspect the created item in the backend, just comment out delete call
+def generate_random_string(length=8):
+    """Generate a random string of uppercase letters."""
+    return ''.join(random.choices(string.ascii_uppercase, k=length))
 
-##
-## @return string the newly created item id
-## @throws ApiException
-##
-def insert_sample_item():
-    api_instance = ItemApi(api_client())
 
-    l = ['A','B','C', 'D', 'E', "F", 'G', 'H']
-    random.shuffle(l)
-    shuffled = ''.join(l)
-    item_id = 'sample_' + shuffled
-    print(f"insert_sample_item will attempt to create item {item_id}.")
+def insert_sample_item() -> str:
+    """
+    Insert a sample item and return the merchant item ID.
 
-    new_item = Item()
-    new_item.merchant_item_id = item_id
+    Returns:
+        str: The newly created merchant item ID
+    """
+    # Generate random item ID
+    item_id = f'sample_{generate_random_string()}'
+    print(f'insertSampleItem will attempt to create item {item_id}')
 
-    pricing = ItemPricing()
-    pricing.cost = 9.99
-    new_item.pricing = pricing
-    new_item.description = f"Sample description for item {item_id}"
+    # Create item API instance
+    item_api = ItemApi(api_client())
 
-    multimedia = ItemContentMultimedia()
-    multimedia.url = 'https://upload.wikimedia.org/wikipedia/en/7/73/Mr._Clean_logo.png'
-    multimedia.code = 'default' ## <-- use 'default' to make this the default item.
-    multimedia.description = 'Some random image i nabbed from wikipedia'
+    # Create new item
+    new_item = Item(
+        merchant_item_id=item_id,
+        pricing=ItemPricing(cost=9.99),
+        description=f'Sample description for item {item_id}',
+        content=ItemContent(
+            multimedia=[
+                ItemContentMultimedia(
+                    url='https://upload.wikimedia.org/wikipedia/en/7/73/Mr._Clean_logo.png',
+                    code='default',
+                    description='Some random image i nabbed from wikipedia'
+                )
+            ]
+        )
+    )
 
-    content = ItemContent()
-    content.multimedia = [multimedia] ## <- notice this is an array
-    new_item.content = content
-
-    shipping = ItemShipping()
-    shipping.track_inventory = True
-
-    dc = ItemShippingDistributionCenter()
-    dc.distribution_center_code = 'DFLT'
-    dc.inventory_level = 20.0
-    dc.handles = True
-
-    shipping.distribution_centers = [dc]
-    new_item.shipping = shipping
-
-    # expand = 'content.multimedia'; ## I want to see the multimedia returned on the newly created object.
-    expand = 'all'
+    # Expansion variable to get multimedia details
+    expand = 'content.multimedia'
 
     print('insertItem request object follows:')
-    pprint(new_item)
-    api_response = api_instance.insert_item(item=new_item, expand=expand)
+    print(new_item)
+
+    # Insert item
+    api_response = item_api.insert_item(new_item, expand=expand)
+
     print('insertItem response object follows:')
-    pprint(api_response)
+    print(api_response)
 
     return item_id
 
 
+def insert_sample_item_and_get_oid() -> int:
+    """
+    Insert a sample item and return its merchant item OID.
 
-##
-## * @param $item_id string item to be deleted
-## * @return void
-## * @throws ApiException
-##
-def delete_sample_item(item_id):
-    api_instance = ItemApi(api_client())
+    Returns:
+        int: The newly created item's merchant item OID
+    """
+    # Generate random item ID
+    item_id = f'sample_{generate_random_string()}'
+    print(f'insertSampleItem will attempt to create item {item_id}')
+
+    # Create item API instance
+    item_api = ItemApi(api_client())
+
+    # Create new item
+    new_item = Item(
+        merchant_item_id=item_id,
+        pricing=ItemPricing(cost=9.99),
+        description=f'Sample description for item {item_id}',
+        content=ItemContent(
+            multimedia=[
+                ItemContentMultimedia(
+                    url='https://upload.wikimedia.org/wikipedia/en/7/73/Mr._Clean_logo.png',
+                    code='default',
+                    description='Some random image i nabbed from wikipedia'
+                )
+            ]
+        )
+    )
+
+    # Expansion variable to get multimedia details
+    expand = 'content.multimedia'
+
+    print('insertItem request object follows:')
+    print(new_item)
+
+    # Insert item
+    api_response = item_api.insert_item(new_item, expand=expand)
+
+    print('insertItem response object follows:')
+    print(api_response)
+
+    return api_response.item.merchant_item_oid
+
+
+def delete_sample_item_by_oid(merchant_item_oid: int) -> None:
+    """
+    Delete a sample item by its merchant item OID.
+
+    Args:
+        merchant_item_oid (int): The merchant item OID to delete
+    """
+    # Create item API instance
+    item_api = ItemApi(api_client())
+
+    print(f'calling deleteItem({merchant_item_oid})')
+    item_api.delete_item(merchant_item_oid)
+
+
+def delete_sample_item(item_id: str) -> None:
+    """
+    Delete a sample item by its merchant item ID.
+
+    Args:
+        item_id (str): The merchant item ID to delete
+    """
+    # Create item API instance
+    item_api = ItemApi(api_client())
 
     print('deleteItem takes the item oid (internal unique identifier), so we need to retrieve the item first to delete')
-    print(f"attempting to retrieve the item object for item id {item_id}")
-    expand = '' ## I don't need extra fields here, just the base item will contain the oid
-    api_response = api_instance.get_item_by_merchant_item_id(merchant_item_id=item_id, expand=expand, placeholders=False)
+    print(f'attempting to retrieve the item object for item id {item_id}')
+
+    # Retrieve item to get its OID
+    expand = None  # No extra fields needed
+    api_response = item_api.get_item_by_merchant_item_id(item_id, expand=expand, skip_cache=False)
     item = api_response.item
+
     print('The following object was retrieved:')
-    pprint(item)
+    print(item)
+
     merchant_item_oid = item.merchant_item_oid
 
-    print(f"calling deleteItem('{merchant_item_oid}')")
-    api_instance.delete_item(merchant_item_oid)
+    print(f'calling deleteItem({merchant_item_oid})')
+    item_api.delete_item(merchant_item_oid)
 
 
+def insert_sample_digital_item(external_id: Optional[str] = None) -> int:
+    """
+    Insert a sample digital item.
 
-##
-## * @return int the digital item oid for the newly created item
-## * @throws ApiException
-##
-def insert_sample_digital_item()
+    Args:
+        external_id (Optional[str], optional): External ID for the digital item. Defaults to None.
 
-    image_url = 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Earth_%2816530938850%29.jpg' # picture of the earth
+    Returns:
+        int: The digital item OID for the newly created item
+    """
+    # Image URL (Earth picture from Wikipedia)
+    image_url = 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Earth_%2816530938850%29.jpg'
 
-    digital_item = ItemDigitalItem()
-    digital_item.import_from_url = image_url
-    digital_item.description = "The Earth"
-    digital_item.click_wrap_agreement = "By purchasing this item, you agree that it is Earth"
+    # Create digital item
+    digital_item = ItemDigitalItem(
+        import_from_url=image_url,
+        description="The Earth",
+        click_wrap_agreement="By purchasing this item, you agree that it is Earth"
+    )
+
+    # Add external ID if provided
+    if external_id is not None:
+        digital_item.external_id = external_id
 
     print('insertDigitalItem request object follows:')
-    pprint(digital_item)
+    print(digital_item)
 
-    api_instance = ItemApi(api_client())
-    api_response = api_instance.insert_digital_item(digital_item)
+    # Create item API instance
+    item_api = ItemApi(api_client())
+
+    # Insert digital item
+    api_response = item_api.insert_digital_item(digital_item)
 
     print('insertDigitalItem response object follows:')
-    pprint(api_response)
+    print(api_response)
 
     return api_response.digital_item.digital_item_oid
 
-##
-## * @param $digital_item_oid int the primary key of the digital item to be deleted.
-## * @return void
-## * @throws ApiException
-##
-def delete_sample_digital_item(digital_item_oid):
-    api_instance = ItemApi(api_client())
-    print(f"calling deleteItem('{digital_item_oid}')")
-    api_instance.delete_digital_item(digital_item_oid)
 
+def delete_sample_digital_item(digital_item_oid: int) -> None:
+    """
+    Delete a sample digital item by its digital item OID.
+
+    Args:
+        digital_item_oid (int): The primary key of the digital item to be deleted
+    """
+    # Create item API instance
+    item_api = ItemApi(api_client())
+
+    print(f'calling deleteItem({digital_item_oid})')
+    item_api.delete_digital_item(digital_item_oid)
