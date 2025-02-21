@@ -1,22 +1,21 @@
-
-
 package webhook;
 
 import com.ultracart.admin.v2.WebhookApi;
-import com.ultracart.admin.v2.models.Coupon;
-import com.ultracart.admin.v2.models.CouponResponse;
+import com.ultracart.admin.v2.models.*;
 import com.ultracart.admin.v2.util.ApiException;
+import common.Constants;
 
 public class DeleteWebhook {
+   public static void execute() throws ApiException {
+       /*
+        * Deletes a webhook
+        *
+        * You will need the webhook_oid to call this method. Call getWebhooks() if you don't know your oid.
+        * Returns status code 204 (No Content) on success
+        */
 
-    public static void main(String[] args) throws ApiException {
-
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        WebhookApi webhookApi = new WebhookApi(apiKey);
-
-        // TODO-PT
-
-    }
-
+       WebhookApi webhookApi = new WebhookApi(Constants.API_KEY);
+       int webhookOid = 123456789; // call getWebhooks if you don't know this.
+       webhookApi.deleteWebhook(webhookOid);
+   }
 }

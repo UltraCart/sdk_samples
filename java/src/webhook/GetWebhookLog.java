@@ -1,22 +1,33 @@
-
-
 package webhook;
 
 import com.ultracart.admin.v2.WebhookApi;
-import com.ultracart.admin.v2.models.Coupon;
-import com.ultracart.admin.v2.models.CouponResponse;
+import com.ultracart.admin.v2.models.*;
 import com.ultracart.admin.v2.util.ApiException;
+import common.Constants;
 
 public class GetWebhookLog {
+   public static void execute() throws ApiException {
+       /*
+        * getWebhookLog() provides a detail log of a webhook event. It is used in tandem with getWebhookLogSummaries to audit
+        * webhook events. This method call will require the webhook_oid and the request_id. The webhook_oid can be discerned
+        * from the results of getWebhooks() and the request_id can be found from getWebhookLogSummaries(). see those examples
+        * if needed.
+        */
 
-    public static void main(String[] args) throws ApiException {
+       WebhookApi webhookApi = new WebhookApi(Constants.API_KEY);
 
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        WebhookApi webhookApi = new WebhookApi(apiKey);
+       int webhookOid = 123456789; // call getWebhooks if you don't know this.
+       String requestId = "987654321";  // call getWebhookLogSummaries if you don't know this.
 
-        // TODO-PT
+       WebhookLogResponse apiResponse = webhookApi.getWebhookLog(webhookOid, requestId);
+       WebhookLog webhookLog = apiResponse.getWebhookLog();
 
-    }
+       if (apiResponse.getError() != null) {
+           System.err.println(apiResponse.getError().getDeveloperMessage());
+           System.err.println(apiResponse.getError().getUserMessage());
+           System.exit(1);
+       }
 
+       System.out.println(webhookLog.toString());
+   }
 }
