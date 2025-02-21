@@ -1,22 +1,35 @@
-
-
 package item;
 
 import com.ultracart.admin.v2.ItemApi;
-import com.ultracart.admin.v2.models.Coupon;
-import com.ultracart.admin.v2.models.CouponResponse;
-import com.ultracart.admin.v2.util.ApiException;
+import com.ultracart.admin.v2.models.*;
+import common.Constants;
 
 public class GetPricingTiers {
+    /// <summary>
+    /// Execute method containing all business logic
+    /// </summary>
+    public static void execute() {
+        ItemApi itemApi = new ItemApi(Constants.API_KEY);
 
-    public static void main(String[] args) throws ApiException {
+        try {
+            /*
+             * Possible expansion values for PricingTier object:
+             * approval_notification
+             * signup_notification
+             */
 
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        ItemApi itemApi = new ItemApi(apiKey);
+            String expand = "approval_notification,signup_notification";
+            PricingTiersResponse apiResponse = itemApi.getPricingTiers(expand);
 
-        // TODO-PT
+            // Display pricing tiers
+            for (PricingTier pricingTier : apiResponse.getPricingTiers()) {
+                System.out.println(pricingTier);
+            }
 
+        } catch (Exception e) {
+            System.out.println("Exception occurred.");
+            System.out.println(e);
+            System.exit(1);
+        }
     }
-
 }
