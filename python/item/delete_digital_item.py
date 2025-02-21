@@ -1,11 +1,11 @@
-# Sample item operations script
+# Digital item operations sample script
 
 from ultracart.api_client import ApiException
-from item_functions import insert_sample_item, delete_sample_item
+from item_functions import insert_sample_digital_item, delete_sample_digital_item
 
 try:
-    item_oid = insert_sample_item()
-    delete_sample_item(item_oid)
+    digital_item_oid = insert_sample_digital_item()
+    delete_sample_digital_item(digital_item_oid)
 
 except ApiException as e:
     print('An ApiException occurred. Please review the following error:')
