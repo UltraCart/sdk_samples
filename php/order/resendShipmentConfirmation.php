@@ -3,12 +3,12 @@
 require_once '../vendor/autoload.php';
 require_once '../constants.php';
 
+use ultracart\v2\api\OrderApi;
+
 /*
  * OrderApi.resendShipmentConfirmation() will resend (email) a shipment confirmation to a customer.
  *
  */
-
-use ultracart\v2\api\OrderApi;
 
 $order_api = OrderApi::usingApiKey(Constants::API_KEY);
 
