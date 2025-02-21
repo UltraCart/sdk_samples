@@ -1,22 +1,36 @@
-
-
 package fulfillment;
 
 import com.ultracart.admin.v2.FulfillmentApi;
-import com.ultracart.admin.v2.models.Coupon;
-import com.ultracart.admin.v2.models.CouponResponse;
-import com.ultracart.admin.v2.util.ApiException;
+import com.ultracart.admin.v2.models.DistributionCenter;
+import com.ultracart.admin.v2.models.DistributionCentersResponse;
+import common.Constants;
 
 public class GetDistributionCenters {
+    /*
+        This method returns back a list of all distribution centers configured for a merchant.
 
-    public static void main(String[] args) throws ApiException {
+        You will need the distribution center (DC) code for most operations.
+        UltraCart allows for multiple DC and the code is a unique short string you assign to a DC as an easy mnemonic.
+        This method call is an easy way to determine what a DC code is for a particular distribution center.
 
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        FulfillmentApi fulfillmentApi = new FulfillmentApi(apiKey);
+        For more information about UltraCart distribution centers, please see:
+        https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1377114/Distribution+Center
+    */
 
-        // TODO-PT
+  public static void execute() {
+    FulfillmentApi fulfillmentApi = new FulfillmentApi(Constants.API_KEY);
 
+    try {
+      DistributionCentersResponse result = fulfillmentApi.getDistributionCenters();
+      for (DistributionCenter dc : result.getDistributionCenters()) {
+        System.out.println(dc.toString());
+      }
+
+      System.out.println("done");
+    } catch (Exception e) {
+      // update inventory failed. examine the reason.
+      System.out.println("Exception when calling FulfillmentApi.getDistributionCenters: " + e.getMessage());
+      System.exit(1);
     }
-
+  }
 }
