@@ -1,22 +1,38 @@
-
-
 package checkout;
 
 import com.ultracart.admin.v2.CheckoutApi;
-import com.ultracart.admin.v2.models.Coupon;
-import com.ultracart.admin.v2.models.CouponResponse;
+import com.ultracart.admin.v2.models.RegisterAffiliateClickRequest;
+import com.ultracart.admin.v2.models.RegisterAffiliateClickResponse;
 import com.ultracart.admin.v2.util.ApiException;
+import common.Constants;
 
 public class RegisterAffiliateClick {
+    public static void execute() {
+        // Reference Implementation: https://github.com/UltraCart/responsive_checkout
+        // Records an affiliate click.
 
-    public static void main(String[] args) throws ApiException {
+        CheckoutApi checkoutApi = new CheckoutApi(Constants.API_KEY);
 
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        CheckoutApi checkoutApi = new CheckoutApi(apiKey);
+        RegisterAffiliateClickRequest clickRequest = new RegisterAffiliateClickRequest();
+        
+        // Note: In Java, you'll need to get these values from your HttpContext
+        // This is a simplified example - implement proper request handling in your application
+        String ipAddress = "127.0.0.1"; // Replace with actual implementation to get IP
+        String userAgent = ""; // Replace with actual implementation to get user agent
+        String refererUrl = ""; // Replace with actual implementation to get referer URL
+        
+        clickRequest.setIpAddress(ipAddress);
+        clickRequest.setUserAgent(userAgent);
+        clickRequest.setReferrerUrl(refererUrl);
+        clickRequest.setAffid(123456789); // you should know this from your UltraCart affiliate system.
+        clickRequest.setSubid("TODO:SupplyThisValue");
+        // clickRequest.setLandingPageUrl(null);  // if you have landing page url.
 
-        // TODO-PT
-
+        try {
+            RegisterAffiliateClickResponse apiResponse = checkoutApi.registerAffiliateClick(clickRequest, null);
+            System.out.println(apiResponse.toString());
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
     }
-
 }

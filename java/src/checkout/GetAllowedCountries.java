@@ -1,22 +1,33 @@
-
-
 package checkout;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ultracart.admin.v2.CheckoutApi;
-import com.ultracart.admin.v2.models.Coupon;
-import com.ultracart.admin.v2.models.CouponResponse;
+import com.ultracart.admin.v2.models.CheckoutAllowedCountriesResponse;
+import com.ultracart.admin.v2.models.Country;
 import com.ultracart.admin.v2.util.ApiException;
+import common.Constants;
+
+import java.util.List;
 
 public class GetAllowedCountries {
+    /**
+     * Populates the country list with all countries the merchant has configured to accept
+     * Reference Implementation: https://github.com/UltraCart/responsive_checkout
+     */
+    public static void execute() {
+        CheckoutApi checkoutApi = new CheckoutApi(Constants.API_KEY);
 
-    public static void main(String[] args) throws ApiException {
+        try {
+            CheckoutAllowedCountriesResponse apiResponse = checkoutApi.getAllowedCountries();
+            List<Country> allowedCountries = apiResponse.getCountries();
 
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        CheckoutApi checkoutApi = new CheckoutApi(apiKey);
-
-        // TODO-PT
-
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            for (Country country : allowedCountries) {
+                System.out.println(gson.toJson(country));
+            }
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
     }
-
 }

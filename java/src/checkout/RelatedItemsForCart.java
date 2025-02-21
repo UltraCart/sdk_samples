@@ -1,22 +1,86 @@
-
-
 package checkout;
 
 import com.ultracart.admin.v2.CheckoutApi;
-import com.ultracart.admin.v2.models.Coupon;
-import com.ultracart.admin.v2.models.CouponResponse;
+import com.ultracart.admin.v2.models.*;
 import com.ultracart.admin.v2.util.ApiException;
+import common.Constants;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RelatedItemsForCart {
+    public static void execute() {
+        // Reference Implementation: https://github.com/UltraCart/responsive_checkout
 
-    public static void main(String[] args) throws ApiException {
+        // Retrieves items related to the items within the cart. Item relations are configured in the UltraCart backend.
+        // See: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1377171/Related+Items
 
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        CheckoutApi checkoutApi = new CheckoutApi(apiKey);
+        // Note: The returned items have a fixed expansion (only so many item properties are returned). The item expansion is:
+        // content, content.assignments, content.attributes, content.multimedia, content.multimedia.thumbnails, options, pricing, and pricing.tiers
 
-        // TODO-PT
+        CheckoutApi checkoutApi = new CheckoutApi(Constants.API_KEY);
 
+        String expansion = "customer_profile,items,billing,shipping,coupons,checkout,payment,summary,taxes";
+        // Possible Expansion Variables: (see https://www.ultracart.com/api/#resource_checkout.html
+        /*
+        affiliate                   checkout                            customer_profile
+        billing                     coupons                             gift
+        gift_certificate            items.attributes                   items.multimedia
+        items                       items.multimedia.thumbnails         items.physical
+        marketing                   payment                                settings.gift
+        settings.billing.provinces  settings.shipping.deliver_on_date   settings.shipping.estimates
+        settings.shipping.provinces settings.shipping.ship_on_date     settings.taxes
+        settings.terms              shipping                           taxes
+        summary                     upsell_after
+         */
+
+        // In Java web application, you'd get the cookie from HttpServletRequest
+        String cartId = null;
+        // Example of how you might get the cookie in a Servlet
+        // Cookie[] cookies = request.getCookies();
+        // if (cookies != null) {
+        //     for (Cookie cookie : cookies) {
+        //         if (Constants.CART_ID_COOKIE_NAME.equals(cookie.getName())) {
+        //             cartId = cookie.getValue();
+        //             break;
+        //         }
+        //     }
+        // }
+
+        Cart cart;
+        try {
+            if (cartId == null) {
+                CartResponse apiResponse = checkoutApi.getCart(expansion);
+                cart = apiResponse.getCart();
+            } else {
+                CartResponse apiResponse = checkoutApi.getCartByCartId(cartId, expansion);
+                cart = apiResponse.getCart();
+            }
+
+            // TODO - add some items to the cart and update.
+
+            List<CartItem> items = new ArrayList<>();
+            CartItem cartItem = new CartItem();
+            cartItem.setItemId("ITEM_ABC");
+            cartItem.setQuantity(BigDecimal.valueOf(1));
+            items.add(cartItem);
+            cart.setItems(items);
+
+            // update the cart and assign it back to our variable.
+            cart = checkoutApi.updateCart(cart, expansion).getCart();
+
+            ItemsResponse apiResponse2 = checkoutApi.relatedItemsForCart(cart, null);
+            List<Item> relatedItems = apiResponse2.getItems();
+
+            System.out.println("<html lang=\"en\"><body><pre>");
+            for (Item item : relatedItems) {
+                System.out.println(item.toString());
+            }
+            System.out.println("</pre></body></html>");
+
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
     }
-
 }
