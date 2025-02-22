@@ -1,22 +1,59 @@
-
-
 package coupon;
 
 import com.ultracart.admin.v2.CouponApi;
 import com.ultracart.admin.v2.models.Coupon;
+import com.ultracart.admin.v2.models.CouponAmountOffSubtotal;
+import com.ultracart.admin.v2.models.CouponExistsResponse;
 import com.ultracart.admin.v2.models.CouponResponse;
-import com.ultracart.admin.v2.util.ApiException;
+import common.Constants;
+
+import java.math.BigDecimal;
+import java.util.UUID;
 
 public class DoesCouponCodeExist {
+    public static void execute() {
+        System.out.println("--- " + DoesCouponCodeExist.class.getSimpleName() + " ---");
 
-    public static void main(String[] args) throws ApiException {
+        try {
+            CouponApi couponApi = new CouponApi(Constants.API_KEY);
 
-        // Create a Simple Key: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-        final String apiKey = "109ee846ee69f50177018ab12f008a00748a25aa28dbdc0177018ab12f008a00";
-        CouponApi couponApi = new CouponApi(apiKey);
+            String merchantCode = UUID.randomUUID().toString().substring(0, 8);
 
-        // TODO-PT
+            CouponExistsResponse couponExistsResponse = couponApi.doesCouponCodeExist(merchantCode);
+            // The response should be false.
+            if (couponExistsResponse.getExists()) {
+                throw new Exception("CouponApi.doesCouponCodeExist should have returned false.");
+            }
 
+            // Now create the coupon and ensure it exists.
+            Coupon coupon = new Coupon();
+            coupon.setMerchantCode(merchantCode);
+            coupon.setDescription("Test coupon for DoesCouponCodeExist");
+            
+            CouponAmountOffSubtotal amountOff = new CouponAmountOffSubtotal();
+            amountOff.setCurrencyCode("USD");
+            amountOff.setDiscountAmount(new BigDecimal("0.01")); // one penny discount
+            coupon.setAmountOffSubtotal(amountOff);
+
+            CouponResponse couponResponse = couponApi.insertCoupon(coupon, null);
+            coupon = couponResponse.getCoupon();
+
+            System.out.println("Created the following temporary coupon:");
+            System.out.println("Coupon OID: " + coupon.getMerchantCode());
+            System.out.println("Coupon Type: " + coupon.getCouponType());
+            System.out.println("Coupon Description: " + coupon.getDescription());
+
+            couponExistsResponse = couponApi.doesCouponCodeExist(merchantCode);
+            if (!couponExistsResponse.getExists()) {
+                throw new Exception(
+                    "CouponApi.doesCouponCodeExist should have returned true after creating the coupon.");
+            }
+
+            // Delete the coupon
+            couponApi.deleteCoupon(coupon.getCouponOid());
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
-
 }
