@@ -6,7 +6,7 @@ import {
     HTTPHeaders
 } from 'ultracart_rest_api_v2_typescript';
 
-let apiKey = 'a84dba2b20613c017eff4a1185380100a385a6ff6f6939017eff4a1185380100';
+let apiKey = 'a1f1b4b50a5c290195256170e70001006b7722bc8075e30195256170e7000100';
 
 // export const couponApi = new CouponApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey, fetchApi: fetch }));
 // export const giftCertificateApi = new GiftCertificateApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey, fetchApi: fetch }));
