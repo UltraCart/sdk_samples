@@ -3,9 +3,9 @@ require_relative '../constants'
 require_relative './item_functions'
 
 begin
-  # Create and then delete a sample item
-  item_id = insert_sample_item
-  delete_sample_item(item_id)
+  # Create and then delete a sample digital item
+  digital_item_oid = insert_sample_digital_item
+  delete_sample_digital_item(digital_item_oid)
 
 rescue UltracartClient::ApiError => e
   warn 'An ApiException occurred. Please review the following error:'
