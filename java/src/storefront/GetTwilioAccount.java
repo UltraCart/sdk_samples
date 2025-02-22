@@ -1,0 +1,1 @@
+// (Internal API).  No sample for this method as a merchant will never need call it.
