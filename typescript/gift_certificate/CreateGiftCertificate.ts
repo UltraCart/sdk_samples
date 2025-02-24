@@ -8,8 +8,8 @@ import {
 
 // ReSharper disable once ClassNeverInstantiated.Global
 export class CreateGiftCertificate {
-    public static execute(): void {
-        const giftCertificate = CreateGiftCertificate.createGiftCertificateCall();
+    public static async execute(): Promise<void> {
+        const giftCertificate = await CreateGiftCertificate.createGiftCertificateCall();
         console.log("Gift Certificate:", giftCertificate);
     }
 
