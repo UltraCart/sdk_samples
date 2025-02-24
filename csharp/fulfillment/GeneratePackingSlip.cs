@@ -28,12 +28,12 @@ namespace SdkSample.fulfillment
             FulfillmentApi fulfillmentApi = Samples.GetFulfillmentApi();
 
             string distributionCenterCode = "RAMI";
-            string ordersId = "DEMO-12345";
+            string orderId = "DEMO-12345";
 
             try
             {
                 // limit is 500 inventory updates at a time. batch them if you're going large.
-                OrderPackingSlipResponse apiResponse = fulfillmentApi.GeneratePackingSlip(distributionCenterCode, ordersId);
+                OrderPackingSlipResponse apiResponse = fulfillmentApi.GeneratePackingSlip(distributionCenterCode, orderId);
                 string base64Pdf = apiResponse.PdfBase64;
                 byte[] decodedPdf = Convert.FromBase64String(base64Pdf);
                 File.WriteAllBytes("packing_slip.pdf", decodedPdf);
