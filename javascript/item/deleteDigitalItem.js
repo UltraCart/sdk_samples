@@ -1,10 +1,10 @@
-import {ItemFunctions} from './itemFunctions.js'; // Assuming ItemFunctions is in a separate file
+import {ItemFunctions} from './itemFunctions.js';
 
-export class DeleteItem {
+export class DeleteDigitalItem {
     static async execute() {
         try {
-            const itemOid = await ItemFunctions.insertSampleItemAndGetOid();
-            await ItemFunctions.deleteSampleItemByOid(itemOid);
+            const digitalItemOid = await ItemFunctions.insertSampleDigitalItem();
+            await ItemFunctions.deleteSampleDigitalItem(digitalItemOid);
         } catch (e) {
             console.log("An Exception occurred. Please review the following error:");
             console.log(e); // <-- change_me: handle gracefully

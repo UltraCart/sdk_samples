@@ -5,11 +5,11 @@ import { ItemFunctions } from './itemFunctions.js';
  */
 export async function execute() {
     try {
-        const itemId = await ItemFunctions.insertSampleItem();
-        await ItemFunctions.deleteSampleItem(itemId);
+        const digitalItemOid = await ItemFunctions.insertSampleDigitalItem();
+        await ItemFunctions.deleteSampleDigitalItem(digitalItemOid);
     } catch (error) {
         console.error("An Exception occurred. Please review the following error:");
-        console.error(error); // handle gracefully
+        console.error(error); // <-- change_me: handle gracefully
         process.exit(1);
     }
 }
