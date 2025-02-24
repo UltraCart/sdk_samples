@@ -85,11 +85,9 @@ export class RelatedItemsForItem {
             const relatedItems: Item[] = apiResponse2.items || [];
 
             // Output related items
-            console.log("<html lang=\"en\"><body><pre>");
             relatedItems.forEach(item => {
                 console.log(JSON.stringify(item, null, 2));
             });
-            console.log("</pre></body></html>");
 
         } catch (error) {
             console.error("Error retrieving related items:", error);

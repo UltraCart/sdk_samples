@@ -16,9 +16,7 @@ export async function execute(): Promise<void> {
         // To insert a review, you'll need an item's OID (Object Identifier) first. So for this example, we create
         // a sample item first, then retrieve it by item id to fetch the item oid.
 
-        console.log("<pre>");
         const itemId: string = await ItemFunctions.insertSampleItem();
-        console.log("</pre>");
 
         const expand: string = "reviews"; // expand string is 'reviews' because we'll need to update the sample item's review template below.
         // list of expansions for item object: https://www.ultracart.com/api/#resource_item.html

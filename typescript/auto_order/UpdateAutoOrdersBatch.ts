@@ -53,4 +53,4 @@ export class UpdateAutoOrdersBatch {
 }
 
 // Example of how to call the method
-UpdateAutoOrdersBatch.execute().catch(console.error);
+// UpdateAutoOrdersBatch.execute().catch(console.error);

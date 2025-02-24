@@ -67,4 +67,4 @@ export class UpdateCoupons {
 }
 
 // Example usage (optional, remove if not needed)
-UpdateCoupons.execute().catch(console.error);
+// UpdateCoupons.execute().catch(console.error);

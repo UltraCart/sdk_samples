@@ -20,7 +20,7 @@ export class UpdateAutoOrder {
             // Create auto order API instance using API key
             const expand = "items,items.future_schedules,original_order,rebill_orders"; // see https://www.ultracart.com/api/#resource_auto_order.html for list
             const autoOrderOid: number = 123456789; // get an auto order and update it. There are many ways to retrieve an auto order.
-            const apiResponse = await autoOrderApi.getAutoOrder({autoOrderOid});
+            const apiResponse = await autoOrderApi.getAutoOrder({autoOrderOid, expand: expand});
             const autoOrderOrUndefined = apiResponse.auto_order;
             const validateOriginalOrder = "No";
 
@@ -51,4 +51,4 @@ export class UpdateAutoOrder {
 }
 
 // Example of how to call the method
-UpdateAutoOrder.execute().catch(console.error);
+// UpdateAutoOrder.execute().catch(console.error);
