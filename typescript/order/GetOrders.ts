@@ -34,9 +34,7 @@ export async function execute(): Promise<void> {
         console.log(JSON.stringify(order, null, 2));
     }
 
-    console.log("<html lang=\"en\"><body><pre>");
     console.log(orders);
-    console.log("</pre></body></html>");
 }
 
 /**
