@@ -2,33 +2,48 @@ import { orderApi } from '../api';
 import { BaseResponse } from 'ultracart_rest_api_v2_typescript';
 
 /**
- * OrderApi.adjustOrderTotal() takes a desired order total and performs goal-seeking to adjust all items and taxes
- * appropriately.  This method was created for merchants dealing with Medicare and Medicaid.  When selling their
- * medical devices, they would often run into limits approved by Medicare.  As such, they needed to adjust the
- * order total to match the approved amount.  This is a convenience method to adjust individual items and their
- * taxes to match the desired total.
+ * OrderApi.CancelOrder() will do just that.  It will cancel an order by rejecting it.
+ * However, the following restrictions apply:
+ * 1) If the order is already completed, this call will fail.
+ * 2) If the order has already been rejected, this call will fail.
+ * 3) If the order has already been transmitted to a fulfillment center, this call will fail.
+ * 4) If the order is queued for transmission to a distribution center, this call will fail.
  */
-export async function execute(): Promise<void> {
-    const orderId = "DEMO-0009104390";
-    const desiredTotal = "21.99";
+export class CancelOrder {
+    /**
+     * Attempts to cancel a specific order
+     * @param apiKey The API key for authentication
+     * @returns Promise resolving to whether the order was successfully canceled
+     */
+    public static async execute(apiKey: string): Promise<boolean> {
+        const orderId = "DEMO-0009104390";
 
-    try {
-        const apiResponse: BaseResponse = await orderApi.adjustOrderTotal({
-            orderId: orderId,
-            desiredTotal: desiredTotal
-        });
+        try {
+            const apiResponse: BaseResponse = await orderApi.cancelOrder({orderId});
 
-        if (apiResponse.error) {
-            console.error(apiResponse.error.developer_message);
-            console.error(apiResponse.error.user_message);
-            console.log("Order could not be adjusted. See error log.");
-            return;
+            if (apiResponse.error) {
+                console.error(apiResponse.error.developer_message);
+                console.error(apiResponse.error.user_message);
+                console.log("Order could not be canceled. See error log.");
+                return false;
+            }
+
+            if (apiResponse.success) {
+                console.log("Order was canceled successfully.");
+                return true;
+            }
+
+            return false;
+        } catch (error) {
+            console.error("An error occurred while canceling the order:", error);
+            return false;
         }
-
-        if (apiResponse.success) {
-            console.log("Order was adjusted successfully. Use GetOrder() to retrieve the order if needed.");
-        }
-    } catch (error) {
-        console.error("An error occurred while adjusting the order:", error);
     }
+}
+
+// Example usage
+async function cancelOrderExample() {
+    const apiKey = "your-api-key-here"; // Replace with actual API key
+    const result = await CancelOrder.execute(apiKey);
+    console.log(result ? "Order cancellation successful" : "Order cancellation failed");
 }
