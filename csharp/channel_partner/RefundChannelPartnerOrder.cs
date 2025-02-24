@@ -45,7 +45,7 @@ namespace SdkSample.channel_partner
             // by Navigating to Home -> Configuration -> Order Management -> Refund/Reject Reasons
             // Warning: If this is a 2nd refund after an initial partial refund, be sure you account for the units and amount already refunded.
             order.RefundReason = "Damage Product";
-            order.Summary.TaxRefunded = order.Summary.TaxRefunded;
+            order.Summary.TaxRefunded = order.Summary.Tax;
             order.Summary.ShippingHandlingRefunded = order.Summary.ShippingHandlingTotal;
             
             foreach (OrderItem item in order.Items)
