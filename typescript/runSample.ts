@@ -1,10 +1,10 @@
-import { GetGiftCertificatesByQuery } from './gift_certificate/GetGiftCertificatesByQuery';
+import {GetCoupons} from "./coupon/GetCoupons";
 // import {ResponseError} from "ultracart_rest_api_v2_typescript";
 
 // Self-executing async function since we can't use await at the top level
 (async () => {
     try {
-        await GetGiftCertificatesByQuery.execute();
+        await GetCoupons.execute();
     } catch (error) {
         console.log(error);
         // const responseError = error as ResponseError;
