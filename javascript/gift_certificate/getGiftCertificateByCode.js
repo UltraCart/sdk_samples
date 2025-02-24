@@ -1,14 +1,29 @@
-var ucApi = require('ultra_cart_rest_api_v2');
-const { apiClient } = require('../api.js');
+import { giftCertificateApi } from '../api.js';
 
-var giftCertificateApi = new ucApi.GiftCertificateApi(apiClient);
+// ReSharper disable once ClassNeverInstantiated.Global
+export class GetGiftCertificateByCode {
+    static async execute() {
+        const giftCertificate = await this.getGiftCertificateByCodeCall();
+        console.log(giftCertificate, "Gift Certificate");
+    }
 
-let code = 'NRQPHPCFVK';
+    // ReSharper disable once MemberCanBePrivate.Global
+    static async getGiftCertificateByCodeCall() {
+        const api = giftCertificateApi;
+        
+        const code = "X8PV761V2Z";
 
+        // by_code does not take an expansion variable.  it will return the entire object by default.
+        const gcResponse = await new Promise((resolve, reject) => {
+            api.getGiftCertificateByCode(code, function(error, data, response) {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
 
-// by_code does not take an expansion variable.  it will return the entire object by default.
-giftCertificateApi.getGiftCertificateByCode(code, 
-    function(error, data, response){
-        let giftCertificate = data.gift_certificate;    
-        console.log('giftCertificate', giftCertificate);
-    });
+        return gcResponse.gift_certificate;
+    }
+}

@@ -1,21 +1,41 @@
-var ucApi = require('ultra_cart_rest_api_v2');
-const { apiClient } = require('../api.js');
-var luxon = require('luxon');
+import {DateTime} from 'luxon';
+import {giftCertificateApi} from '../api.js';
 
-var giftCertificateApi = new ucApi.GiftCertificateApi(apiClient);
+export class CreateGiftCertificate {
+    static async execute() {
+        const giftCertificate = await CreateGiftCertificate.createGiftCertificateCall();
+        console.log("Gift Certificate:", giftCertificate);
+    }
 
+    static async createGiftCertificateCall() {
 
-let gcCreateRequest = new ucApi.GiftCertificateCreateRequest();
-gcCreateRequest.amount = 150.75;
-gcCreateRequest.initial_ledger_description = "Issued instead of refund";
-gcCreateRequest.merchant_note = 'Problem Order: blah-12345\nIssued gift certificate due to stale product.\nIssued By: Customer Service Rep Joe Smith';
-gcCreateRequest.email = 'support@ultracart.com';
-gcCreateRequest.expiration_dts = luxon.DateTime.now().setZone('America/New_York').plus({months:3}).endOf('day').toISO();
+        const giftCertificateCreateRequest = {
+            amount: 200.00,
+            initial_ledger_description: "Created via TypeScript SDK",
+            merchant_note: "Internal comment here",
+            email: "support@ultracart.com",
+            expiration_dts: DateTime.now()
+                .setZone('America/New_York')
+                .plus({months: 3})
+                .toISO()
+        };
 
+        const request = {
+            giftCertificateCreateRequest: giftCertificateCreateRequest
+        };
 
-// create does not take an expansion variable.  it will return the entire object by default.
-giftCertificateApi.createGiftCertificate(gcCreateRequest, 
-    function(error, data, response){
-        let giftCertificate = data.gift_certificate;    
-        console.log('giftCertificate', giftCertificate);
-    });
+        // create does not take an expansion variable.  it will return the entire object by default.
+        const gcResponse = await new Promise((resolve, reject) => {
+            giftCertificateApi.createGiftCertificate(request, function (error, data, response) {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(data, response);
+                }
+            });
+        });
+        return gcResponse.gift_certificate;
+    }
+}
+
+export default CreateGiftCertificate;

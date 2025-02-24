@@ -1,22 +1,49 @@
-var ucApi = require('ultra_cart_rest_api_v2');
-const { apiClient } = require('../api.js');
+import { giftCertificateApi } from '../api.js';
 
-var giftCertificateApi = new ucApi.GiftCertificateApi(apiClient);
+// ReSharper disable once ClassNeverInstantiated.Global
+export class UpdateGiftCertificate {
+    static async execute() {
+        const giftCertificate = await this.updateGiftCertificateCall();
+        console.log(giftCertificate);
+    }
 
-let giftCertificateOid = 676713;
+    // ReSharper disable once MemberCanBePrivate.Global
+    static async updateGiftCertificateCall() {
+        const api = giftCertificateApi;
+        
+        const giftCertificateOid = 676713;
+        
+        const gcResponse = await new Promise((resolve, reject) => {
+            api.getGiftCertificateByOid({giftCertificateOid: giftCertificateOid}, function(error, data, response) {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
 
+        if(gcResponse.gift_certificate !== undefined) {
+            const giftCertificate = gcResponse.gift_certificate;
+            giftCertificate.email = "perry@ultracart.com";
 
-// by_oid does not take an expansion variable.  it will return the entire object by default.
-giftCertificateApi.getGiftCertificateByOid(giftCertificateOid, 
-    function(error, data, response){
-        let giftCertificate = data.gift_certificate;    
-
-        // now update the email
-        giftCertificate.email = 'perry@ultracart.com';
-        giftCertificateApi.updateGiftCertificate(giftCertificateOid, giftCertificate,
-            function(error, data, response){
-                let updatedCertificate = data.gift_certificate;    
-                console.log('updatedCertificate', updatedCertificate);
+            // update does not take an expansion variable.  it will return the entire object by default.
+            const updatedResponse = await new Promise((resolve, reject) => {
+                api.updateGiftCertificate(
+                    giftCertificateOid, giftCertificate,
+                    function(error, data, response) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(data);
+                        }
+                    }
+                );
             });
 
-    });
+            return updatedResponse.gift_certificate;
+        }
+        // handle this condition somehow.
+        return undefined;
+    }
+}

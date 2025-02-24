@@ -1,7 +1,7 @@
 {
   "name": "sdk_samples",
   "version": "1.0.0",
-  "type": "commonjs",
+  "type": "module",
   "description": "UltraCart Rest SDK Samples",
   "main": "index.js",
   "scripts": {
@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/UltraCart/sdk_samples#readme",
   "dependencies": {
-    "luxon": "^2.3.1",
+    "luxon": "3.2.1",
     "ssl-root-cas": "^1.2.3",
-    "ultra_cart_rest_api_v2": "^4.0.192"
+    "ultra_cart_rest_api_v2": "^4.1.0"
   }
 }

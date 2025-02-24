@@ -1,21 +1,41 @@
-var ucApi = require('ultra_cart_rest_api_v2');
-const { apiClient } = require('../api.js');
+import { giftCertificateApi } from '../api.js';
 
-var giftCertificateApi = new ucApi.GiftCertificateApi(apiClient);
+export class DeleteGiftCertificate {
+    static async execute() {
+        const giftCertificate = await this.deleteGiftCertificateCall();
+        console.debug(giftCertificate, "Gift Certificate");
+    }
 
-let giftCertificateOid = 676713;
+    static async deleteGiftCertificateCall() {
+        const api = giftCertificateApi;
 
-giftCertificateApi.deleteGiftCertificate(giftCertificateOid, function(error, data, response){
+        const giftCertificateOid = 676713;
 
-    // requery the gift certificate and an object is still returned, even after deleting.
-    // However, the object's deleted property will now be true.
-    // by_oid does not take an expansion variable.  it will return the entire object by default.
-    giftCertificateApi.getGiftCertificateByOid(giftCertificateOid, 
-        function(error, data, response){
-            let giftCertificate = data.gift_certificate;    
-            console.log('giftCertificate', giftCertificate);
+        // Wrap the delete call in a Promise
+        await new Promise((resolve, reject) => {
+            api.deleteGiftCertificate(giftCertificateOid, function (error, data, response) {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(data, response);
+                }
+            });
         });
 
-});
 
+        // if I re-query the gift certificate after deleting, I will still get an object back, but the
+        // deleted flag on the object will be true.
+        // by_oid does not take an expansion variable.  it will return the entire object by default.
+        const gcResponse = await new Promise((resolve, reject) => {
+            api.getGiftCertificateByOid(giftCertificateOid, function (error, data, response) {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
 
+        return gcResponse.gift_certificate;
+    }
+}
