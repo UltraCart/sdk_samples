@@ -20,6 +20,6 @@
   "dependencies": {
     "luxon": "3.2.1",
     "ssl-root-cas": "^1.2.3",
-    "ultra_cart_rest_api_v2": "^4.1.0"
+    "ultra_cart_rest_api_v2": "^4.1.2"
   }
 }

@@ -17,6 +17,7 @@ public class EntryPoint {
     GetAutoOrderByReferenceOrderId.execute();
     GetAutoOrders.execute();
     GetAutoOrdersBatch.execute();
+    PauseAutoOrder.execute();
     UpdateAutoOrder.execute();
     UpdateAutoOrdersBatch.execute();
 

@@ -49,6 +49,7 @@
     <Compile Include="auto_order\Introduction_2.cs" />
     <Compile Include="auto_order\Introduction_3.cs" />
     <Compile Include="auto_order\Introduction_4.cs" />
+    <Compile Include="auto_order\PauseAutoOrder.cs" />
     <Compile Include="auto_order\UpdateAutoOrder.cs" />
     <Compile Include="auto_order\UpdateAutoOrdersBatch.cs" />
     <Compile Include="channel_partner\CancelOrderByChannelPartnerOrderId.cs" />
@@ -610,8 +611,8 @@
     <Compile Include="workflow\UpdateWorkflowTask.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="com.ultracart.admin.v2, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\com.ultracart.admin.v2.4.1.0\lib\net48\com.ultracart.admin.v2.dll</HintPath>
+    <Reference Include="com.ultracart.admin.v2, Version=4.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\com.ultracart.admin.v2.4.1.2\lib\net48\com.ultracart.admin.v2.dll</HintPath>
     </Reference>
     <Reference Include="JsonSubTypes, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176">
       <HintPath>packages\JsonSubTypes.1.7.0\lib\net40\JsonSubTypes.dll</HintPath>

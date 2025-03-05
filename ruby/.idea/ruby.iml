@@ -20,7 +20,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rubocop-ast (v1.18.0, ruby-3.0.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-progressbar (v1.11.0, ruby-3.0.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="typhoeus (v1.4.1, ruby-3.0.0-p0) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="ultracart_api (v4.1.0, ruby-3.0.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ultracart_api (v4.1.2, ruby-3.0.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="unicode-display_width (v2.1.0, ruby-3.0.0-p0) [gem]" level="application" />
   </component>
 </module>
