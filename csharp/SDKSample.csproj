@@ -65,6 +65,7 @@
     <Compile Include="channel_partner\InsertChannelPartnerShipToPreference.cs" />
     <Compile Include="channel_partner\Introduction.cs" />
     <Compile Include="channel_partner\RefundChannelPartnerOrder.cs" />
+    <Compile Include="channel_partner\RefundChannelPartnerOrderPartially.cs" />
     <Compile Include="channel_partner\UpdateChannelPartnerShipToPreference.cs" />
     <Compile Include="chargeback\DeleteChargeback.cs" />
     <Compile Include="chargeback\GetChargebackDispute.cs" />
