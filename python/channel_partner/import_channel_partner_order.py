@@ -76,7 +76,7 @@ item = ChannelPartnerOrderItem()
 # item.auto_order_schedule = "Weekly"
 
 item.merchant_item_id = "shirt"
-item.quantity = 1
+item.quantity = 1.0
 item.upsell = False
 
 item_option1 = ChannelPartnerOrderItemOption()
@@ -186,7 +186,7 @@ order.ip_address = "34.125.95.217"
 # -- Items start ---
 item = ChannelPartnerOrderItem()
 item.merchant_item_id = "shirt"
-item.quantity = 1
+item.quantity = 1.0
 item.upsell = False
 
 item_option1 = ChannelPartnerOrderItemOption()

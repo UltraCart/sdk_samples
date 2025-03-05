@@ -88,23 +88,23 @@ order.ip_address = "34.125.95.217"
 # -- Items start ---
 item1 = ChannelPartnerOrderItem()
 item1.merchant_item_id = "rivoli_14mm_ab"
-item1.quantity = 4
+item1.quantity = 4.0
 
 item2 = ChannelPartnerOrderItem()
 item2.merchant_item_id = "rivoli_14mm_birth"
-item2.quantity = 6
+item2.quantity = 6.0
 
 item3 = ChannelPartnerOrderItem()
 item3.merchant_item_id = "rivoli_14mm_colors"
-item3.quantity = 3
+item3.quantity = 3.0
 
 item4 = ChannelPartnerOrderItem()
 item4.merchant_item_id = "rivoli_14mm_mystic"
-item4.quantity = 2
+item4.quantity = 2.0
 
 item5 = ChannelPartnerOrderItem()
 item5.merchant_item_id = "rivoli_14mm_opal"
-item5.quantity = 4
+item5.quantity = 4.0
 
 order.items = [item1, item2, item3, item4, item5]
 # -- Items End ---
