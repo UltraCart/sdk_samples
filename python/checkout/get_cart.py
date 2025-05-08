@@ -24,7 +24,17 @@ settings.terms              shipping                           taxes
 summary                     upsell_after
 """
 
-cart_id = request.cookies.get("UltraCartShoppingCartID")
+inside_web_context = False
+try:
+    cart_id = request.cookies.get("UltraCartShoppingCartID")
+    inside_web_context = True
+
+except Exception as e:
+    # Log the error if needed
+    print(f"Error getting cart ID: {e}")
+    # Set a default value or handle the error situation
+    cart_id = None
+    # Execution continues from here
 
 if cart_id is None:
     api_response = checkout_api.get_cart(expand=expand)
@@ -34,7 +44,8 @@ else:
 cart = api_response.cart
 
 # TODO: set or re-set the cart cookie if this is part of a multi-page process. two weeks is a generous cart id time.
-response = make_response(str(cart))
-response.set_cookie("UltraCartShoppingCartID", cart.cart_id, max_age=1209600, path="/")
+if inside_web_context:
+    response = make_response(str(cart))
+    response.set_cookie("UltraCartShoppingCartID", cart.cart_id, max_age=1209600, path="/")
 
 print(cart)

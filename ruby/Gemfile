@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
 gem 'rubocop', group: 'development'
-gem 'ultracart_api', '4.1.2'
+gem 'ultracart_api', '4.1.10'

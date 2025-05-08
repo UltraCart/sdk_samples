@@ -19,7 +19,7 @@ namespace SdkSample.channel_partner
         public static void Execute()
         {
             Console.WriteLine("--- " + MethodBase.GetCurrentMethod()?.DeclaringType?.Name + " ---");
-            
+            var doFirstExample = false;
             try
             {
                 // Create channel partner API instance using API key
@@ -44,127 +44,138 @@ namespace SdkSample.channel_partner
                 // ---------------------------------------------
                 
                 ChannelPartnerOrder order = new ChannelPartnerOrder();
-                
-                // order.AdvertisingSource = "Friend"; // https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1377001/Advertising+Sources
-                // order.AffiliateId = 856234; // https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1377727/Affiliates
-                // order.AffiliateSubId = 1234; // https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1376754/Allowing+Affiliates+to+use+Sub-IDs
-                // order.ArbitraryShippingHandlingTotal = 9.99;
-                // order.ArbitraryTax = 2.50;
-                // order.ArbitraryTaxRate = 7.0;
-                // order.ArbitraryTaxableSubtotal = 69.99;
-                
-                order.AssociateWithCustomerProfileIfPresent = true;
-                order.AutoApprovePurchaseOrder = true;
-                order.BilltoAddress1 = "11460 Johns Creek Parkway";
-                order.BilltoAddress2 = "Suite 101";
-                order.BilltoCity = "Duluth";
-                order.BilltoCompany = "Widgets Inc";
-                order.BilltoCountryCode = "US";
-                order.BilltoDayPhone = "6784153823";
-                order.BilltoEveningPhone = "6784154019";
-                order.BilltoFirstName = "John";
-                order.BilltoLastName = "Smith";
-                order.BilltoPostalCode = "30097";
-                order.BilltoStateRegion = "GA";
-                order.BilltoTitle = "Sir";
-                order.CcEmail = "orders@widgets.com";
-                order.ChannelPartnerOrderId = "widget-1245-abc";
-                order.ConsiderRecurring = false;
-                order.Coupons = new List<string> { "10OFF", "BUY1GET1" };
-                
-                // order.CreditCardAuthorizationAmount = 69.99;
-                // order.CreditCardAuthorizationDts = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssK"); // this will usually not be 'now'. it will be the actual auth date
-                // order.CreditCardAuthorizationNumber = "1234";
-                
-                order.CreditCardExpirationMonth = 5;
-                order.CreditCardExpirationYear = 2032;
-                order.CreditCardType = "VISA"; // see the hosted fields below for the card number and cvv tokens
-                order.CustomField1 = "Whatever";
-                order.CustomField2 = "You";
-                order.CustomField3 = "Want";
-                order.CustomField4 = "Can";
-                order.CustomField5 = "Go";
-                order.CustomField6 = "In";
-                order.CustomField7 = "CustomFields";
-                order.DeliveryDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssK");
-                order.Email = "ceo@widgets.com";
-                order.Gift = false;
-                
-                order.GiftEmail = "sally@aol.com";
-                order.GiftMessage = "Congratulations on your promotion!";
-                
-                order.HostedFieldsCardToken = "7C97B0AAA26AB10180B4B29F00380101";
-                order.HostedFieldsCvvToken = "C684AB4336787F0180B4B51971380101";
-                
-                // order.InsuranceApplicationId = insuranceApplicationId; // these are used by only a handful of specialized merchants
-                // order.InsuranceClaimId = insuranceClaimId; // these are used by only a handful of specialized merchants
-                
-                order.IpAddress = "34.125.95.217";
-                
-                // -- Items start ---
-                ChannelPartnerOrderItem item = new ChannelPartnerOrderItem();
-                // item.ArbitraryUnitCost = 9.99;
-                // item.AutoOrderLastRebillDts = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssK");
-                // item.AutoOrderSchedule = "Weekly";
-                
-                item.MerchantItemId = "shirt";
-                item.Quantity = 1;
-                item.Upsell = false;
-                
-                ChannelPartnerOrderItemOption itemOption1 = new ChannelPartnerOrderItemOption();
-                itemOption1.Name = "Size";
-                itemOption1.Value = "Small";
-                
-                ChannelPartnerOrderItemOption itemOption2 = new ChannelPartnerOrderItemOption();
-                itemOption2.Name = "Color";
-                itemOption2.Value = "Orange";
-                
-                item.Options = new List<ChannelPartnerOrderItemOption> { itemOption1, itemOption2 };
-                
-                order.Items = new List<ChannelPartnerOrderItem> { item };
-                // -- Items End ---
-                
-                
-                order.LeastCostRoute = true; // Give me the lowest cost shipping
-                order.LeastCostRouteShippingMethods = new List<string> { "FedEx: Ground", "UPS: Ground", "USPS: Priority" };
-                order.MailingListOptIn = true; // Yes, I confirmed with the customer personally they wish to be on my mailing lists.
-                order.NoRealtimePaymentProcessing = false;
-                order.PaymentMethod = ChannelPartnerOrder.PaymentMethodEnum.CreditCard;
-                // order.PurchaseOrderNumber = "PO-12345";
-                order.RotatingTransactionGatewayCode = "MyStripe"; // We wish this to be charged against our Stripe gateway
-                order.ScreenBrandingThemeCode = "SF1986"; // Theme codes predated StoreFronts. Each StoreFront still has a theme code under the hood. We need that here. See this screen to find your code: https://secure.ultracart.com/merchant/configuration/customerServiceLoad.do
-                order.ShipOnDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssK");
-                order.ShipToResidential = true;
-                // order.ShippingMethod = "FedEx: Ground"; // We're using LeastCostRoute, so we do not supply this value
-                order.ShiptoAddress1 = "55 Main Street";
-                order.ShiptoAddress2 = "Suite 202";
-                order.ShiptoCity = "Duluth";
-                order.ShiptoCompany = "Widgets Inc";
-                order.ShiptoCountryCode = "US";
-                order.ShiptoDayPhone = "6785552323";
-                order.ShiptoEveningPhone = "7703334444";
-                order.ShiptoFirstName = "Sally";
-                order.ShiptoLastName = "McGonkyDee";
-                order.ShiptoPostalCode = "30097";
-                order.ShiptoStateRegion = "GA";
-                order.ShiptoTitle = "Director";
-                order.SkipPaymentProcessing = false;
-                order.SpecialInstructions = "Please wrap this in bubble wrap because my FedEx delivery guy is abusive to packages";
-                order.StoreCompleted = false; // this will bypass everything, including shipping. useful only for importing old orders long completed
-                order.StorefrontHostName = "store.mysite.com";
-                order.StoreIfPaymentDeclines = false; // if payment fails, this can send it to Accounts Receivable. Do not want that. Fail if payment fails.
-                order.TaxCounty = "Gwinnett";
-                order.TaxExempt = false;
-                
-                ChannelPartnerOrderTransaction orderTransaction = new ChannelPartnerOrderTransaction();
-                orderTransaction.Successful = false; // we haven't charged the card yet, so this is false.
-                orderTransaction.Details = new List<ChannelPartnerOrderTransactionDetail>(); // we haven't charged the card yet, so this is empty.
-                order.Transaction = orderTransaction;
-                order.TreatWarningsAsErrors = true;
-                
-                var apiResponse = channelPartnerApi.ImportChannelPartnerOrder(order);
-                
-                
+
+                if (doFirstExample)
+                {
+
+                    // order.AdvertisingSource = "Friend"; // https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1377001/Advertising+Sources
+                    // order.AffiliateId = 856234; // https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1377727/Affiliates
+                    // order.AffiliateSubId = 1234; // https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/1376754/Allowing+Affiliates+to+use+Sub-IDs
+                    // order.ArbitraryShippingHandlingTotal = 9.99;
+                    // order.ArbitraryTax = 2.50;
+                    // order.ArbitraryTaxRate = 7.0;
+                    // order.ArbitraryTaxableSubtotal = 69.99;
+
+                    order.AssociateWithCustomerProfileIfPresent = true;
+                    order.AutoApprovePurchaseOrder = true;
+                    order.BilltoAddress1 = "11460 Johns Creek Parkway";
+                    order.BilltoAddress2 = "Suite 101";
+                    order.BilltoCity = "Duluth";
+                    order.BilltoCompany = "Widgets Inc";
+                    order.BilltoCountryCode = "US";
+                    order.BilltoDayPhone = "6784153823";
+                    order.BilltoEveningPhone = "6784154019";
+                    order.BilltoFirstName = "John";
+                    order.BilltoLastName = "Smith";
+                    order.BilltoPostalCode = "30097";
+                    order.BilltoStateRegion = "GA";
+                    order.BilltoTitle = "Sir";
+                    order.CcEmail = "orders@widgets.com";
+                    order.ChannelPartnerOrderId = "widget-1245-abc";
+                    order.ConsiderRecurring = false;
+                    order.Coupons = new List<string> { "10OFF", "BUY1GET1" };
+
+                    // order.CreditCardAuthorizationAmount = 69.99;
+                    // order.CreditCardAuthorizationDts = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssK"); // this will usually not be 'now'. it will be the actual auth date
+                    // order.CreditCardAuthorizationNumber = "1234";
+
+                    order.CreditCardExpirationMonth = 5;
+                    order.CreditCardExpirationYear = 2032;
+                    order.CreditCardType = "VISA"; // see the hosted fields below for the card number and cvv tokens
+                    order.CustomField1 = "Whatever";
+                    order.CustomField2 = "You";
+                    order.CustomField3 = "Want";
+                    order.CustomField4 = "Can";
+                    order.CustomField5 = "Go";
+                    order.CustomField6 = "In";
+                    order.CustomField7 = "CustomFields";
+                    order.DeliveryDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssK");
+                    order.Email = "ceo@widgets.com";
+                    order.Gift = false;
+
+                    order.GiftEmail = "sally@aol.com";
+                    order.GiftMessage = "Congratulations on your promotion!";
+
+                    order.HostedFieldsCardToken = "7C97B0AAA26AB10180B4B29F00380101";
+                    order.HostedFieldsCvvToken = "C684AB4336787F0180B4B51971380101";
+
+                    // order.InsuranceApplicationId = insuranceApplicationId; // these are used by only a handful of specialized merchants
+                    // order.InsuranceClaimId = insuranceClaimId; // these are used by only a handful of specialized merchants
+
+                    order.IpAddress = "34.125.95.217";
+
+                    // -- Items start ---
+                    ChannelPartnerOrderItem item = new ChannelPartnerOrderItem();
+                    // item.ArbitraryUnitCost = 9.99;
+                    // item.AutoOrderLastRebillDts = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssK");
+                    // item.AutoOrderSchedule = "Weekly";
+
+                    item.MerchantItemId = "shirt";
+                    item.Quantity = 1;
+                    item.Upsell = false;
+
+                    ChannelPartnerOrderItemOption itemOption1 = new ChannelPartnerOrderItemOption();
+                    itemOption1.Name = "Size";
+                    itemOption1.Value = "Small";
+
+                    ChannelPartnerOrderItemOption itemOption2 = new ChannelPartnerOrderItemOption();
+                    itemOption2.Name = "Color";
+                    itemOption2.Value = "Orange";
+
+                    item.Options = new List<ChannelPartnerOrderItemOption> { itemOption1, itemOption2 };
+
+                    order.Items = new List<ChannelPartnerOrderItem> { item };
+                    // -- Items End ---
+
+
+                    order.LeastCostRoute = true; // Give me the lowest cost shipping
+                    order.LeastCostRouteShippingMethods = new List<string>
+                        { "FedEx: Ground", "UPS: Ground", "USPS: Priority" };
+                    order.MailingListOptIn =
+                        true; // Yes, I confirmed with the customer personally they wish to be on my mailing lists.
+                    order.NoRealtimePaymentProcessing = false;
+                    order.PaymentMethod = ChannelPartnerOrder.PaymentMethodEnum.CreditCard;
+                    // order.PurchaseOrderNumber = "PO-12345";
+                    order.RotatingTransactionGatewayCode =
+                        "MyStripe"; // We wish this to be charged against our Stripe gateway
+                    order.ScreenBrandingThemeCode =
+                        "SF1986"; // Theme codes predated StoreFronts. Each StoreFront still has a theme code under the hood. We need that here. See this screen to find your code: https://secure.ultracart.com/merchant/configuration/customerServiceLoad.do
+                    order.ShipOnDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssK");
+                    order.ShipToResidential = true;
+                    // order.ShippingMethod = "FedEx: Ground"; // We're using LeastCostRoute, so we do not supply this value
+                    order.ShiptoAddress1 = "55 Main Street";
+                    order.ShiptoAddress2 = "Suite 202";
+                    order.ShiptoCity = "Duluth";
+                    order.ShiptoCompany = "Widgets Inc";
+                    order.ShiptoCountryCode = "US";
+                    order.ShiptoDayPhone = "6785552323";
+                    order.ShiptoEveningPhone = "7703334444";
+                    order.ShiptoFirstName = "Sally";
+                    order.ShiptoLastName = "McGonkyDee";
+                    order.ShiptoPostalCode = "30097";
+                    order.ShiptoStateRegion = "GA";
+                    order.ShiptoTitle = "Director";
+                    order.SkipPaymentProcessing = false;
+                    order.SpecialInstructions =
+                        "Please wrap this in bubble wrap because my FedEx delivery guy is abusive to packages";
+                    order.StoreCompleted =
+                        false; // this will bypass everything, including shipping. useful only for importing old orders long completed
+                    order.StorefrontHostName = "store.mysite.com";
+                    order.StoreIfPaymentDeclines =
+                        false; // if payment fails, this can send it to Accounts Receivable. Do not want that. Fail if payment fails.
+                    order.TaxCounty = "Gwinnett";
+                    order.TaxExempt = false;
+
+                    ChannelPartnerOrderTransaction orderTransaction = new ChannelPartnerOrderTransaction();
+                    orderTransaction.Successful = false; // we haven't charged the card yet, so this is false.
+                    orderTransaction.Details =
+                        new List<ChannelPartnerOrderTransactionDetail>(); // we haven't charged the card yet, so this is empty.
+                    order.Transaction = orderTransaction;
+                    order.TreatWarningsAsErrors = true;
+
+                    var apiResponse = channelPartnerApi.ImportChannelPartnerOrder(order);
+                }
+
                 // ---------------------------------------------
                 // ---------------------------------------------
                 // Example 2 - Order already processed
