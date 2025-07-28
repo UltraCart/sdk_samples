@@ -49,13 +49,13 @@ export class RefundOrder {
                     orderId,
                     order,
                     {
-                        rejectAfterRefund: rejectAfterRefund,
-                        skipCustomerNotification: skipCustomerNotification,
-                        autoOrderCancel: cancelAssociatedAutoOrders,
-                        manualRefund: considerManualRefundDoneExternally,
-                        reverseAffiliateTransactions: reverseAffiliateTransactions,
-                        issueStoreCredit: issueStoreCredit,
-                        autoOrderCancelReason: autoCancelReason,
+                        reject_after_refund: rejectAfterRefund,
+                        skip_customer_notification: skipCustomerNotification,
+                        auto_order_cancel: cancelAssociatedAutoOrders,
+                        manual_refund: considerManualRefundDoneExternally,
+                        reverse_affiliate_transactions: reverseAffiliateTransactions,
+                        issue_store_credit: issueStoreCredit,
+                        auto_order_cancel_reason: autoCancelReason,
                         _expand: expand
                     }, function (error, data, response) {
                         if (error) {
