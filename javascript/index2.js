@@ -1,6 +1,6 @@
-import {GetGiftCertificatesByQuery} from "./gift_certificate/getGiftCertificatesByQuery.js";
+import {UnblockRefundOnOrder} from "./order/unblockRefundOnOrder.js";
 
 console.log("Beginning script");
-console.log("Calling GetGiftCertificatesByQuery.execute() ");
+console.log("Calling UnblockRefundOnOrder.execute() ");
 
-await GetGiftCertificatesByQuery.execute();
+await UnblockRefundOnOrder.execute();

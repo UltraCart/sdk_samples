@@ -30,12 +30,12 @@ export class Login {
             }).then(data => data.cart);
 
             if (!cart) {
-                console.error("Could not get a cart from ultracart, cannot continue.");
+                console.error("Could not get a cart from UltraCart, cannot continue.");
                 return {success: false};
             }
 
             // Collect these from user input in a real application
-            const email = "test@test.com";
+            const email = "test@ultracart.com";
             const password = "ABC123";
 
             // Prepare billing information

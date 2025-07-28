@@ -28,13 +28,13 @@ export class Login {
             let cart: Cart | undefined = (await checkoutApi.getCart({expand})).cart;
 
             if (!cart) {
-                console.error("Could not get a cart from ultracart, cannot continue.");
+                console.error("Could not get a cart from UltraCart, cannot continue.");
                 return {success: false};
             }
 
 
             // Collect these from user input in a real application
-            const email = "test@test.com";
+            const email = "test@ultracart.com";
             const password = "ABC123";
 
             // Prepare billing information
@@ -49,7 +49,7 @@ export class Login {
             };
 
             // Perform login
-            const apiResponse: CartProfileLoginResponse = await checkoutApi.login({loginRequest});
+            const apiResponse: CartProfileLoginResponse = await checkoutApi.login({loginRequest, expand:expand});
 
             // Update cart with response
             cart = apiResponse.cart;
@@ -74,10 +74,11 @@ export class Login {
 }
 
 // Optional: If you want to call the method
-// Login.execute().then(result => {
-//     if (result.success) {
-//         console.log("Login successful", result.cart);
-//     } else {
-//         console.log("Login failed");
-//     }
-// });
+Login.execute().then(result => {
+    if (result.success) {
+        console.log("Login successful", result.cart);
+        console.log("result.cart.billing.email:", result.cart?.billing?.email);
+    } else {
+        console.log("Login failed");
+    }
+});

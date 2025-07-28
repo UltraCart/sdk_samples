@@ -10,7 +10,7 @@ import {
 
 // sample key yo. only works in dev, so get your own.
 // See this article: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-let apiKey = 'a1f1b4b50a5c290195256170e70001006b7722bc8075e30195256170e7000100';
+let apiKey = '93debaee9cc581019851fe9010200100fc2f3ea91f359c019851fe9010200100';
 const apiClient = new ApiClient();
 apiClient.defaultHeaders['X-UltraCart-Api-Version'] = '2017-03-01';
 apiClient.authentications.ultraCartSimpleApiKey.apiKey = apiKey;

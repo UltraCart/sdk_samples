@@ -13,7 +13,7 @@ import {
     ChannelPartnerApi
 } from 'ultracart_rest_api_v2_typescript';
 
-let apiKey = 'a1f1b4b50a5c290195256170e70001006b7722bc8075e30195256170e7000100';
+let apiKey = '93debaee9cc581019851fe9010200100fc2f3ea91f359c019851fe9010200100';
 
 // export const couponApi = new CouponApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey, fetchApi: fetch }));
 // export const giftCertificateApi = new GiftCertificateApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey, fetchApi: fetch }));

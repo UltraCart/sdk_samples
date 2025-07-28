@@ -1,10 +1,10 @@
-import {GetCoupons} from "./coupon/GetCoupons";
+import {BlockRefundOnOrder} from "./order/BlockRefundOnOrder";
 // import {ResponseError} from "ultracart_rest_api_v2_typescript";
 
 // Self-executing async function since we can't use await at the top level
 (async () => {
     try {
-        await GetCoupons.execute();
+        await BlockRefundOnOrder.execute();
     } catch (error) {
         console.log(error);
         // const responseError = error as ResponseError;
