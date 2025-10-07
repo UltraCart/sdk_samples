@@ -1,0 +1,46 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104436/replacement" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100" \
+  -d $'{
+    "original_order_id": "DEMO-0009104436",
+    "items": [
+        {
+            "merchant_item_id": "TSHIRT",
+            "quantity": 1.0
+        },
+        {
+            "merchant_item_id": "BONE",
+            "quantity": 2.0
+        }
+    ],
+    "immediate_charge": true,
+    "skip_payment": true,
+    "free": true,
+    "custom_field_1": "Whatever",
+    "custom_field_4": "More Whatever",
+    "additional_merchant_notes_new_order": "Replacement order for spoiled ice cream",
+    "additional_merchant_notes_original_order": "This order was replaced."
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 740B0C7E6D556D0199C01586F180011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 19:11:05 GMT
+```
+
+**Response Body**
+```json
+{
+    "successful": true,
+    "orderId": "DEMO-0009106284",
+    "free": true
+}
+```

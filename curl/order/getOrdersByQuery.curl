@@ -1,0 +1,1271 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/order/orders/query\\ \
+?_limit=2&_offset=0&_expand=auto_order%2Cbilling%2Cchannel_partner%2Ccheckout%2Ccoupon%2Cedi%2Cgift%2Cgift_certificate%2Cinternal%2Citem%2Cpayment%2Cpayment.transaction%2Cpoint_of_sale%2Cproperties%2Cquote%2Cshipping%2Cshipping.tracking_number_details%2Csummary%2Ctaxes%2Cutms&_sort=%2Bshipping.state_region%2C-shipping.city" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100" \
+  -d $'{
+    "payment_date_begin": "2018-12-03T14:27:10.312-05:00",
+    "payment_date_end": "2025-10-07T14:27:10.312-04:00",
+    "query_target": "cache"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 00234A2DB61DBC0199BFED658A80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 18:27:10 GMT
+```
+
+**Response Body**
+```json
+{
+    "orders": [
+        {
+            "merchant_id": "DEMO",
+            "order_id": "DEMO-0009105091",
+            "current_stage": "Completed Order",
+            "creation_dts": "2023-05-18T10:46:27-04:00",
+            "refund_dts": "2023-05-18T11:39:11-04:00",
+            "language_iso_code": "ENG",
+            "billing": {
+                "first_name": "test",
+                "last_name": "buyer",
+                "country_code": "US",
+                "email": "perry-buyer@ultracart.com"
+            },
+            "shipping": {
+                "shipping_date": "2023-05-18T11:39:12-04:00",
+                "weight": {
+                    "value": 1,
+                    "uom": "LB"
+                },
+                "shipping_method": "UPS: SurePost",
+                "first_name": "test",
+                "last_name": "buyer",
+                "address1": "1 Main St",
+                "city": "San Jose",
+                "state_region": "CA",
+                "postal_code": "95131",
+                "country_code": "US",
+                "ship_to_residential": true,
+                "tracking_numbers": [
+                    ""
+                ],
+                "tracking_number_details": []
+            },
+            "taxes": {
+                "tax_county": "Santa Clara",
+                "tax_rate": 0.09375,
+                "tax_rate_state": 0.06,
+                "tax_rate_county": 0.0025,
+                "tax_rate_city": 0.0025,
+                "tax_rate_postal_code": 0.02875,
+                "tax_shipping": true
+            },
+            "payment": {
+                "payment_method": "PayPal",
+                "payment_status": "Refunded",
+                "payment_dts": "2023-05-18T10:46:30-04:00",
+                "transactions": [
+                    {
+                        "transaction_gateway": "PayPal",
+                        "transaction_timestamp": "2023-05-18T11:39:10-04:00",
+                        "details": [
+                            {
+                                "name": "debug_id",
+                                "value": "9869e168659a5"
+                            },
+                            {
+                                "name": "refund_amount",
+                                "value": "18.63"
+                            },
+                            {
+                                "name": "refund_create_time",
+                                "value": "2023-05-18T08:39:09-07:00"
+                            },
+                            {
+                                "name": "refund_currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "refund_id",
+                                "value": "09Y267721F6361310"
+                            },
+                            {
+                                "name": "refund_id",
+                                "value": "09Y267721F6361310"
+                            },
+                            {
+                                "name": "refund_status",
+                                "value": "COMPLETED"
+                            },
+                            {
+                                "name": "refund_update_time",
+                                "value": "2023-05-18T08:39:09-07:00"
+                            },
+                            {
+                                "name": "seller_payable_breakdown.gross_amount",
+                                "value": "18.63"
+                            },
+                            {
+                                "name": "seller_payable_breakdown.gross_amount_cc",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "seller_payable_breakdown.net_amount",
+                                "value": "17.98"
+                            },
+                            {
+                                "name": "seller_payable_breakdown.net_amount_cc",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "seller_payable_breakdown.paypal_fee",
+                                "value": "0.65"
+                            },
+                            {
+                                "name": "seller_payable_breakdown.paypal_fee_cc",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "seller_payable_breakdown.total_refunded_amount",
+                                "value": "18.63"
+                            },
+                            {
+                                "name": "seller_payable_breakdown.total_refunded_amount_cc",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "UC Refund Amount",
+                                "value": "18.63"
+                            },
+                            {
+                                "name": "UC Refund By User",
+                                "value": "demo"
+                            },
+                            {
+                                "name": "UC Refund Date/Time",
+                                "value": "Thu May 18 11:39:10 EDT 2023"
+                            }
+                        ],
+                        "successful": true,
+                        "transaction_id": 60086765
+                    },
+                    {
+                        "transaction_gateway": "PayPal",
+                        "transaction_timestamp": "2023-05-18T11:35:01-04:00",
+                        "details": [
+                            {
+                                "name": "Error",
+                                "value": "You do not have permissions to make this API call"
+                            }
+                        ],
+                        "transaction_id": 60086745
+                    },
+                    {
+                        "transaction_gateway": "PayPal",
+                        "transaction_timestamp": "2023-05-18T10:46:27-04:00",
+                        "details": [
+                            {
+                                "name": "Authorization Code",
+                                "type": "AuthTicket"
+                            },
+                            {
+                                "name": "create_time",
+                                "value": "2023-05-18T14:46:24Z"
+                            },
+                            {
+                                "name": "debugId",
+                                "value": "13461489939b0"
+                            },
+                            {
+                                "name": "id",
+                                "value": "4BF845543D6304537"
+                            },
+                            {
+                                "name": "intent",
+                                "value": "CAPTURE"
+                            },
+                            {
+                                "name": "payment_source.paypal.account_id",
+                                "value": "98S722SHAHLGS"
+                            },
+                            {
+                                "name": "payment_source.paypal.email_address",
+                                "value": "perry-buyer@ultracart.com"
+                            },
+                            {
+                                "name": "payment_source.paypal.experience_context.cancel_url",
+                                "value": "https://secure.ultracart.com/echo.jsp"
+                            },
+                            {
+                                "name": "payment_source.paypal.experience_context.landing_page",
+                                "value": "LOGIN"
+                            },
+                            {
+                                "name": "payment_source.paypal.experience_context.locale",
+                                "value": "en-US"
+                            },
+                            {
+                                "name": "payment_source.paypal.experience_context.payment_method_selected",
+                                "value": "PAYPAL"
+                            },
+                            {
+                                "name": "payment_source.paypal.experience_context.return_url",
+                                "value": "https://secure.ultracart.com/echo.jsp"
+                            },
+                            {
+                                "name": "payment_source.paypal.experience_context.user_action",
+                                "value": "PAY_NOW"
+                            },
+                            {
+                                "name": "payment_source.paypal.name.given_name",
+                                "value": "test"
+                            },
+                            {
+                                "name": "payment_source.paypal.name.surname",
+                                "value": "buyer"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.discount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.discount.value",
+                                "value": "0.0"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.handling.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.handling.value",
+                                "value": "0.00"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.insurance.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.insurance.value",
+                                "value": "0.00"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.item_total.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.item_total.value",
+                                "value": "5.00"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.shipping.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.shipping.value",
+                                "value": "12.03"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.shipping_discount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.shipping_discount.value",
+                                "value": "0.00"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.tax_total.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.tax_total.value",
+                                "value": "1.60"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.value",
+                                "value": "18.63"
+                            },
+                            {
+                                "name": "purchase_units[0].custom_id",
+                                "value": "UltraCart Order ID: DEMO-0009105091"
+                            },
+                            {
+                                "name": "purchase_units[0].description",
+                                "value": "PayPal Test Auto Order Item"
+                            },
+                            {
+                                "name": "purchase_units[0].invoice_id",
+                                "value": "DEMO-0009105091"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].name",
+                                "value": "PayPal Test Auto Order Item"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].quantity",
+                                "value": "1"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].tax.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].tax.value",
+                                "value": "0.00"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].unit_amount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].unit_amount.value",
+                                "value": "5.00"
+                            },
+                            {
+                                "name": "purchase_units[0].payee.email_address",
+                                "value": "perry_merchant@ultracart.com"
+                            },
+                            {
+                                "name": "purchase_units[0].payee.merchant_id",
+                                "value": "APVVRUM5HSDQ8"
+                            },
+                            {
+                                "name": "purchase_units[0].payment_instruction.disbursement_mode",
+                                "value": "INSTANT"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].amount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].amount.value",
+                                "value": "18.63"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].create_time",
+                                "value": "2023-05-18T14:46:25Z"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].custom_id",
+                                "value": "UltraCart Order ID: DEMO-0009105091"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].disbursement_mode",
+                                "value": "INSTANT"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].final_capture",
+                                "value": "true"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].id",
+                                "value": "17H43084T67481300"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].invoice_id",
+                                "value": "DEMO-0009105091"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[1].href",
+                                "value": "https://api.sandbox.paypal.com/v2/payments/captures/17H43084T67481300/refund"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[1].method",
+                                "value": "POST"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[1].rel",
+                                "value": "refund"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[2].href",
+                                "value": "https://api.sandbox.paypal.com/v2/checkout/orders/4BF845543D6304537"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[2].method",
+                                "value": "GET"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[2].rel",
+                                "value": "up"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_protection.status",
+                                "value": "ELIGIBLE"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.gross_amount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.gross_amount.value",
+                                "value": "18.63"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.net_amount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.net_amount.value",
+                                "value": "17.49"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.paypal_fee.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.paypal_fee.value",
+                                "value": "1.14"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].status",
+                                "value": "COMPLETED"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].update_time",
+                                "value": "2023-05-18T14:46:25Z"
+                            },
+                            {
+                                "name": "purchase_units[0].reference_id",
+                                "value": "default"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.address.address_line_1",
+                                "value": "1 Main St"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.address.admin_area_1",
+                                "value": "CA"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.address.admin_area_2",
+                                "value": "San Jose"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.address.country_code",
+                                "value": "US"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.address.postal_code",
+                                "value": "95131"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.name.full_name",
+                                "value": "test buyer"
+                            },
+                            {
+                                "name": "status",
+                                "value": "COMPLETED"
+                            },
+                            {
+                                "name": "update_time",
+                                "value": "2023-05-18T14:46:25Z"
+                            }
+                        ],
+                        "successful": true,
+                        "transaction_id": 60086005
+                    }
+                ]
+            },
+            "summary": {
+                "shipping_handling_total": {
+                    "value": 12.03,
+                    "localized": 12.03,
+                    "localized_formatted": "$12.03"
+                },
+                "subtotal": {
+                    "value": 5,
+                    "localized": 5,
+                    "localized_formatted": "$5.00"
+                },
+                "tax": {
+                    "value": 1.6,
+                    "localized": 1.6,
+                    "localized_formatted": "$1.60"
+                },
+                "total": {
+                    "value": 18.63,
+                    "localized": 18.63,
+                    "localized_formatted": "$18.63"
+                },
+                "shipping_handling_total_discount": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "subtotal_discount": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "taxable_subtotal_discount": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "taxable_subtotal": {
+                    "value": 17.03,
+                    "localized": 17.03,
+                    "localized_formatted": "$17.03"
+                },
+                "subtotal_discount_refunded": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "subtotal_refunded": {
+                    "value": 5,
+                    "localized": 5,
+                    "localized_formatted": "$5.00"
+                },
+                "tax_refunded": {
+                    "value": 1.6,
+                    "localized": 1.6,
+                    "localized_formatted": "$1.60"
+                },
+                "shipping_handling_refunded": {
+                    "value": 12.03,
+                    "localized": 12.03,
+                    "localized_formatted": "$12.03"
+                },
+                "total_refunded": {
+                    "value": 18.63,
+                    "localized": 18.63,
+                    "localized_formatted": "$18.63"
+                }
+            },
+            "gift": {
+                "gift_charge": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "gift_wrap_cost": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "gift_charge_refunded": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "gift_wrap_refunded": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                }
+            },
+            "internal": {
+                "refund_by_user": "demo",
+                "transactional_merchant_notes": []
+            },
+            "items": [
+                {
+                    "merchant_item_id": "PAYPALTESTAO",
+                    "quantity": 1,
+                    "description": "PayPal Test Auto Order Item",
+                    "cost": {
+                        "value": 5,
+                        "localized": 5,
+                        "localized_formatted": "$5.00"
+                    },
+                    "weight": {
+                        "value": 1,
+                        "uom": "LB"
+                    },
+                    "special_product_type": "",
+                    "discount": {
+                        "value": 0,
+                        "localized": 0,
+                        "localized_formatted": "$0.00"
+                    },
+                    "item_reference_oid": 104542439,
+                    "accounting_code": "PAYPALTESTAO",
+                    "distribution_center_code": "DISK",
+                    "shipped_dts": "2023-05-18T11:39:12-04:00",
+                    "quantity_refunded": 1,
+                    "total_refunded": {
+                        "value": 5,
+                        "localized": 5,
+                        "localized_formatted": "$5.00"
+                    },
+                    "unit_cost_with_discount": {
+                        "value": 5,
+                        "localized": 5,
+                        "localized_formatted": "$5.00"
+                    },
+                    "total_cost_with_discount": {
+                        "value": 5,
+                        "localized": 5,
+                        "localized_formatted": "$5.00"
+                    },
+                    "properties": [
+                        {
+                            "name": "refundReason",
+                            "value": "CustomerCancel"
+                        }
+                    ],
+                    "tax_product_type": "",
+                    "item_index": 1,
+                    "refund_reason": "CustomerCancel"
+                }
+            ],
+            "checkout": {
+                "storefront_host_name": "demo.ultracartstore.com",
+                "browser": {
+                    "user_agent": {
+                        "family": "Chrome",
+                        "major": "113",
+                        "minor": "0",
+                        "patch": "0"
+                    },
+                    "os": {
+                        "family": "Windows",
+                        "major": "10",
+                        "minor": "",
+                        "patch": "",
+                        "patch_minor": ""
+                    },
+                    "device": {
+                        "family": "Other"
+                    }
+                },
+                "screen_size": "large"
+            },
+            "auto_order": {
+                "auto_order_oid": 6068208,
+                "original_order_id": "DEMO-0009105084",
+                "auto_order_code": "PRSBVWDFNN"
+            },
+            "properties": [
+                {
+                    "name": "screenSize",
+                    "value": "large"
+                },
+                {
+                    "name": "cashbackEarned",
+                    "value": "0.1"
+                },
+                {
+                    "name": "refundReason",
+                    "value": "CustomerCancel"
+                },
+                {
+                    "name": "userAgent",
+                    "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+                },
+                {
+                    "name": "ucasid",
+                    "value": "654060696",
+                    "expiration_dts": "2023-11-20T10:48:54-05:00"
+                },
+                {
+                    "name": "ucacid",
+                    "value": "189660031.911683",
+                    "expiration_dts": "2023-11-20T09:46:17-05:00"
+                }
+            ],
+            "utms": [],
+            "refund_reason": "CustomerCancel"
+        },
+        {
+            "merchant_id": "DEMO",
+            "order_id": "DEMO-0009105078",
+            "current_stage": "Completed Order",
+            "creation_dts": "2023-05-17T15:24:06-04:00",
+            "language_iso_code": "ENG",
+            "billing": {
+                "first_name": "test",
+                "last_name": "buyer",
+                "country_code": "US",
+                "email": "perry-buyer@ultracart.com"
+            },
+            "shipping": {
+                "shipping_date": "2025-05-28T09:38:04-04:00",
+                "weight": {
+                    "value": 2,
+                    "uom": "LB"
+                },
+                "shipping_method": "UPS: SurePost",
+                "first_name": "test",
+                "last_name": "buyer",
+                "address1": "1 Main St",
+                "city": "San Jose",
+                "state_region": "CA",
+                "postal_code": "95131",
+                "country_code": "US",
+                "ship_to_residential": true,
+                "tracking_numbers": [
+                    ""
+                ],
+                "tracking_number_details": [],
+                "ship_on_date": "2023-05-17T00:00:00-04:00"
+            },
+            "taxes": {
+                "tax_county": "Santa Clara",
+                "tax_rate": 0,
+                "tax_shipping": true
+            },
+            "payment": {
+                "payment_method": "PayPal",
+                "payment_status": "Processed",
+                "payment_dts": "2023-05-17T15:24:10-04:00",
+                "transactions": [
+                    {
+                        "transaction_gateway": "PayPal",
+                        "transaction_timestamp": "2023-05-17T15:24:06-04:00",
+                        "details": [
+                            {
+                                "name": "Authorization Code",
+                                "type": "AuthTicket"
+                            },
+                            {
+                                "name": "create_time",
+                                "value": "2023-05-17T19:23:16Z"
+                            },
+                            {
+                                "name": "id",
+                                "value": "6Y418303S9385682T"
+                            },
+                            {
+                                "name": "intent",
+                                "value": "CAPTURE"
+                            },
+                            {
+                                "name": "links[0].href",
+                                "value": "https://api.sandbox.paypal.com/v2/checkout/orders/6Y418303S9385682T"
+                            },
+                            {
+                                "name": "links[0].method",
+                                "value": "GET"
+                            },
+                            {
+                                "name": "links[0].rel",
+                                "value": "self"
+                            },
+                            {
+                                "name": "payer.address.country_code",
+                                "value": "US"
+                            },
+                            {
+                                "name": "payer.email_address",
+                                "value": "perry-buyer@ultracart.com"
+                            },
+                            {
+                                "name": "payer.name.given_name",
+                                "value": "test"
+                            },
+                            {
+                                "name": "payer.name.surname",
+                                "value": "buyer"
+                            },
+                            {
+                                "name": "payer.payer_id",
+                                "value": "98S722SHAHLGS"
+                            },
+                            {
+                                "name": "payment_source.paypal.account_id",
+                                "value": "98S722SHAHLGS"
+                            },
+                            {
+                                "name": "payment_source.paypal.address.country_code",
+                                "value": "US"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.customer.id",
+                                "value": "jvbAOfXTkC"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.id",
+                                "value": "fccsy6cy"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.links[0].href",
+                                "value": "https://api.sandbox.paypal.com/v3/vault/payment-tokens/fccsy6cy"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.links[0].method",
+                                "value": "GET"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.links[0].rel",
+                                "value": "self"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.links[1].href",
+                                "value": "https://api.sandbox.paypal.com/v3/vault/payment-tokens/fccsy6cy"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.links[1].method",
+                                "value": "DELETE"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.links[1].rel",
+                                "value": "delete"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.links[2].href",
+                                "value": "https://api.sandbox.paypal.com/v2/checkout/orders/6Y418303S9385682T"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.links[2].method",
+                                "value": "GET"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.links[2].rel",
+                                "value": "up"
+                            },
+                            {
+                                "name": "payment_source.paypal.attributes.vault.status",
+                                "value": "VAULTED"
+                            },
+                            {
+                                "name": "payment_source.paypal.email_address",
+                                "value": "perry-buyer@ultracart.com"
+                            },
+                            {
+                                "name": "payment_source.paypal.name.given_name",
+                                "value": "test"
+                            },
+                            {
+                                "name": "payment_source.paypal.name.surname",
+                                "value": "buyer"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.handling.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.handling.value",
+                                "value": "0.00"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.insurance.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.insurance.value",
+                                "value": "0.00"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.item_total.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.item_total.value",
+                                "value": "10.00"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.shipping.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.shipping.value",
+                                "value": "12.03"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.shipping_discount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.shipping_discount.value",
+                                "value": "0.00"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.tax_total.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.breakdown.tax_total.value",
+                                "value": "2.07"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].amount.value",
+                                "value": "24.10"
+                            },
+                            {
+                                "name": "purchase_units[0].custom_id",
+                                "value": "DEMO-0009105078"
+                            },
+                            {
+                                "name": "purchase_units[0].description",
+                                "value": "PayPal Test Auto Order Item"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].image_url"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].name",
+                                "value": "PayPal Test Auto Order Item"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].quantity",
+                                "value": "2"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].tax.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].tax.value",
+                                "value": "0.00"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].unit_amount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].items[0].unit_amount.value",
+                                "value": "5.00"
+                            },
+                            {
+                                "name": "purchase_units[0].payee.email_address",
+                                "value": "perry_merchant@ultracart.com"
+                            },
+                            {
+                                "name": "purchase_units[0].payee.merchant_id",
+                                "value": "APVVRUM5HSDQ8"
+                            },
+                            {
+                                "name": "purchase_units[0].payment_instruction.disbursement_mode",
+                                "value": "INSTANT"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].amount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].amount.value",
+                                "value": "24.10"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].create_time",
+                                "value": "2023-05-17T19:24:04Z"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].custom_id",
+                                "value": "DEMO-0009105078"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].disbursement_mode",
+                                "value": "INSTANT"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].final_capture",
+                                "value": "true"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].id",
+                                "value": "8F831281GF913933B"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[0].href",
+                                "value": "https://api.sandbox.paypal.com/v2/payments/captures/8F831281GF913933B"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[0].method",
+                                "value": "GET"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[0].rel",
+                                "value": "self"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[1].href",
+                                "value": "https://api.sandbox.paypal.com/v2/payments/captures/8F831281GF913933B/refund"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[1].method",
+                                "value": "POST"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[1].rel",
+                                "value": "refund"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[2].href",
+                                "value": "https://api.sandbox.paypal.com/v2/checkout/orders/6Y418303S9385682T"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[2].method",
+                                "value": "GET"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].links[2].rel",
+                                "value": "up"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_protection.dispute_categories[0]",
+                                "value": "ITEM_NOT_RECEIVED"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_protection.dispute_categories[1]",
+                                "value": "UNAUTHORIZED_TRANSACTION"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_protection.status",
+                                "value": "ELIGIBLE"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.gross_amount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.gross_amount.value",
+                                "value": "24.10"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.net_amount.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.net_amount.value",
+                                "value": "22.77"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.paypal_fee.currency_code",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].seller_receivable_breakdown.paypal_fee.value",
+                                "value": "1.33"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].status",
+                                "value": "COMPLETED"
+                            },
+                            {
+                                "name": "purchase_units[0].payments.captures[0].update_time",
+                                "value": "2023-05-17T19:24:04Z"
+                            },
+                            {
+                                "name": "purchase_units[0].reference_id",
+                                "value": "default"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.address.address_line_1",
+                                "value": "1 Main St"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.address.admin_area_1",
+                                "value": "CA"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.address.admin_area_2",
+                                "value": "San Jose"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.address.country_code",
+                                "value": "US"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.address.postal_code",
+                                "value": "95131"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.name.full_name",
+                                "value": "test buyer"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.options[0].amount.currency",
+                                "value": "USD"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.options[0].amount.value",
+                                "value": "12.03"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.options[0].id",
+                                "value": "UPS: SurePost"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.options[0].label",
+                                "value": "UPS: SurePost"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.options[0].selected",
+                                "value": "true"
+                            },
+                            {
+                                "name": "purchase_units[0].shipping.options[0].type",
+                                "value": "SHIPPING"
+                            },
+                            {
+                                "name": "status",
+                                "value": "COMPLETED"
+                            },
+                            {
+                                "name": "update_time",
+                                "value": "2023-05-17T19:24:04Z"
+                            }
+                        ],
+                        "successful": true,
+                        "transaction_id": 60075446
+                    }
+                ]
+            },
+            "summary": {
+                "shipping_handling_total": {
+                    "value": 12.03,
+                    "localized": 12.03,
+                    "localized_formatted": "$12.03"
+                },
+                "subtotal": {
+                    "value": 10,
+                    "localized": 10,
+                    "localized_formatted": "$10.00"
+                },
+                "tax": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "total": {
+                    "value": 22.03,
+                    "localized": 22.03,
+                    "localized_formatted": "$22.03"
+                },
+                "shipping_handling_total_discount": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "subtotal_discount": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "taxable_subtotal_discount": {
+                    "value": 0,
+                    "localized": 0,
+                    "localized_formatted": "$0.00"
+                },
+                "taxable_subtotal": {
+                    "value": 10,
+                    "localized": 10,
+                    "localized_formatted": "$10.00"
+                }
+            },
+            "items": [
+                {
+                    "merchant_item_id": "PAYPALTESTAO",
+                    "quantity": 2,
+                    "description": "PayPal Test Auto Order Item",
+                    "cost": {
+                        "value": 5,
+                        "localized": 5,
+                        "localized_formatted": "$5.00"
+                    },
+                    "weight": {
+                        "value": 1,
+                        "uom": "LB"
+                    },
+                    "special_product_type": "",
+                    "discount": {
+                        "value": 0,
+                        "localized": 0,
+                        "localized_formatted": "$0.00"
+                    },
+                    "item_reference_oid": 104525700,
+                    "accounting_code": "PAYPALTESTAO",
+                    "distribution_center_code": "DISK",
+                    "shipped_dts": "2025-05-28T09:38:04-04:00",
+                    "shipped_by_user": "demo",
+                    "unit_cost_with_discount": {
+                        "value": 5,
+                        "localized": 5,
+                        "localized_formatted": "$5.00"
+                    },
+                    "total_cost_with_discount": {
+                        "value": 10,
+                        "localized": 10,
+                        "localized_formatted": "$10.00"
+                    },
+                    "tax_product_type": "",
+                    "item_index": 1
+                }
+            ],
+            "checkout": {
+                "customer_ip_address": "68.169.169.183",
+                "storefront_host_name": "demo.ultracartstore.com",
+                "browser": {
+                    "user_agent": {
+                        "family": "Chrome",
+                        "major": "113",
+                        "minor": "0",
+                        "patch": "0"
+                    },
+                    "os": {
+                        "family": "Windows",
+                        "major": "10",
+                        "minor": "",
+                        "patch": "",
+                        "patch_minor": ""
+                    },
+                    "device": {
+                        "family": "Other"
+                    }
+                },
+                "screen_size": "large"
+            },
+            "auto_order": {
+                "auto_order_oid": 6066948,
+                "original_order_id": "DEMO-0009105078",
+                "enabled": true,
+                "auto_order_code": "C63HK7RM2R",
+                "credit_card_attempt": 0,
+                "next_attempt": "2025-05-29T00:00:00-04:00",
+                "status": "active"
+            },
+            "properties": [
+                {
+                    "name": "screenSize",
+                    "value": "large"
+                },
+                {
+                    "name": "cashbackEarned",
+                    "value": "0.2"
+                },
+                {
+                    "name": "userAgent",
+                    "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+                },
+                {
+                    "name": "ucacid",
+                    "value": "1414476415.341333",
+                    "expiration_dts": "2025-11-30T08:38:04-05:00"
+                }
+            ],
+            "utms": []
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 2,
+            "offset": 0,
+            "limit": 2,
+            "more": true,
+            "next_offset": 2,
+            "total_records": 1144
+        },
+        "payload_name": "orders"
+    }
+}
+```

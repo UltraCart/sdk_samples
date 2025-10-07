@@ -1,0 +1,216 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X PUT "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009106282/refund\\ \
+?reject_after_refund=False&skip_customer_notification=True&auto_order_cancel=True&manual_refund=True&reverse_affiliate_transactions=True&_expand=item" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100" \
+  -d $'{
+    "merchant_id": "DEMO",
+    "order_id": "DEMO-0009106282",
+    "current_stage": "Shipping Department",
+    "creation_dts": "2025-10-07T14:50:23-04:00",
+    "language_iso_code": "ENG",
+    "items": [
+        {
+            "merchant_item_id": "BONE",
+            "quantity": 1.0,
+            "description": "TJ'\''s DOGGIE BONES (6 lbs.)\nCode: NKFDWBNJ81",
+            "cost": {
+                "value": 17.95,
+                "localized": 17.95,
+                "localized_formatted": "$17.95"
+            },
+            "weight": {
+                "value": 1.0,
+                "uom": "LB"
+            },
+            "special_product_type": "",
+            "free_shipping": true,
+            "discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "item_reference_oid": 127545010,
+            "accounting_code": "Bone",
+            "length": {
+                "value": 0.394,
+                "uom": "IN"
+            },
+            "height": {
+                "value": 0.394,
+                "uom": "IN"
+            },
+            "width": {
+                "value": 0.394,
+                "uom": "IN"
+            },
+            "options": [
+                {
+                    "label": "Addon Treat",
+                    "value": "No thanks",
+                    "cost_change": {
+                        "value": 0.0,
+                        "localized": 0.0,
+                        "localized_formatted": "$0.00"
+                    },
+                    "weight_change": {
+                        "value": 0.0,
+                        "uom": "LB"
+                    },
+                    "additional_dimension_application": "none"
+                }
+            ],
+            "mix_and_match_group_oid": 11226,
+            "mix_and_match_group_name": "5% off Subtotal",
+            "distribution_center_code": "DFLT",
+            "unit_cost_with_discount": {
+                "value": 17.95,
+                "localized": 17.95,
+                "localized_formatted": "$17.95"
+            },
+            "total_cost_with_discount": {
+                "value": 17.95,
+                "localized": 17.95,
+                "localized_formatted": "$17.95"
+            },
+            "cogs": 3.0,
+            "barcode": "078742226583",
+            "country_code_of_origin": "US",
+            "tax_product_type": "",
+            "item_index": 1,
+            "quantity_refunded": 1.0
+        }
+    ],
+    "refund_reason": "CustomerCancel"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 346BECC4F47EF80199C012E08E80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 19:08:10 GMT
+```
+
+**Response Body**
+```json
+{
+    "order": {
+        "merchant_id": "DEMO",
+        "order_id": "DEMO-0009106282",
+        "current_stage": "Shipping Department",
+        "creation_dts": "2025-10-07T14:50:23-04:00",
+        "refund_dts": "2025-10-07T15:08:07-04:00",
+        "language_iso_code": "ENG",
+        "items": [
+            {
+                "merchant_item_id": "BONE",
+                "quantity": 1,
+                "description": "TJ's DOGGIE BONES (6 lbs.)\nCode: NKFDWBNJ81",
+                "cost": {
+                    "value": 17.95,
+                    "localized": 17.95,
+                    "localized_formatted": "$17.95"
+                },
+                "weight": {
+                    "value": 1,
+                    "uom": "LB"
+                },
+                "special_product_type": "",
+                "free_shipping": true,
+                "discount": {
+                    "value": 0,
+                    "localized": 0.0,
+                    "localized_formatted": "$0.00"
+                },
+                "item_reference_oid": 127545010,
+                "accounting_code": "Bone",
+                "length": {
+                    "value": 0.394,
+                    "uom": "IN"
+                },
+                "height": {
+                    "value": 0.394,
+                    "uom": "IN"
+                },
+                "width": {
+                    "value": 0.394,
+                    "uom": "IN"
+                },
+                "options": [
+                    {
+                        "label": "Addon Treat",
+                        "value": "No thanks",
+                        "cost_change": {
+                            "value": 0,
+                            "localized": 0.0,
+                            "localized_formatted": "$0.00"
+                        },
+                        "weight_change": {
+                            "value": 0,
+                            "uom": "LB"
+                        },
+                        "additional_dimension_application": "none"
+                    }
+                ],
+                "mix_and_match_group_oid": 11226,
+                "mix_and_match_group_name": "5% off Subtotal",
+                "distribution_center_code": "DFLT",
+                "quantity_refunded": 1,
+                "total_refunded": {
+                    "value": 17.95,
+                    "localized": 17.95,
+                    "localized_formatted": "$17.95"
+                },
+                "unit_cost_with_discount": {
+                    "value": 17.95,
+                    "localized": 17.95,
+                    "localized_formatted": "$17.95"
+                },
+                "total_cost_with_discount": {
+                    "value": 17.95,
+                    "localized": 17.95,
+                    "localized_formatted": "$17.95"
+                },
+                "cogs": 3.0,
+                "barcode": "078742226583",
+                "country_code_of_origin": "US",
+                "tax_product_type": "",
+                "item_index": 1
+            }
+        ],
+        "refund_reason": "CustomerCancel"
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "order"
+    }
+}
+```
+
+**Error Response Headers**
+```html
+Status: 400 Bad Request
+X-UltraCart-Request-Id: AB9CBF98B81EC50199C00B9DCD80011
+UC-REST-ERROR: Payment has not been processed on this order.  No refund can be issued.
+Content-Type: application/json; charset=UTF-8
+Connection: close
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 19:00:11 GMT
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "Payment has not been processed on this order.  No refund can be issued.",
+        "user_message": "Payment has not been processed on this order.  No refund can be issued."
+    },
+    "metadata": {}
+}
+```

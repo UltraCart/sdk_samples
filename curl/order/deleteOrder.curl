@@ -1,0 +1,42 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X DELETE "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009105482" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+**Response Headers**
+```html
+Status: 204 No Content
+X-UltraCart-Request-Id: 3803C55A2614430199BAF6DBC980011
+Content-Length: 0
+Date: Mon, 06 Oct 2025 19:19:27 GMT
+```
+
+**Response Body**
+```json
+
+```
+
+**Error Response Headers**
+```html
+Status: 400 Bad Request
+X-UltraCart-Request-Id: 5E906D6F7BDF030199BAE88BA780011
+UC-REST-ERROR: Server side object 'order' could not be updated.  It does not exist.
+Content-Type: application/json; charset=UTF-8
+Connection: close
+Transfer-Encoding: chunked
+Date: Mon, 06 Oct 2025 19:03:46 GMT
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "Server side object 'order' could not be updated.  It does not exist.",
+        "user_message": "Server side object 'order' could not be updated.  It does not exist."
+    },
+    "metadata": {}
+}
+```

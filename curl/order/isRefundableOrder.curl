@@ -1,0 +1,132 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104976/refundable" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 91172F1D28F1D80199C0014C8B80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 18:48:57 GMT
+```
+
+**Response Body**
+```json
+{
+    "order_level_refund_reasons": [
+        {
+            "value": "Abandoned",
+            "description": "Abandoned"
+        },
+        {
+            "value": "CouldNotShip",
+            "description": "CouldNotShip"
+        },
+        {
+            "value": "CustomerCancel",
+            "description": "CustomerCancel"
+        },
+        {
+            "value": "CustomerReturn",
+            "description": "CustomerReturn"
+        },
+        {
+            "value": "DifferentItem",
+            "description": "DifferentItem"
+        },
+        {
+            "value": "GeneralAdjustment",
+            "description": "GeneralAdjustment"
+        },
+        {
+            "value": "NoInventory",
+            "description": "NoInventory"
+        },
+        {
+            "value": "PriceError",
+            "description": "PriceError"
+        }
+    ],
+    "item_level_refund_reasons": [
+        {
+            "value": "Abandoned",
+            "description": "Abandoned"
+        },
+        {
+            "value": "CouldNotShip",
+            "description": "CouldNotShip"
+        },
+        {
+            "value": "CustomerCancel",
+            "description": "CustomerCancel"
+        },
+        {
+            "value": "CustomerReturn",
+            "description": "CustomerReturn"
+        },
+        {
+            "value": "DifferentItem",
+            "description": "DifferentItem"
+        },
+        {
+            "value": "GeneralAdjustment",
+            "description": "GeneralAdjustment"
+        },
+        {
+            "value": "NoInventory",
+            "description": "NoInventory"
+        },
+        {
+            "value": "PriceError",
+            "description": "PriceError"
+        }
+    ],
+    "item_level_return_reasons": [],
+    "order_level_refund_reason_required": true,
+    "order_level_reject_reasons": [
+        {
+            "value": "Abandoned",
+            "description": "Abandoned"
+        },
+        {
+            "value": "CouldNotShip",
+            "description": "CouldNotShip"
+        },
+        {
+            "value": "CustomerCancel",
+            "description": "CustomerCancel"
+        },
+        {
+            "value": "CustomerReturn",
+            "description": "CustomerReturn"
+        },
+        {
+            "value": "DifferentItem",
+            "description": "DifferentItem"
+        },
+        {
+            "value": "GeneralAdjustment",
+            "description": "GeneralAdjustment"
+        },
+        {
+            "value": "NoInventory",
+            "description": "NoInventory"
+        },
+        {
+            "value": "PriceError",
+            "description": "PriceError"
+        }
+    ],
+    "order_level_reject_reason_required": true,
+    "success": true,
+    "metadata": {
+        "payload_name": "refundable"
+    }
+}
+```
+

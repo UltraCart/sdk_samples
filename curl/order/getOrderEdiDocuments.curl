@@ -1,0 +1,48 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104976/edi" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 5075AA3FF2CA720199BFD48B4880011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 18:00:04 GMT
+```
+
+**Response Body**
+```json
+{
+    "ediDocuments": ["See the object model for these details"],
+    "success": true,
+    "metadata": {}
+}
+```
+
+**Error Response Headers**
+```html
+Status: 400 Bad Request
+X-UltraCart-Request-Id: A6FDBE98D05EF50199BFCAF7C780011
+UC-REST-ERROR: Order is not associated with an EDI channel partner.
+Content-Type: application/json; charset=UTF-8
+Connection: close
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 17:49:36 GMT
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "Order is not associated with an EDI channel partner.",
+        "user_message": "Order is not associated with an EDI channel partner."
+    },
+    "metadata": {}
+}
+```
+

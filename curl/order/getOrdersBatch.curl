@@ -1,0 +1,181 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/order/orders/batch\\ \
+?_expand=auto_order%2Cbilling%2Cchannel_partner%2Ccheckout%2Ccoupon%2Cedi%2Cgift%2Cgift_certificate%2Cinternal%2Citem%2Cpayment%2Cpayment.transaction%2Cpoint_of_sale%2Cproperties%2Cquote%2Cshipping%2Cshipping.tracking_number_details%2Csummary%2Ctaxes%2Cutms" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100" \
+  -d $'{
+    "limit": 500,
+    "query_target": "cache",
+    "order_ids": [
+        "DEMO-0009103110",
+        "DEMO-0009103427"
+    ]
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 1E17E32757DAF00199BFE6272280011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 18:19:15 GMT
+```
+
+**Response Body**
+```json
+{
+    "orders": [
+        {
+            "merchant_id": "DEMO",
+            "order_id": "DEMO-0009103110",
+            "current_stage": "Completed Order",
+            "creation_dts": "2014-07-13T00:58:52-04:00",
+            "billing": {
+                "first_name": "test",
+                "last_name": "test",
+                "address1": "test",
+                "city": "MERCED",
+                "state_region": "CA",
+                "postal_code": "95340",
+                "country_code": "US",
+                "day_phone": "209-383-9870",
+                "evening_phone": "209-383-9870",
+                "evening_phone_e164": "+12093839870",
+                "email": "test@test.com"
+            },
+            "shipping": {
+                "shipping_date": "2021-12-13T09:15:26-05:00",
+                "weight": {
+                    "value": 5,
+                    "uom": "LB"
+                },
+                "shipping_method": "USPS: Priority Mail",
+                "first_name": "test",
+                "last_name": "test",
+                "address1": "test",
+                "city": "MERCED",
+                "state_region": "CA",
+                "postal_code": "95340",
+                "country_code": "US",
+                "ship_to_residential": true,
+                "day_phone": "209-383-9870",
+                "tracking_numbers": [
+                    ""
+                ],
+                "tracking_number_details": []
+            },
+            "payment": {
+                "payment_method": "Credit Card",
+                "payment_status": "Processed",
+                "payment_dts": "2014-07-13T00:58:52-04:00"
+            },
+            "summary": {
+                "shipping_handling_total": {
+                    "value": 2.96,
+                    "localized": 2.96,
+                    "localized_formatted": "$2.96"
+                },
+                "total": {
+                    "value": 24.56,
+                    "localized": 24.56,
+                    "localized_formatted": "$24.56"
+                }
+            },
+            "checkout": {
+                "storefront_host_name": "demo-3.ultracartstore.com"
+            },
+            "auto_order": {
+                "auto_order_oid": 2078718,
+                "original_order_id": "DEMO-0009103086"
+            },
+            "properties": [
+                {
+                    "name": "ucacid",
+                    "value": "1054770559.508834",
+                    "expiration_dts": "2023-03-25T10:38:20-04:00"
+                }
+            ]
+        },
+        {
+            "merchant_id": "DEMO",
+            "order_id": "DEMO-0009103427",
+            "current_stage": "Completed Order",
+            "creation_dts": "2016-08-22T18:43:24-04:00",
+            "billing": {
+                "first_name": "order",
+                "last_name": "ultra",
+                "address1": "222 lincoln ave",
+                "city": "salinas",
+                "state_region": "CA",
+                "postal_code": "93901",
+                "country_code": "US",
+                "day_phone": "222-209-9870",
+                "email": "mail@mail.com"
+            },
+            "shipping": {
+                "shipping_date": "2016-11-22T10:40:07-05:00",
+                "weight": {
+                    "value": 3,
+                    "uom": "LB"
+                },
+                "shipping_method": "USPS: Priority Mail",
+                "first_name": "order",
+                "last_name": "ultra",
+                "address1": "222 lincoln ave",
+                "city": "salinas",
+                "state_region": "ca",
+                "postal_code": "93901",
+                "country_code": "US",
+                "ship_to_residential": true,
+                "day_phone": "222-209-9870",
+                "tracking_numbers": [
+                    ""
+                ],
+                "tracking_number_details": []
+            },
+            "payment": {
+                "payment_method": "Credit Card",
+                "payment_status": "Processed",
+                "test_order": true,
+                "payment_dts": "2016-08-22T18:43:24-04:00"
+            },
+            "summary": {
+                "shipping_handling_total": {
+                    "value": 9.35,
+                    "localized": 9.35,
+                    "localized_formatted": "$9.35"
+                },
+                "total": {
+                    "value": 252.35,
+                    "localized": 252.35,
+                    "localized_formatted": "$252.35"
+                }
+            },
+            "checkout": {
+                "customer_ip_address": "71.195.167.129",
+                "custom_field7": "Y",
+                "screen_branding_theme_code": "CSTM"
+            },
+            "auto_order": {
+                "auto_order_oid": 2936116,
+                "original_order_id": "DEMO-0009103427"
+            }
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 2,
+            "offset": 0,
+            "limit": 100,
+            "next_offset": 0,
+            "total_records": 2
+        },
+        "payload_name": "orders"
+    }
+}
+```

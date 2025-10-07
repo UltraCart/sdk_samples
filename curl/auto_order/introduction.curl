@@ -1,0 +1,1 @@
+The auto order REST API provides all the functionality necessary manipulate auto orders on your UltraCart account.

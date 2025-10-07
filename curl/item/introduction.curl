@@ -1,0 +1,2 @@
+The item REST API provides all the functionality necessary manipulate items on your UltraCart account.  This is one of the largest REST APIs on the 
+UltraCart platform due to the extensive functionality within the item object.

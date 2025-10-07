@@ -1,0 +1,195 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/order/orders/token\\ \
+?_expand=billing%2Ccheckout%2Ccoupon%2Ccustomer_profile%2Citem%2Cpayment%2Cshipping%2Csummary%2Ctaxes" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100" \
+  -d $'{
+    "order_token": "DEMO:T5xAFygRLa0M2ql2zpZ9mEQyLbQjGLfAP/aIdhglmBoFexpK6X74LvF7TR3Q96Q="
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 6C0E0233E5D79A0199BFC48E9A80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 17:42:35 GMT
+```
+
+**Response Body**
+```json
+{
+    "order": {
+        "merchant_id": "DEMO",
+        "order_id": "DEMO-0009104436",
+        "current_stage": "Rejected",
+        "creation_dts": "2021-09-08T12:21:46-04:00",
+        "reject_dts": "2022-03-10T15:56:22-05:00",
+        "language_iso_code": "ENG",
+        "billing": {
+            "first_name": "test",
+            "last_name": "test",
+            "address1": "test",
+            "city": "MERCED",
+            "state_region": "CA",
+            "postal_code": "95340",
+            "country_code": "US",
+            "day_phone": "209-383-9870",
+            "day_phone_e164": "+12093839870",
+            "email": "test@test.com"
+        },
+        "shipping": {
+            "weight": {
+                "value": 1,
+                "uom": "LB"
+            },
+            "shipping_method": "BackupMethod",
+            "first_name": "test",
+            "last_name": "test",
+            "address1": "test",
+            "city": "MERCED",
+            "state_region": "CA",
+            "postal_code": "95340",
+            "country_code": "US",
+            "day_phone": "209-383-9870",
+            "day_phone_e164": "+12093839870",
+            "tracking_numbers": [
+                ""
+            ]
+        },
+        "payment": {
+            "payment_method": "Cash",
+            "payment_status": "Unprocessed"
+        },
+        "summary": {
+            "shipping_handling_total": {
+                "value": 5.99,
+                "localized": 5.99,
+                "localized_formatted": "$5.99"
+            },
+            "subtotal": {
+                "value": 17.95,
+                "localized": 17.95,
+                "localized_formatted": "$17.95"
+            },
+            "tax": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "total": {
+                "value": 23.94,
+                "localized": 23.94,
+                "localized_formatted": "$23.94"
+            },
+            "shipping_handling_total_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "subtotal_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "taxable_subtotal_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "taxable_subtotal": {
+                "value": 17.95,
+                "localized": 17.95,
+                "localized_formatted": "$17.95"
+            }
+        },
+        "items": [
+            {
+                "merchant_item_id": "BONE",
+                "quantity": 1,
+                "description": "TJ's DOGGIE BONES (6 lbs.)\nCode: NKFDWBNJ81",
+                "cost": {
+                    "value": 17.95,
+                    "localized": 17.95,
+                    "localized_formatted": "$17.95"
+                },
+                "weight": {
+                    "value": 1,
+                    "uom": "LB"
+                },
+                "special_product_type": "",
+                "free_shipping": true,
+                "discount": {
+                    "value": 0,
+                    "localized": 0.0,
+                    "localized_formatted": "$0.00"
+                },
+                "item_reference_oid": 90514067,
+                "accounting_code": "Bone",
+                "length": {
+                    "value": 0.394,
+                    "uom": "IN"
+                },
+                "height": {
+                    "value": 0.394,
+                    "uom": "IN"
+                },
+                "width": {
+                    "value": 0.394,
+                    "uom": "IN"
+                },
+                "options": [
+                    {
+                        "label": "Addon Treat",
+                        "value": "No thanks",
+                        "cost_change": {
+                            "value": 0,
+                            "localized": 0.0,
+                            "localized_formatted": "$0.00"
+                        },
+                        "weight_change": {
+                            "value": 0,
+                            "uom": "LB"
+                        },
+                        "additional_dimension_application": "none"
+                    }
+                ],
+                "mix_and_match_group_oid": 11226,
+                "mix_and_match_group_name": "5% off Subtotal",
+                "distribution_center_code": "DISK",
+                "unit_cost_with_discount": {
+                    "value": 17.95,
+                    "localized": 17.95,
+                    "localized_formatted": "$17.95"
+                },
+                "total_cost_with_discount": {
+                    "value": 17.95,
+                    "localized": 17.95,
+                    "localized_formatted": "$17.95"
+                },
+                "cogs": 3.0,
+                "barcode": "078742226583",
+                "country_code_of_origin": "US",
+                "tags": [
+                    {
+                        "tag_value": "test item"
+                    }
+                ],
+                "tax_product_type": "",
+                "item_index": 1
+            }
+        ],
+        "checkout": {
+            "storefront_host_name": "demo.ultracartstore.com"
+        }
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "order"
+    }
+}
+```
