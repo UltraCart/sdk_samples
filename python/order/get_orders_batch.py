@@ -42,7 +42,7 @@ order_batch.order_ids = [
 api_response = api_instance.get_orders_batch(order_batch=order_batch, expand=expansion)
 orders = api_response.orders
 
-# pprint(orders)
+pprint(orders)
 for order in orders:
     pprint(order)
 print(f"{len(orders)} were returned.")

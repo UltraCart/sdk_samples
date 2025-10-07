@@ -41,7 +41,7 @@ new_order = api_response.order
 items = []
 item = OrderItem()
 item.merchant_item_id = 'simple_teapot'
-item.quantity = 1
+item.quantity = 1.0
 item.description = "A lovely teapot"
 item.distribution_center_code = 'DFLT'  # Where is this item shipping out of?
 
@@ -52,7 +52,7 @@ item.cost = cost
 
 weight = Weight()
 weight.uom = "OZ"
-weight.value = 6
+weight.value = 6.0
 item.weight = weight
 
 items.append(item)
@@ -82,11 +82,9 @@ except ApiException as e:
     logging.error(f"Exception when calling OrderApi->process_payment: {e}")
     exit()
 
-transaction_details = payment_response.payment_transaction  # Do whatever you wish with this.
-
 # This could get verbose...
-import pprint
-print("New Order (after updated items):")
-pprint.pprint(updated_order)
-print("\nPayment Response:")
-pprint.pprint(payment_response)
+# import pprint
+# print("New Order (after updated items):")
+# pprint.pprint(updated_order)
+# print("\nPayment Response:")
+# pprint.pprint(payment_response)

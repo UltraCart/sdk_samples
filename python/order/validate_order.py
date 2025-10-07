@@ -45,14 +45,13 @@ order_id = 'DEMO-0009104976'
 
 # Step 1: Retrieve the order
 try:
-    api_response = order_api.get_order(order_id, expansion)
+    api_response = order_api.get_order(order_id, expand=expansion)
     order = api_response.order
 except ApiException as e:
     print(f"Exception when calling OrderApi->get_order: {e}")
     exit()
 
 # Output the current order details
-print("<html lang='en'><body><pre>")
 print(order)
 
 # TODO: Do some updates to the order here.
@@ -60,7 +59,7 @@ print(order)
 # Step 2: Validate the order
 validation_request = OrderValidationRequest()
 validation_request.order = order
-validation_request.checks = None  # leaving this null to perform all validations
+# validation_request.checks = "Billing Validate City State Zip"
 
 try:
     api_response = order_api.validate_order(validation_request)
@@ -76,8 +75,6 @@ if api_response.errors is not None:
 
 # Output validation messages, if any
 print('Validation messages:<br>')
-if api_response.messages is not None:
+if hasattr(api_response, 'messages') and api_response.messages is not None:
     for message in api_response.messages:
         print(message)
-
-print('</pre></body></html>')

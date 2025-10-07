@@ -24,5 +24,5 @@ except ApiException as e:
     exit()
 
 # This could get verbose...
-import pprint
-pprint.pprint(api_response)
+# import pprint
+# pprint.pprint(api_response)

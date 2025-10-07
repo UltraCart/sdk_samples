@@ -17,7 +17,7 @@ try:
     order_api = OrderApi(api_client())
 
     # Set order to delete
-    order_id = 'DEMO-0008104390'
+    order_id = 'DEMO-0009105482'
 
     # Delete order
     order_api.delete_order(order_id)

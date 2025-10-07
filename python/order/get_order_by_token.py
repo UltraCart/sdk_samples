@@ -38,7 +38,7 @@ expand = "billing,checkout,coupon,customer_profile,item,payment,shipping,summary
 # Example would be: www.mysite.com/receipt?orderToken=[OrderToken]
 
 # TODO: Handle retrieving the order token from request parameters
-order_token = "DEMO:UZBOGywSKKwD2a5wx5JwmkwyIPNsGrDHNPiHfxsi0iAEcxgo9H74J/l6SR3X8g=="  # Replace with actual order token
+order_token = "DEMO:T5xAFygRLa0M2ql2zpZ9mEQyLbQjGLfAP/aIdhglmBoFexpK6X74LvF7TR3Q96Q="  # Replace with actual order token
 
 # To generate an order token manually for testing, refer to generate_order_token.py
 # TODO: Handle missing order token (e.g., if this page is called incorrectly by a search engine, etc.)

@@ -29,7 +29,7 @@ order_id = 'DEMO-0009104390'
 api_response = order_api.get_order(order_id, expand=expand)
 
 # Check for errors
-if api_response.error:
+if hasattr(api_response, 'error') and api_response.error:
     print(f"Developer Message: {api_response.error.developer_message}")
     print(f"User Message: {api_response.error.user_message}")
     exit()
@@ -38,4 +38,4 @@ if api_response.error:
 order = api_response.order
 
 # Print order details
-print(order)
+# print(order)

@@ -18,7 +18,7 @@ except ApiException as e:
     exit()
 
 # Check if there was an error in the API response
-if api_response.error is not None:
+if hasattr(api_response, 'error') and api_response.error is not None:
     print(f"Developer Message: {api_response.error.developer_message}")
     print(f"User Message: {api_response.error.user_message}")
     print('Order could not be adjusted. See the error log.')

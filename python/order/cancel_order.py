@@ -40,4 +40,4 @@ try:
 
 except ApiException as e:
     logger.error(f"API Exception: {e}")
-    print('Order could not be canceled due to an API error.')
+    print('Order could not be canceled due to an API error.  An exception will occur if you attempt to cancel an order that has immediate transmission configured for the distribution center.  Those orders cannot be canceled because they were immedatiately sent to a fulfillment center.')

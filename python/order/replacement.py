@@ -26,13 +26,13 @@ items = []
 
 item1 = OrderReplacementItem()
 item1.merchant_item_id = 'TSHIRT'
-item1.quantity = 1
+item1.quantity = 1.0
 # $item1->setArbitraryUnitCost(9.99);  # Optional: Set cost if needed
 items.append(item1)
 
 item2 = OrderReplacementItem()
 item2.merchant_item_id = 'BONE'
-item2.quantity = 2
+item2.quantity = 2.0
 items.append(item2)
 
 replacement_options.items = items

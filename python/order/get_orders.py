@@ -4,9 +4,7 @@ from ultracart.apis import OrderApi
 from samples import api_client
 
 # Increase time limit, pulling all orders could take a long time.
-time_limit = 3000
-# Set max execution time
-time.sleep(time_limit)
+time_limit = 3
 # Set display errors
 display_errors = 1
 
@@ -34,48 +32,72 @@ def get_order_chunk(order_api, offset, limit):
     # shipping            shipping.tracking_number_details    summary
     # taxes
 
-    order_id = None
-    payment_method = None
-    company = None
-    first_name = None
-    last_name = None
-    city = None
-    state_region = None
-    postal_code = None
-    country_code = None
-    phone = None
+    # Set max execution time
+    time.sleep(time_limit)
+
+    # order_id = ''
+    # payment_method = ''
+    # company = ''
+    # first_name = ''
+    # last_name = ''
+    # city = ''
+    # state_region = ''
+    # postal_code = ''
+    # country_code = ''
+    # phone = ''
     email = 'support@ultracart.com'  # <-- this is the only filter we're using.
-    cc_email = None
-    total = None
-    screen_branding_theme_code = None
-    storefront_host_name = None
-    creation_date_begin = None
-    creation_date_end = None
-    payment_date_begin = None
-    payment_date_end = None
-    shipment_date_begin = None
-    shipment_date_end = None
-    rma = None
-    purchase_order_number = None
-    item_id = None
-    current_stage = None
-    channel_partner_code = None
-    channel_partner_order_id = None
-    _sort = None
+    # cc_email = ''
+    # total = 0
+    # screen_branding_theme_code = ''
+    # storefront_host_name = ''
+    # creation_date_begin = 'iso8601 format'
+    # creation_date_end = 'iso8601 format'
+    # payment_date_begin = 'iso8601 format'
+    # payment_date_end = 'iso8601 format'
+    # shipment_date_begin = 'iso8601 format'
+    # shipment_date_end = 'iso8601 format'
+    # rma = ''
+    # purchase_order_number = ''
+    # item_id = ''
+    # current_stage = 'Completed'
+    # channel_partner_code = ''
+    # channel_partner_order_id = ''
+    # sort = ''
 
     # See all these parameters? That is why you should use getOrdersByQuery() instead of getOrders()
     try:
         api_response = order_api.get_orders(
-            order_id=order_id, payment_method=payment_method, company=company, first_name=first_name,
-            last_name=last_name, city=city, state_region=state_region, postal_code=postal_code,
-            country_code=country_code, phone=phone, email=email, cc_email=cc_email, total=total,
-            screen_branding_theme_code=screen_branding_theme_code, storefront_host_name=storefront_host_name,
-            creation_date_begin=creation_date_begin, creation_date_end=creation_date_end,
-            payment_date_begin=payment_date_begin, payment_date_end=payment_date_end,
-            shipment_date_begin=shipment_date_begin, shipment_date_end=shipment_date_end, rma=rma,
-            purchase_order_number=purchase_order_number, item_id=item_id, current_stage=current_stage,
-            channel_partner_code=channel_partner_code, channel_partner_order_id=channel_partner_order_id,
-            limit=limit, offset=offset, _sort=_sort, expand=expand
+            # order_id=order_id,
+            # payment_method=payment_method,
+            # company=company,
+            # first_name=first_name,
+            # last_name=last_name,
+            # city=city,
+            # state_region=state_region,
+            # postal_code=postal_code,
+            # country_code=country_code,
+            # phone=phone,
+            email=email,
+            # cc_email=cc_email,
+            # total=total,
+            # screen_branding_theme_code=screen_branding_theme_code,
+            # storefront_host_name=storefront_host_name,
+            # creation_date_begin=creation_date_begin,
+            # creation_date_end=creation_date_end,
+            # payment_date_begin=payment_date_begin,
+            # payment_date_end=payment_date_end,
+            # shipment_date_begin=shipment_date_begin,
+            # shipment_date_end=shipment_date_end,
+            # rma=rma,
+            # purchase_order_number=purchase_order_number,
+            # item_id=item_id,
+            # current_stage=current_stage,
+            # channel_partner_code=channel_partner_code,
+            # channel_partner_order_id=channel_partner_order_id,
+            limit=limit,
+            offset=offset,
+            # sort=sort,
+            expand=expand
         )
     except ApiException as e:
         print(f"Exception when calling OrderApi->get_orders: {e}")

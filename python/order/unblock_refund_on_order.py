@@ -22,4 +22,4 @@ except ApiException as e:
     logging.error(f"Exception when calling OrderApi->unblock_refund_on_order: {e}")
     exit()
 
-print('Metho executed successfully. Returns back 204 No Content')
+print('Method executed successfully. Returns back 204 No Content')

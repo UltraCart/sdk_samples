@@ -13,27 +13,28 @@ order_id = 'DEMO-0009104976'
 
 # Step 1: Retrieve the order
 try:
-    api_response = order_api.get_order(order_id, expansion)
+    api_response = order_api.get_order(order_id, expand=expansion)
     order = api_response.order
 except ApiException as e:
     print(f"Exception when calling OrderApi->get_order: {e}")
     exit()
 
 # Output the current order details
-print("<html lang='en'><body><pre>")
 print(order)
 
 # TODO: Do some updates to the order here.
 
 # Step 2: Update the order
 try:
-    api_response = order_api.update_order(order_id, order, expansion)
+    # do something here related to the order. what will you change?
+    # then call update_order
+    api_response = order_api.update_order(order_id, order, expand=expansion)
 except ApiException as e:
     print(f"Exception when calling OrderApi->update_order: {e}")
     exit()
 
 # Check for errors in the API response
-if api_response.error is not None:
+if hasattr(api_response, 'error') and api_response.error is not None:
     print(f"Developer Message: {api_response.error.developer_message}")
     print(f"User Message: {api_response.error.user_message}")
     exit()

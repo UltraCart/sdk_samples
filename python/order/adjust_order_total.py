@@ -21,7 +21,7 @@ try:
 
     # Set order details
     order_id = 'DEMO-0009104390'
-    desired_total = '21.99'
+    desired_total = '23.38'
 
     # Adjust order total
     api_response = order_api.adjust_order_total(order_id, desired_total)

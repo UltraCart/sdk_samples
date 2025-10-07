@@ -20,10 +20,10 @@ order_api = OrderApi(api_client())
 
 # For the refund, we only need the items expanded to adjust their quantities.
 # See: https://www.ultracart.com/api/ for a list of all expansions.
-expand = "items"
+expand = "item"
 
 # Step 1. Retrieve the order
-order_id = 'DEMO-0009104436'
+order_id = 'DEMO-0009106282'
 try:
     api_response = order_api.get_order(order_id, expand=expand)
 except ApiException as e:
@@ -40,14 +40,20 @@ for item in order.items:
 reject_after_refund = False
 skip_customer_notification = True
 cancel_associated_auto_orders = True  # Does not matter for this sample. The order is not a recurring order.
-consider_manual_refund_done_externally = False  # No, I want an actual refund done through my gateway.
+consider_manual_refund_done_externally = True  # Usually this is false for Credit Card orders.  This example is a cash order.
 reverse_affiliate_transactions = True  # Can't let my affiliates get money on a refunded order. Bad business.
 
 try:
-    refund_response = order_api.refund_order(order_id, order, reject_after_refund, skip_customer_notification,
-                                             cancel_associated_auto_orders, consider_manual_refund_done_externally,
-                                             reverse_affiliate_transactions, include_refunded_amounts=False,
-                                             reason=None, expand=expand)
+    order.refund_reason = "CustomerCancel"
+    refund_response = order_api.refund_order(order_id,
+                                             order,
+                                             reject_after_refund=reject_after_refund,
+                                             skip_customer_notification=skip_customer_notification,
+                                             auto_order_cancel=cancel_associated_auto_orders,
+                                             manual_refund=consider_manual_refund_done_externally,
+                                             reverse_affiliate_transactions=reverse_affiliate_transactions,
+                                             # auto_order_cancel_reason='Customer Dissatisfied',
+                                             expand=expand)
 except ApiException as e:
     logging.error(f"Exception when calling OrderApi->refund_order: {e}")
     exit()
