@@ -136,8 +136,8 @@ def delete_sample_item(item_id: str) -> None:
     print(f'attempting to retrieve the item object for item id {item_id}')
 
     # Retrieve item to get its OID
-    expand = None  # No extra fields needed
-    api_response = item_api.get_item_by_merchant_item_id(item_id, expand=expand, skip_cache=False)
+    expand = ''  # No extra fields needed
+    api_response = item_api.get_item_by_merchant_item_id(item_id, expand=expand)
     item = api_response.item
 
     print('The following object was retrieved:')
@@ -161,6 +161,7 @@ def insert_sample_digital_item(external_id: Optional[str] = None) -> int:
     """
     # Image URL (Earth picture from Wikipedia)
     image_url = 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Earth_%2816530938850%29.jpg'
+    image_url = 'https://spaceplace.nasa.gov/gallery-earth/en/ISS_earth.en.jpg'
 
     # Create digital item
     digital_item = ItemDigitalItem(
