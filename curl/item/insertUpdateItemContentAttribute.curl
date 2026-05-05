@@ -1,0 +1,27 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/item/items/226937/content/attributes" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100" \
+  -d $'{
+    "name": "storefrontSEOKeywords",
+    "value": "dog,cat,fish",
+    "type": "string"
+}'
+```
+
+**Response Headers**
+```html
+Status: 204 No Content
+X-UltraCart-Request-Id: 5E39A09DCE59680199DEFC8C6D80011
+Content-Length: 0
+Date: Mon, 13 Oct 2025 19:11:58 GMT
+```
+
+**Response Body**
+```json
+
+```
+

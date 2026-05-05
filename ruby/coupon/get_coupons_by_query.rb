@@ -70,8 +70,8 @@ def get_coupon_chunk(coupon_api, offset, limit)
   # coupons do not have expansions
   # Possible sorts: "coupon_type", "merchant_code", "description", "start_dts", "expiration_dts", "quickbooks_code"
   opts = {
-    _expand: nil,
-    _sort: 'merchant_code'
+    :'_expand' => nil,
+    :'_sort' => 'merchant_code'
   }
 
   api_response = coupon_api.get_coupons_by_query(query, limit, offset, opts)

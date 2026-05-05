@@ -1,0 +1,72 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/item/items\\ \
+?_expand=content.multimedia" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100" \
+  -d $'{
+    "merchant_item_id": "sample_SQIJNWTX",
+    "pricing": {
+        "cost": 9.99
+    },
+    "description": "Sample description for item sample_SQIJNWTX",
+    "content": {
+        "multimedia": [
+            {
+                "url": "https://upload.wikimedia.org/wikipedia/en/7/73/Mr._Clean_logo.png",
+                "code": "default",
+                "description": "Some random image i nabbed from wikipedia"
+            }
+        ]
+    }
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: E191C798BA94590199DEFA2B4F80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 13 Oct 2025 19:09:25 GMT
+```
+
+**Response Body**
+```json
+{
+    "item": {
+        "merchant_item_oid": 6730098,
+        "merchant_id": "DEMO",
+        "merchant_item_id": "sample_SQIJNWTX",
+        "description": "Sample description for item sample_SQIJNWTX",
+        "description_translated_text_instance_oid": 70676929,
+        "parent_category_path": "/",
+        "last_modified_dts": "2025-10-13T15:09:21-04:00",
+        "creation_dts": "2025-10-13T15:09:21-04:00",
+        "content": {
+            "view_url": "",
+            "multimedia": [
+                {
+                    "merchant_item_multimedia_oid": 3018330,
+                    "file_name": "Mr._Clean_logo.png",
+                    "description": "Some random image i nabbed from wikipedia",
+                    "url": "//demo.ultracartdev.com/itemmultimedia/DEMO/SAMPLE_SQIJNWTX/Mr._Clean_logo.png",
+                    "type": "Image",
+                    "code": "default",
+                    "width": 246,
+                    "height": 247
+                }
+            ],
+            "meta_title": "",
+            "meta_description": "",
+            "meta_keywords": ""
+        }
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "item"
+    }
+}
+```

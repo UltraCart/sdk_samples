@@ -14,7 +14,7 @@ require_once '../samples.php';
 
 function createRandomEmail(): string {
     $rand = str_shuffle('ABCDEFGH');
-    return 'sample_' . $rand . ".test.com";
+    return 'sample_' . $rand . "@test.com";
 }
 
 /**

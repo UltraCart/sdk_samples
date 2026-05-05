@@ -13,7 +13,7 @@ def establish_and_update_auto_order():
     # see https://www.ultracart.com/api/#resource_auto_order.html for list
     expand = "items,items.future_schedules,original_order,rebill_orders"
 
-    original_order_id = "DEMO-123457"
+    original_order_id = "DEMO-0009106215"
     api_response = auto_order_api.establish_auto_order_by_reference_order_id(original_order_id, expand=expand)
 
     empty_auto_order = api_response.auto_order
@@ -21,8 +21,8 @@ def establish_and_update_auto_order():
 
     items = []
     item = AutoOrderItem()
-    item.original_item_id = "ITEM_ABC"  # This item should be configured with auto order features.
-    item.original_quantity = 1
+    item.original_item_id = "99-AO"  # This item should be configured with auto order features.
+    item.original_quantity = 1.0
     item.arbitrary_unit_cost = 59.99
 
     # Valid Frequencies
@@ -33,7 +33,7 @@ def establish_and_update_auto_order():
     empty_auto_order.items = items
 
     validate_original_order = 'No'
-    api_response = auto_order_api.update_auto_order(auto_order_oid, empty_auto_order, validate_original_order, expand=expand)
+    api_response = auto_order_api.update_auto_order(auto_order_oid, empty_auto_order, validate_original_order=validate_original_order, expand=expand)
     updated_auto_order = api_response.auto_order
     print(updated_auto_order)
 

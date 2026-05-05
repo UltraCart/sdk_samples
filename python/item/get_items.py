@@ -24,17 +24,16 @@ def get_item_chunk(item_api, offset, limit):
 
     # Retrieve items with no category filtering
     api_response = item_api.get_items(
-        parent_category_id=None,
-        parent_category_path=None,
+        # parent_category_id=0,
+        # parent_category_path='',
         limit=limit,
         offset=offset,
-        since=None,
-        sort=None,
-        expand=expand,
-        active=False
+        # since='', # don't pass anything if you wish defaults.
+        # sort='', # don't pass anything if you wish defaults.
+        expand=expand
     )
 
-    return api_response.get_items() or []
+    return api_response.items or []
 
 
 def main():
@@ -70,7 +69,7 @@ def main():
         sys.exit(1)
 
     # Print all retrieved items (will be verbose)
-    print(items)
+    # print(items)
 
 
 if __name__ == "__main__":

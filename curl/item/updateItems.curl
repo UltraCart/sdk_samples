@@ -1,0 +1,94 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X PUT "https://secure.ultracart.com/rest/v2/item/items/batch\\ \
+?_expand=pricing" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100" \
+  -d $'{
+    "items": [
+        {
+            "merchant_item_oid": 6730106,
+            "merchant_id": "DEMO",
+            "merchant_item_id": "sample_QTYVSZWU",
+            "description": "Sample description for item sample_QTYVSZWU",
+            "description_translated_text_instance_oid": 70676970,
+            "parent_category_path": "/",
+            "last_modified_dts": "2025-10-13T15:21:12-04:00",
+            "creation_dts": "2025-10-13T15:21:12-04:00",
+            "pricing": {
+                "cost": 12.99
+            }
+        },
+        {
+            "merchant_item_oid": 6730107,
+            "merchant_id": "DEMO",
+            "merchant_item_id": "sample_EQLISYQH",
+            "description": "Sample description for item sample_EQLISYQH",
+            "description_translated_text_instance_oid": 70676975,
+            "parent_category_path": "/",
+            "last_modified_dts": "2025-10-13T15:21:16-04:00",
+            "creation_dts": "2025-10-13T15:21:16-04:00",
+            "pricing": {
+                "cost": 14.99
+            }
+        }
+    ]
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 7EBBAEEB8E052A0199DF05219C80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 13 Oct 2025 19:21:24 GMT
+```
+
+**Response Body**
+```json
+{
+    "items": [
+        {
+            "merchant_item_oid": 6730106,
+            "merchant_id": "DEMO",
+            "merchant_item_id": "sample_QTYVSZWU",
+            "description": "Sample description for item sample_QTYVSZWU",
+            "description_translated_text_instance_oid": 70676970,
+            "parent_category_path": "/",
+            "last_modified_dts": "2025-10-13T15:21:20-04:00",
+            "creation_dts": "2025-10-13T15:21:12-04:00",
+            "pricing": {
+                "cost": 12.99
+            }
+        },
+        {
+            "merchant_item_oid": 6730107,
+            "merchant_id": "DEMO",
+            "merchant_item_id": "sample_EQLISYQH",
+            "description": "Sample description for item sample_EQLISYQH",
+            "description_translated_text_instance_oid": 70676975,
+            "parent_category_path": "/",
+            "last_modified_dts": "2025-10-13T15:21:22-04:00",
+            "creation_dts": "2025-10-13T15:21:16-04:00",
+            "pricing": {
+                "cost": 14.99
+            }
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 2,
+            "offset": 0,
+            "limit": 100,
+            "next_offset": 0,
+            "total_records": 2
+        },
+        "payload_name": "items"
+    }
+}
+```
+

@@ -1,0 +1,109 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/checkout/cart\\ \
+?_expand=customer_profile%2Citems%2Cbilling%2Cshipping%2Ccoupons%2Ccheckout%2Cpayment%2Csummary%2Ctaxes" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: F8441E97783E0E019A17B3515C80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 24 Oct 2025 19:30:19 GMT
+```
+
+**Response Body**
+```json
+{
+    "cart": {
+        "merchant_id": "DEMO",
+        "cart_id": "23200E0D104EAE019A17B35181800100",
+        "currency_code": "USD",
+        "base_currency_code": "USD",
+        "billing": {
+            "country_code": "US"
+        },
+        "shipping": {
+            "country_code": "US",
+            "ship_to_residential": true
+        },
+        "checkout": {
+            "ip_address": "127.0.0.1",
+            "screen_branding_theme_code": "DFLT",
+            "user_agent": "Unknown",
+            "current_step": "View Cart"
+        },
+        "summary": {
+            "subtotal": {
+                "value": 0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "subtotal_discount": {
+                "value": 0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "subtotal_with_discount": {
+                "value": 0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "tax": {
+                "value": 0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "taxable_subtotal": {
+                "value": 0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "taxable_subtotal_discount": {
+                "value": 0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "taxable_subtotal_with_discount": {
+                "value": 0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "shipping_handling": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "shipping_handling_discount": {
+                "value": 0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "shipping_handling_with_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "total": {
+                "value": 0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "surcharge": {
+                "value": 0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            }
+        },
+        "coupons": [],
+        "taxes": {
+            "rate": 0
+        },
+        "items": []
+    }
+}
+```

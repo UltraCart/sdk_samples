@@ -28,14 +28,14 @@ def get_customer_chunk(
 
     # Optional sorting
     sort = "email"
-    since = None
+    # since = ''
 
     # Retrieve customer chunk
     api_response = customer_api.get_customers_by_query(
         query,
-        offset,
-        limit,
-        since=since,
+        offset=offset,
+        limit=limit,
+        # since=since,
         sort=sort,
         expand=expand
     )

@@ -1,0 +1,45 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X PUT "https://secure.ultracart.com/rest/v2/customer/customers/11887431/wishlist/726094" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "customer_profile_oid": 11887431,
+    "customer_wishlist_item_oid": 726094,
+    "merchant_item_oid": 6733821,
+    "add_dts": "2025-10-21T09:49:22-04:00",
+    "position": 0,
+    "priority": 4,
+    "comments": "Christmas Idea!"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: E70141243F8118019A07081BF680011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 13:49:23 GMT
+```
+
+**Response Body**
+```json
+{
+    "wishlist_item": {
+        "customer_profile_oid": 11887431,
+        "customer_wishlist_item_oid": 726094,
+        "merchant_item_oid": 6733821,
+        "add_dts": "2025-10-21T09:49:22-04:00",
+        "position": 0,
+        "priority": 4,
+        "comments": "Christmas Idea!"
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "wishlist_item"
+    }
+}
+```

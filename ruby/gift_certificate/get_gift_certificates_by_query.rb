@@ -8,10 +8,8 @@ api = UltracartClient::GiftCertificateApi.new_using_api_key(Constants::API_KEY, 
 def get_gift_certificates_chuck(api, offset, limit)
   expansion = 'ledger'.freeze
   query = UltracartClient::GiftCertificateQuery.new # leaving this empty, so no filtering, and I should get all records returned.
-  api_response = api.get_gift_certificates_by_query(query, { _limit: limit, _offset: offset, _expand: expansion })
-  return api_response.gift_certificates unless api_response.gift_certificates.nil?
-
-  []
+  api_response = api.get_gift_certificates_by_query(query, { :'_limit' => limit, :'_offset' => offset, :'_expand' => expansion })
+  api_response.gift_certificates unless api_response.gift_certificates.nil? []
 end
 
 

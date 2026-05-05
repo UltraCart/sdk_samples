@@ -3,8 +3,8 @@ from samples import channel_partner_api_client
 
 # Initialize API
 channel_partner_api = ChannelPartnerApi(channel_partner_api_client())
-channel_partner_oid = 12345
-channel_partner_ship_to_preference_oid = 67890
+channel_partner_oid = 18413
+channel_partner_ship_to_preference_oid = 100221
 
 # Get existing preference
 api_response = channel_partner_api.get_channel_partner_ship_to_preference(channel_partner_oid, channel_partner_ship_to_preference_oid)
@@ -20,7 +20,7 @@ preference.description = "This is a merchant friendly description to help me rem
 # Update the preference
 api_response = channel_partner_api.update_channel_partner_ship_to_preference(channel_partner_oid, channel_partner_ship_to_preference_oid, preference)
 
-if api_response.error is not None:
+if hasattr(api_response, 'error') and api_response.error is not None:
     print(api_response.error.developer_message)
     print(api_response.error.user_message)
     exit()

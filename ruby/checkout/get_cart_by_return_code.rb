@@ -22,7 +22,7 @@ expansion = "items,billing,shipping,coupons,checkout,payment,summary,taxes"
 # summary	                    upsell_after
 
 return_code = '1234567890'  # usually retrieved from a query parameter
-api_response = checkout_api.get_cart_by_return_code(return_code, _expand: expansion)
+api_response = checkout_api.get_cart_by_return_code(return_code, {:'_expand' => expansion})
 cart = api_response.cart
 
 # TODO: set or re-set the cart cookie if this is part of a multi-page process. two weeks is a generous cart id time.

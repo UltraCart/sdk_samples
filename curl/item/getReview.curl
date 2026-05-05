@@ -1,0 +1,50 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/item/items/226937/reviews/206522" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 9FD5EF720007150199DEF03F0180011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 13 Oct 2025 18:58:31 GMT
+```
+
+**Response Body**
+```json
+{
+    "review": {
+        "review_oid": 206522,
+        "customer_profile_oid": 1050917,
+        "overall": 4.0,
+        "rating_name1": "Durability",
+        "rating_name2": "Price",
+        "rating_name3": "Performance",
+        "rating_name4": "Appearance",
+        "rating_score1": 4.0,
+        "rating_score2": 5.0,
+        "rating_score3": 4.0,
+        "rating_score4": 4.0,
+        "recommend_to_friend": true,
+        "title": "My dog LOVES these treats!",
+        "review": "My dog absolutely loves these dog bone treats. Crunches them up with her little doggie smile. She is literally on cloud nine, happily howling at the moon with joy over these treats. Likes them so much better than the space doggie food from NASA.",
+        "status": "approved",
+        "recommend_store_to_friend": 9,
+        "store_feedback": "Crunch Crunch Crunch, yum yum yum.",
+        "submitted_dts": "2023-08-14T08:42:48-04:00",
+        "helpful_yes_votes": 0,
+        "helperful_no_votes": 0,
+        "order_id": "DEMO-0009104418"
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "review"
+    }
+}
+```
+

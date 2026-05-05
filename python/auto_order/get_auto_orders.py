@@ -32,32 +32,52 @@ def get_auto_order_chunk(auto_order_api, offset, limit):
     rebill_orders.summary	            rebill_orders.taxes
     """
 
-    auto_order_code = None
-    original_order_id = None
-    first_name = None
-    last_name = None
-    company = None
-    city = None
-    state = None
-    postal_code = None
-    country_code = None
-    phone = None
+    # auto_order_code = ''
+    # original_order_id = ''
+    # first_name = ''
+    # last_name = ''
+    # company = ''
+    # city = ''
+    # state = ''
+    # postal_code = ''
+    # country_code = ''
+    # phone = ''
     email = 'test@ultracart.com'  # <-- for this example, we are only filtering on email address.
-    original_order_date_begin = None
-    original_order_date_end = None
-    next_shipment_date_begin = None
-    next_shipment_date_end = None
-    card_type = None
-    item_id = None
-    status = None
-    since = None
-    sort = None
+    # original_order_date_begin = ''
+    # original_order_date_end = ''
+    # next_shipment_date_begin = ''
+    # next_shipment_date_end = ''
+    # card_type = ''
+    # item_id = ''
+    # status = ''
+    # since = ''
+    # sort = ''
 
     # see all these parameters?  that is why you should use getAutoOrdersByQuery() instead of getAutoOrders()
-    api_response = auto_order_api.get_auto_orders(auto_order_code, original_order_id, first_name, last_name,
-        company, city, state, postal_code, country_code, phone, email, original_order_date_begin,
-        original_order_date_end, next_shipment_date_begin, next_shipment_date_end, card_type, item_id, status,
-        limit, offset, since, sort, expand=expand)
+    api_response = auto_order_api.get_auto_orders(
+        # auto_order_code=auto_order_code,
+        # original_order_id=original_order_id,
+        # first_name=first_name,
+        # last_name=last_name,
+        # company=company,
+        # city=city,
+        # state=state,
+        # postal_code=postal_code,
+        # country_code=country_code,
+        # phone=phone,
+        email=email,
+        # original_order_date_begin=original_order_date_begin,
+        # original_order_date_end=original_order_date_end,
+        # next_shipment_date_begin=next_shipment_date_begin,
+        # next_shipment_date_end=next_shipment_date_end,
+        # card_type=card_type,
+        # item_id=item_id,
+        # status=status,
+        limit=limit,
+        offset=offset,
+        # since=since,
+        # sort=sort,
+        expand=expand)
 
     if api_response.auto_orders is not None:
         return api_response.auto_orders

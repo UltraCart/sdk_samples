@@ -1,0 +1,109 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X PUT "https://secure.ultracart.com/rest/v2/auto_order/auto_orders/5712848\\ \
+?validate_original_order=No&_expand=items%2Citems.future_schedules%2Coriginal_order%2Crebill_orders" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "auto_order_oid": 5712848,
+    "merchant_id": "DEMO",
+    "original_order_id": "DEMO-0009104933",
+    "original_order": {
+        "merchant_id": "DEMO",
+        "order_id": "DEMO-0009104933",
+        "current_stage": "Completed Order",
+        "creation_dts": "2022-12-22T10:11:57-05:00",
+        "language_iso_code": "ENG",
+        "billing.postal_code": "44233"
+    },
+    "auto_order_code": "6N8DKS6VTF",
+    "credit_card_attempt": 3,
+    "next_attempt": "2023-01-31T00:00:00-05:00",
+    "items": [
+        {
+            "auto_order_item_oid": 101036395,
+            "next_shipment_dts": "2023-01-22T00:00:00-05:00",
+            "life_time_value": 20.0,
+            "number_of_rebills": 0,
+            "rebill_value": 0.0,
+            "last_order_dts": "2022-12-22T10:11:59-05:00",
+            "original_item_id": "BONE",
+            "original_quantity": 1.0,
+            "options": [
+                {
+                    "label": "Addon Treat",
+                    "value": "No thanks"
+                }
+            ],
+            "future_schedules": [],
+            "first_order_dts": "2022-12-22T10:11:59-05:00",
+            "next_item_id": "BONE"
+        }
+    ],
+    "failure_reason": "01/28/2023 14:54:44 - Credit card declined. Gateway Response:\n\nfailure_message => The card number is not a valid credit card number.; code: invalid_number; request-id: req_VD1zq4ovU2EehY\nrotatingTransactionGatewayCode => STRIPE\nrotatingTransactionGatewayName => Stripe Connect\n",
+    "disabled_dts": "2023-01-28T14:54:43-05:00",
+    "rebill_orders": [],
+    "status": "disabled"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 85B99E7B714B16019A08584DA980011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 19:56:37 GMT
+```
+
+**Response Body**
+```json
+{
+    "auto_order": {
+        "auto_order_oid": 5712848,
+        "merchant_id": "DEMO",
+        "original_order_id": "DEMO-0009104933",
+        "original_order": {
+            "merchant_id": "DEMO",
+            "order_id": "DEMO-0009104933",
+            "current_stage": "Completed Order",
+            "creation_dts": "2022-12-22T10:11:57-05:00",
+            "language_iso_code": "ENG"
+        },
+        "auto_order_code": "6N8DKS6VTF",
+        "credit_card_attempt": 3,
+        "next_attempt": "2023-01-31T00:00:00-05:00",
+        "items": [
+            {
+                "auto_order_item_oid": 101036395,
+                "next_shipment_dts": "2023-01-22T00:00:00-05:00",
+                "life_time_value": 20.0,
+                "number_of_rebills": 0,
+                "rebill_value": 0.0,
+                "last_order_dts": "2022-12-22T10:11:59-05:00",
+                "original_item_id": "BONE",
+                "original_quantity": 1,
+                "options": [
+                    {
+                        "label": "Addon Treat",
+                        "value": "No thanks"
+                    }
+                ],
+                "future_schedules": [],
+                "first_order_dts": "2022-12-22T10:11:59-05:00",
+                "next_item_id": "BONE"
+            }
+        ],
+        "failure_reason": "01/28/2023 14:54:44 - Credit card declined. Gateway Response:\n\nfailure_message => The card number is not a valid credit card number.; code: invalid_number; request-id: req_VD1zq4ovU2EehY\nrotatingTransactionGatewayCode => STRIPE\nrotatingTransactionGatewayName => Stripe Connect\n",
+        "disabled_dts": "2023-01-28T14:54:43-05:00",
+        "rebill_orders": [],
+        "status": "disabled"
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "auto_order"
+    }
+}
+```

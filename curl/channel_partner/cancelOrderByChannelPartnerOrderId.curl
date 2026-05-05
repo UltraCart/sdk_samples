@@ -1,0 +1,49 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X DELETE "https://secure.ultracart.com/rest/v2/channel_partner/cancel/by_channel_partner_order_id/ORD847K5M" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 5FD3031FB99737019A08796A7180011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 20:32:47 GMT
+```
+
+**Response Body**
+```json
+{
+    "cancel_errors": [
+        "Cant tell if we can cancel because the DC doesnt have a transport configured."
+    ],
+    "metadata": {}
+}
+```
+
+**Error Response Headers**
+```html
+Status: 400 Bad Request
+X-UltraCart-Request-Id: D40E55F25BBDAF019A086B762080011
+UC-REST-ERROR: This API Key does not have permission to interact with channel partner orders.  Please review your Channel Partner configuration.
+Content-Type: application/json; charset=UTF-8
+Connection: close
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 20:17:32 GMT
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "This API Key does not have permission to interact with channel partner orders.  Please review your Channel Partner configuration.",
+        "user_message": "This API Key does not have permission to interact with channel partner orders.  Please review your Channel Partner configuration."
+    },
+    "metadata": {}
+}
+```
+

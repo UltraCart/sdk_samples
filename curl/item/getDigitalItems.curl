@@ -1,0 +1,126 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/item/digital_library\\ \
+?_limit=100&_offset=0" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: EB53340111CECC0199CF1A665380011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 10 Oct 2025 17:10:38 GMT
+```
+
+**Response Body**
+```json
+{
+    "digital_items": [
+        {
+            "digital_item_oid": 235428,
+            "description": "The Earth",
+            "original_filename": "Earth_%2816530938850%29.jpg",
+            "file_size": 1051749,
+            "creation_dts": "2025-10-10T13:06:15-04:00",
+            "mime_type": "image/jpeg",
+            "click_wrap_agreement": "By purchasing this item, you agree that it is Earth",
+            "pdf_meta": {
+                "custom_header": "",
+                "custom_footer": ""
+            }
+        },
+        {
+            "digital_item_oid": 32497,
+            "description": "file.zip simple edit here",
+            "original_filename": "file.zip",
+            "file_size": 101867728,
+            "creation_dts": "2010-05-21T16:49:36-04:00",
+            "mime_type": "application/zip",
+            "pdf_meta": {
+                "custom_header": "",
+                "custom_footer": ""
+            }
+        },
+        {
+            "digital_item_oid": 125567,
+            "description": "Gift Certificate",
+            "original_filename": "GiftCert.pdf",
+            "file_size": 215922,
+            "creation_dts": "2022-07-12T10:56:57-04:00",
+            "mime_type": "application/pdf",
+            "pdf_meta": {
+                "printing_allowed": true,
+                "modify_contents_allowed": true,
+                "copy_allowed": true,
+                "tagged": true,
+                "custom_header": "",
+                "custom_footer": ""
+            }
+        },
+        {
+            "digital_item_oid": 114447,
+            "description": "test abili",
+            "original_filename": "Royce-White.pdf",
+            "file_size": 17853478,
+            "creation_dts": "2019-04-15T13:03:21-04:00",
+            "mime_type": "application/pdf",
+            "pdf_meta": {
+                "custom_header": "",
+                "custom_footer": ""
+            }
+        },
+        {
+            "digital_item_oid": 127177,
+            "description": "Office 2016 ISO",
+            "original_filename": "SW_DVD5_Office_2016_64Bit_English_MLF_X20-42479.ISO",
+            "file_size": 851998720,
+            "creation_dts": "2023-03-28T10:11:24-04:00",
+            "mime_type": "application/octet-stream",
+            "pdf_meta": {
+                "custom_header": "",
+                "custom_footer": ""
+            }
+        },
+        {
+            "digital_item_oid": 113687,
+            "description": "TEST-FILE-13485.2016-130-EXE-Spanish-Employee-Training.zip",
+            "original_filename": "TEST-FILE-13485.2016-130-EXE-Spanish-Employee-Training.zip",
+            "file_size": 110203677,
+            "creation_dts": "2019-02-05T10:37:24-05:00",
+            "mime_type": "application/zip",
+            "pdf_meta": {
+                "custom_header": "",
+                "custom_footer": ""
+            }
+        },
+        {
+            "digital_item_oid": 21897,
+            "description": "UltraCart Reference Manual",
+            "original_filename": "UltraCartReferenceManual-1.pdf",
+            "file_size": 12838331,
+            "creation_dts": "2009-06-16T12:52:40-04:00",
+            "mime_type": "application/pdf",
+            "click_wrap_agreement": "The click wrap agreement and no play makes UltraCart a dull boy. redrum redrum",
+            "pdf_meta": {
+                "custom_header": "",
+                "custom_footer": ""
+            }
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 7,
+            "offset": 0,
+            "limit": 100,
+            "next_offset": 0,
+            "total_records": 7
+        },
+        "payload_name": "digital_items"
+    }
+}
+```

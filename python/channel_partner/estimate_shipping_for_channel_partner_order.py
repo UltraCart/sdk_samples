@@ -25,7 +25,7 @@ color_option.name = "Color"
 color_option.value = "Orange"
 
 item.options = [size_option, color_option]
-item.quantity = 1
+item.quantity = 1.0
 item.upsell = False
 
 order.items = [item]

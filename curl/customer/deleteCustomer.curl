@@ -1,0 +1,20 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X DELETE "https://secure.ultracart.com/rest/v2/customer/customers/11884621" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9ba531f25214860199e2f539c3800100992dc2bbaeb40d0199e2f539c3800100"
+```
+
+**Response Headers**
+```html
+Status: 204 No Content
+X-UltraCart-Request-Id: 5B0D50CF08736A0199E326320D80011
+Content-Length: 0
+Date: Tue, 14 Oct 2025 14:35:55 GMT
+```
+
+**Response Body**
+```json
+
+```

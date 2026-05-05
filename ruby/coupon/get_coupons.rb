@@ -27,19 +27,19 @@ def get_coupons_chunk(coupon_api, offset = 0, limit = 200)
 
   # getCoupons doesn't have any expansions. full record is always returned.
   opts = {
-    merchant_code: merchant_code,
-    description: description,
-    coupon_type: coupon_type,
-    start_date_begin: start_date_begin,
-    start_date_end: start_date_end,
-    expiration_date_begin: expiration_date_begin,
-    expiration_date_end: expiration_date_end,
-    affiliate_oid: affiliate_oid,
-    exclude_expired: exclude_expired,
-    _limit: limit,
-    _offset: offset,
-    _sort: nil,
-    _expand: nil
+    :'merchant_code' => merchant_code,
+    :'description' => description,
+    :'coupon_type' => coupon_type,
+    :'start_date_begin' => start_date_begin,
+    :'start_date_end' => start_date_end,
+    :'expiration_date_begin' => expiration_date_begin,
+    :'expiration_date_end' => expiration_date_end,
+    :'affiliate_oid' => affiliate_oid,
+    :'exclude_expired' => exclude_expired,
+    :'_limit' => limit,
+    :'_offset' => offset,
+    :'_sort' => nil,
+    :'_expand' => nil
   }
 
   get_response = coupon_api.get_coupons(opts)

@@ -21,7 +21,7 @@ begin
   api_response = customer_api.get_customer(
     customer_oid,
     opts: {
-      '_expand' => 'billing,shipping'
+      :'_expand' => 'billing,shipping'
     }
   )
 

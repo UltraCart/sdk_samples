@@ -1,0 +1,45 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/item/digital_library" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100" \
+  -d $'{
+    "import_from_url": "https://spaceplace.nasa.gov/gallery-earth/en/ISS_earth.en.jpg",
+    "description": "The Earth",
+    "click_wrap_agreement": "By purchasing this item, you agree that it is Earth"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: FF2AECBB73ADD70199DEF963F080011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 13 Oct 2025 19:08:30 GMT
+```
+
+**Response Body**
+```json
+{
+    "digital_item": {
+        "digital_item_oid": 235447,
+        "description": "The Earth",
+        "original_filename": "ISS_earth.en.jpg",
+        "file_size": 68354,
+        "creation_dts": "2025-10-13T15:08:30-04:00",
+        "mime_type": "image/jpeg",
+        "click_wrap_agreement": "By purchasing this item, you agree that it is Earth",
+        "pdf_meta": {
+            "custom_header": "",
+            "custom_footer": ""
+        }
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "digital_item"
+    }
+}
+```

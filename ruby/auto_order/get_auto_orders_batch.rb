@@ -67,7 +67,7 @@ expand = "items,items.future_schedules,original_order,rebill_orders" # contact u
 auto_order_oids = [123456, 234567, 345678, 456789]
 batch_request = UltracartClient::AutoOrderQueryBatch.new
 batch_request.auto_order_oids = auto_order_oids
-api_response = auto_order_api.get_auto_orders_batch(batch_request, { '_expand' => expand })
+api_response = auto_order_api.get_auto_orders_batch(batch_request, { :'_expand' => expand })
 auto_orders = api_response.auto_orders
 
 # this will be verbose...

@@ -65,7 +65,7 @@ auto_order_api = UltracartClient::AutoOrderApi.new_using_api_key(Constants::API_
 
 expand = "items,items.future_schedules,original_order,rebill_orders" # contact us if you're unsure what you need
 original_order_id = "DEMO-12345678"
-api_response = auto_order_api.get_auto_order_by_reference_order_id(original_order_id, { '_expand' => expand })
+api_response = auto_order_api.get_auto_order_by_reference_order_id(original_order_id, { :'_expand' => expand })
 auto_order = api_response.auto_order
 
 # this will be verbose...

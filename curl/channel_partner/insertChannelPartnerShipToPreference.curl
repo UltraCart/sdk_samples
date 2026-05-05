@@ -1,0 +1,49 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/channel_partner/channel_partners/18413/ship_to_preferences" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "channel_partner_oid": 18413,
+    "ship_to_edi_code": "EDI_CODE_HERE",
+    "return_policy": "This is some return policy text that will be printed on the packing slip.",
+    "additional_kit_component_item_ids": [
+        "ITEM_ID1",
+        "ITEM_ID2",
+        "ITEM_ID3"
+    ],
+    "description": "This is a merchant friendly description to help me remember what the above setting are."
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: B92E72DA350B6A019A0882613E80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 20:42:33 GMT
+```
+
+**Response Body**
+```json
+{
+    "ship_to_preference": {
+        "channel_partner_ship_to_preference_oid": 100201,
+        "channel_partner_oid": 18413,
+        "merchant_id": "DEMO",
+        "ship_to_edi_code": "EDI_CODE_HERE",
+        "return_policy": "This is some return policy text that will be printed on the packing slip.",
+        "additional_kit_component_item_ids": [
+            "ITEM_ID1",
+            "ITEM_ID2",
+            "ITEM_ID3"
+        ],
+        "description": "This is a merchant friendly description to help me remember what the above setting are."
+    },
+    "success": true,
+    "metadata": {}
+}
+```

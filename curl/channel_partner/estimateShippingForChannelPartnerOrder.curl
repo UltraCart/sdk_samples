@@ -1,0 +1,75 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/channel_partner/estimate_shipping" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "channel_partner_order_id": "widget-1245-abc-1",
+    "coupons": [
+        "10OFF"
+    ],
+    "items": [
+        {
+            "merchant_item_id": "shirt",
+            "options": [
+                {
+                    "name": "Size",
+                    "value": "Small"
+                },
+                {
+                    "name": "Color",
+                    "value": "Orange"
+                }
+            ],
+            "quantity": 1.0,
+            "upsell": false
+        }
+    ],
+    "ship_to_residential": true,
+    "shipto_address1": "55 Main Street",
+    "shipto_address2": "Suite 202",
+    "shipto_city": "Duluth",
+    "shipto_company": "Widgets Inc",
+    "shipto_country_code": "US",
+    "shipto_day_phone": "6785552323",
+    "shipto_evening_phone": "7703334444",
+    "shipto_first_name": "Sally",
+    "shipto_last_name": "McGonkyDee",
+    "shipto_postal_code": "30097",
+    "shipto_state_region": "GA",
+    "shipto_title": "Director"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 25250C5EBCDC8C019A0D88C2A580011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 22 Oct 2025 20:08:02 GMT
+```
+
+**Response Body**
+```json
+{
+    "estimates": [
+        {
+            "shipping_method": "USPS: Retail Ground",
+            "shipping_handling_total": 9.45
+        },
+        {
+            "shipping_method": "USPS: Ground Advantage",
+            "shipping_handling_total": 9.45
+        },
+        {
+            "shipping_method": "USPS: Priority Mail",
+            "shipping_handling_total": 10.9
+        }
+    ],
+    "success": true,
+    "metadata": {}
+}
+```

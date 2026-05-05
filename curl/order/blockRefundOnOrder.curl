@@ -1,4 +1,3 @@
-C:\work\sdk_samples\python\venv\Scripts\python.exe C:\work\sdk_samples\python\order\block_refund_on_order.py 
 **Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
 ```bash
 curl -X GET "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009105222/refund_block\\ \

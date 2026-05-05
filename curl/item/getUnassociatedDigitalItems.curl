@@ -1,0 +1,62 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/item/digital_library/unassociated\\ \
+?_limit=100&_offset=0&_expand=" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: E7ECB5BE49589F0199DEF787F980011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 13 Oct 2025 19:06:28 GMT
+```
+
+**Response Body**
+```json
+{
+    "digital_items": [
+        {
+            "digital_item_oid": 235428,
+            "description": "The Earth",
+            "original_filename": "Earth_%2816530938850%29.jpg",
+            "file_size": 1051749,
+            "creation_dts": "2025-10-10T13:06:15-04:00",
+            "mime_type": "image/jpeg",
+            "click_wrap_agreement": "By purchasing this item, you agree that it is Earth",
+            "pdf_meta": {
+                "custom_header": "",
+                "custom_footer": ""
+            },
+            "external_id": "something_random"
+        },
+        {
+            "digital_item_oid": 113687,
+            "description": "TEST-FILE-13485.2016-130-EXE-Spanish-Employee-Training.zip",
+            "original_filename": "TEST-FILE-13485.2016-130-EXE-Spanish-Employee-Training.zip",
+            "file_size": 110203677,
+            "creation_dts": "2019-02-05T10:37:24-05:00",
+            "mime_type": "application/zip",
+            "pdf_meta": {
+                "custom_header": "",
+                "custom_footer": ""
+            }
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 2,
+            "offset": 0,
+            "limit": 100,
+            "next_offset": 0,
+            "total_records": 2
+        },
+        "payload_name": "digital_items"
+    }
+}
+```

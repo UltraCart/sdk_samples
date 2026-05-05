@@ -9,11 +9,11 @@ expansion = 'items' # For this example, we're just getting a cart to insert some
 
 cart_id = nil
 cart_id = ENV['HTTP_COOKIE'].to_s[/#{Constants::CART_ID_COOKIE_NAME}=([^;]+)/, 1] if ENV['HTTP_COOKIE']
-
+opts = { :'_expand' => expansion }
 cart = if cart_id.nil?
-         checkout_api.get_cart({_expand: expansion}).cart
+         checkout_api.get_cart(opts).cart
        else
-         checkout_api.get_cart_by_cart_id(cart_id, {_expand: expansion}).cart
+         checkout_api.get_cart_by_cart_id(cart_id, opts).cart
        end
 
 # Get the items array on the cart, creating it if it doesn't exist.
@@ -35,7 +35,7 @@ items << item
 cart.items = items
 
 # Push the cart up to save the item
-cart_response = checkout_api.update_cart(cart, {_expand: expansion})
+cart_response = checkout_api.update_cart(cart, opts)
 
 # Extract the updated cart from the response
 cart = cart_response.cart

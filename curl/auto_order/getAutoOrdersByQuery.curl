@@ -1,0 +1,189 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/auto_order/auto_orders/query\\ \
+?_limit=2&_offset=0&_sort=next_shipment_dts&_expand=items%2Citems.future_schedules%2Coriginal_order%2Crebill_orders" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "email": "support@ultracart.com"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: D7CB6F8A90F03F019A0853B56880011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 19:51:38 GMT
+```
+
+**Response Body**
+```json
+{
+    "auto_orders": [
+        {
+            "auto_order_oid": 8204314,
+            "merchant_id": "DEMO",
+            "original_order_id": "DEMO-0009106198",
+            "original_order": {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009106198",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2025-08-07T09:48:25-04:00",
+                "language_iso_code": "ENG"
+            },
+            "auto_order_code": "2BQ38B1F5P",
+            "credit_card_attempt": 0,
+            "items": [
+                {
+                    "auto_order_item_oid": 126651121,
+                    "next_shipment_dts": "2025-11-08T00:00:00-05:00",
+                    "life_time_value": 507.77,
+                    "number_of_rebills": 3,
+                    "rebill_value": 500.0,
+                    "last_order_dts": "2025-10-08T14:00:31-04:00",
+                    "arbitrary_quantity": 1,
+                    "original_item_id": "AUTO-ORDER",
+                    "original_quantity": 1,
+                    "future_schedules": [
+                        {
+                            "shipment_dts": "2025-11-08T00:00:00-05:00",
+                            "item_id": "AOPAYMENT",
+                            "unit_cost": 50.0,
+                            "rebill_count": 4
+                        },
+                        {
+                            "shipment_dts": "2025-12-08T00:00:00-05:00",
+                            "item_id": "AOPAYMENT",
+                            "unit_cost": 50.0,
+                            "rebill_count": 5
+                        },
+                        {
+                            "shipment_dts": "2026-01-08T00:00:00-05:00",
+                            "item_id": "BONE_CASE",
+                            "unit_cost": 400.0,
+                            "rebill_count": 6
+                        },
+                        {
+                            "shipment_dts": "2026-02-08T00:00:00-05:00",
+                            "item_id": "AOPAYMENT",
+                            "unit_cost": 50.0,
+                            "rebill_count": 7
+                        },
+                        {
+                            "shipment_dts": "2026-03-08T00:00:00-05:00",
+                            "item_id": "AOPAYMENT",
+                            "unit_cost": 50.0,
+                            "rebill_count": 8
+                        },
+                        {
+                            "shipment_dts": "2026-04-08T00:00:00-04:00",
+                            "item_id": "BONE_CASE",
+                            "unit_cost": 400.0,
+                            "rebill_count": 9
+                        },
+                        {
+                            "shipment_dts": "2026-05-08T00:00:00-04:00",
+                            "item_id": "AOPAYMENT",
+                            "unit_cost": 50.0,
+                            "rebill_count": 10
+                        },
+                        {
+                            "shipment_dts": "2026-06-08T00:00:00-04:00",
+                            "item_id": "AOPAYMENT",
+                            "unit_cost": 50.0,
+                            "rebill_count": 11
+                        },
+                        {
+                            "shipment_dts": "2026-07-08T00:00:00-04:00",
+                            "item_id": "BONE_CASE",
+                            "unit_cost": 400.0,
+                            "rebill_count": 12
+                        }
+                    ],
+                    "first_order_dts": "2025-08-07T09:48:25-04:00",
+                    "next_item_id": "AOPAYMENT"
+                }
+            ],
+            "cancel_reason": "-- You must choose a",
+            "rebill_orders": [
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009106199",
+                    "current_stage": "Completed Order",
+                    "creation_dts": "2025-08-08T14:00:32-04:00",
+                    "language_iso_code": "ENG"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009106244",
+                    "current_stage": "Completed Order",
+                    "creation_dts": "2025-09-08T14:00:36-04:00",
+                    "language_iso_code": "ENG"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009106286",
+                    "current_stage": "Shipping Department",
+                    "creation_dts": "2025-10-08T14:00:33-04:00",
+                    "language_iso_code": "ENG"
+                }
+            ],
+            "status": "disabled"
+        },
+        {
+            "auto_order_oid": 4515135,
+            "merchant_id": "DEMO",
+            "original_order_id": "DEMO-0009104412",
+            "original_order": {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104412",
+                "current_stage": "Completed Order",
+                "creation_dts": "2021-03-15T14:41:39-04:00",
+                "language_iso_code": "ENG"
+            },
+            "auto_order_code": "2FS6J1F7V4",
+            "credit_card_attempt": 0,
+            "items": [
+                {
+                    "auto_order_item_oid": 86882449,
+                    "next_shipment_dts": "2021-04-15T00:00:00-04:00",
+                    "life_time_value": 17.95,
+                    "number_of_rebills": 0,
+                    "rebill_value": 0.0,
+                    "last_order_dts": "2021-03-15T14:41:39-04:00",
+                    "original_item_id": "BONE",
+                    "original_quantity": 1,
+                    "options": [
+                        {
+                            "label": "Addon Treat",
+                            "value": "No thanks"
+                        }
+                    ],
+                    "future_schedules": [],
+                    "first_order_dts": "2021-03-15T14:41:39-04:00"
+                }
+            ],
+            "canceled_by_user": "customer",
+            "canceled_dts": "2021-03-15T14:47:16-04:00",
+            "rebill_orders": [],
+            "status": "canceled"
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 2,
+            "offset": 0,
+            "limit": 2,
+            "more": true,
+            "next_offset": 2,
+            "total_records": 24
+        },
+        "payload_name": "auto_orders"
+    }
+}
+```

@@ -16,16 +16,16 @@ auto_order_api = AutoOrderApi(api_client())
 expand = "items,items.future_schedules,original_order,rebill_orders"
 
 # Get an auto order and update it. There are many ways to retrieve an auto order.
-auto_order_oid = 123456789
+auto_order_oid = 5712848
 
 # Retrieve the auto order
-api_response = auto_order_api.get_auto_order(auto_order_oid)
+api_response = auto_order_api.get_auto_order(auto_order_oid, expand=expand)
 auto_order = api_response.auto_order
 validate_original_order = 'No'
 
 # For this example, the customer supplied the wrong postal code when ordering.
 # So to change the postal code for all subsequent auto orders, we change the original order.
-auto_order.original_order.billing.postal_code = '44233'
+auto_order['original_order']['billing.postal_code'] = '44233'
 
 # Update the auto order
 api_response = auto_order_api.update_auto_order(auto_order_oid, auto_order,

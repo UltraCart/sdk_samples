@@ -18,7 +18,7 @@ auto_order_api = UltracartClient::AutoOrderApi.new_using_api_key(Constants::API_
 
 expand = "items" # see https://www.ultracart.com/api/#resource_auto_order.html for list
 auto_order_oid = 123456789 # get an auto order and update it. There are many ways to retrieve an auto order.
-get_response = auto_order_api.get_auto_order(auto_order_oid, {_expand: expand})
+get_response = auto_order_api.get_auto_order(auto_order_oid, {:'_expand' => expand})
 auto_order = get_response.auto_order
 
 pause_response = auto_order_api.pause_auto_order(auto_order_oid, auto_order)

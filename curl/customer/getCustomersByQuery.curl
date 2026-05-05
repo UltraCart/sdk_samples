@@ -1,0 +1,56 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/customer/customers/query\\ \
+?_offset=0&_limit=2&_sort=email&_expand=shipping%2Cbilling" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 79406A1B0C8694019A05B8911E80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 07:42:53 GMT
+```
+
+**Response Body**
+```json
+{
+    "customers": [
+        {
+            "customer_profile_oid": 11538045,
+            "merchant_id": "DEMO",
+            "email": "1111@111.com",
+            "last_modified_dts": "2025-10-06T16:02:33-04:00",
+            "last_modified_by": "API:ApiUserOid=159161",
+            "signup_dts": "2025-06-04T16:02:34-04:00",
+            "fax": "+15555555555"
+        },
+        {
+            "customer_profile_oid": 11537521,
+            "merchant_id": "DEMO",
+            "email": "111@111.com",
+            "last_modified_dts": "2025-06-04T15:48:25-04:00",
+            "last_modified_by": "Tyler",
+            "signup_dts": "2025-06-04T15:48:25-04:00",
+            "fax": ""
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 2,
+            "offset": 0,
+            "limit": 2,
+            "more": true,
+            "next_offset": 2,
+            "total_records": 838
+        },
+        "payload_name": "customers"
+    }
+}
+```

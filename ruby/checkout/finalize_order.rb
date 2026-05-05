@@ -27,7 +27,7 @@ cart_id = cookies[Constants::CART_ID_COOKIE_NAME] if cookies[Constants::CART_ID_
 
 cart = nil
 if cart_id.nil?
-  api_response = checkout_api.get_cart(_expand: expansion)
+  api_response = checkout_api.get_cart({:'_expand' => expansion})
 else
   api_response = checkout_api.get_cart_by_cart_id(cart_id, _expand: expansion)
 end

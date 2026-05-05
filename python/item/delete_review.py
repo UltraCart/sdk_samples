@@ -18,8 +18,8 @@ from samples import api_client
 item_api = ItemApi(api_client())
 
 # Specify item and review OIDs
-merchant_item_oid = 123456
-review_oid = 987654
+merchant_item_oid = 794919
+review_oid = 33431
 
 # Delete the review
 item_api.delete_review(review_oid, merchant_item_oid)

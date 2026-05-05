@@ -1,0 +1,112 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/item/pricing_tiers\\ \
+?_expand=approval_notification%2Csignup_notification" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 31EE784A5F709E0199DEE215DA80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 13 Oct 2025 18:43:02 GMT
+```
+
+**Response Body**
+```json
+{
+    "pricingTiers": [
+        {
+            "pricing_tier_oid": 298164,
+            "name": "Dealer Tier 10",
+            "approval_notification": {},
+            "signup_notification": {}
+        },
+        {
+            "pricing_tier_oid": 298165,
+            "name": "Dealer Tier 15 Price",
+            "approval_notification": {},
+            "signup_notification": {}
+        },
+        {
+            "pricing_tier_oid": 298166,
+            "name": "Dealer Tier 20 Price",
+            "approval_notification": {},
+            "signup_notification": {}
+        },
+        {
+            "pricing_tier_oid": 298167,
+            "name": "Dealer Tier 25 Price",
+            "approval_notification": {},
+            "signup_notification": {}
+        },
+        {
+            "pricing_tier_oid": 298168,
+            "name": "Dealer Tier 30 Price",
+            "approval_notification": {},
+            "signup_notification": {}
+        },
+        {
+            "pricing_tier_oid": 298169,
+            "name": "Dealer Tier LOJ Price",
+            "approval_notification": {},
+            "signup_notification": {}
+        },
+        {
+            "pricing_tier_oid": 298170,
+            "name": "Dealer Tier RS 35 Price",
+            "approval_notification": {},
+            "signup_notification": {}
+        },
+        {
+            "pricing_tier_oid": 243,
+            "name": "default",
+            "default_tier": true,
+            "approval_notification": {},
+            "signup_notification": {}
+        },
+        {
+            "pricing_tier_oid": 66264,
+            "name": "Distributor",
+            "default_percentage_discount": 0.5,
+            "display_on_wholesale_signup": true,
+            "approval_notification": {},
+            "signup_notification": {},
+            "exempt_loyalty_rewards": true
+        },
+        {
+            "pricing_tier_oid": 55404,
+            "name": "Wholesale",
+            "default_percentage_discount": 0.5,
+            "default_on_wholesale_signup": true,
+            "display_on_wholesale_signup": true,
+            "approval_notification": {},
+            "signup_notification": {},
+            "suppress_mailing_list": true,
+            "exempt_loyalty_rewards": true
+        },
+        {
+            "pricing_tier_oid": 192664,
+            "name": "Wholesale Canada",
+            "approval_notification": {},
+            "signup_notification": {},
+            "currency_code": "CAD"
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 11,
+            "offset": 0,
+            "limit": 100,
+            "next_offset": 0,
+            "total_records": 11
+        },
+        "payload_name": "items"
+    }
+}
+```

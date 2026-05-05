@@ -14,7 +14,7 @@ target_auto_order_oid = 123456789 # set getAutoOrdersByQuery for retrieving auto
 consolidate_request = UltracartClient::AutoOrderConsolidate.new
 consolidate_request.source_auto_order_oids = [23456789, 3456789] # these are the autoorder_oids you wish to consolidate into the target.
 
-api_response = auto_order_api.consolidate_auto_orders(target_auto_order_oid, consolidate_request, { '_expand' => expand })
+api_response = auto_order_api.consolidate_auto_orders(target_auto_order_oid, consolidate_request, { :'_expand' => expand })
 
 consolidated_auto_order = api_response.auto_order
 

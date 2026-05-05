@@ -30,9 +30,9 @@ auto_orders_request = UltracartClient::AutoOrdersRequest.new
 auto_orders_request.auto_orders = auto_orders
 
 opts = {
-  _expand: expand,
-  _placeholders: placeholders,
-  _async: async
+  :'_expand' => expand,
+  :'_placeholders' => placeholders,
+  :'_async' => async
 }
 
 api_response = auto_order_api.update_auto_orders_batch(auto_orders_request, opts)

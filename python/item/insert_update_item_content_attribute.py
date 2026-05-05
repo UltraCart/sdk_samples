@@ -24,7 +24,7 @@ Success will return back a status code of 204 (No Content)
 item_api = ItemApi(api_client())
 
 # Specify the merchant item OID
-merchant_item_oid = 12345
+merchant_item_oid = 226937
 
 # Create content attribute
 attribute = ItemContentAttribute(

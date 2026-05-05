@@ -1,0 +1,115 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/auto_order/auto_orders\\ \
+?email=test%40ultracart.com&_limit=2&_offset=0&_expand=items%2Coriginal_order%2Crebill_orders" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: C954AEE3F2A7BF019A082ACDA880011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 19:06:55 GMT
+```
+
+**Response Body**
+```json
+{
+    "auto_orders": [
+        {
+            "auto_order_oid": 3639186,
+            "merchant_id": "DEMO",
+            "original_order_id": "DEMO-0009104025",
+            "original_order": {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104025",
+                "current_stage": "Rejected",
+                "creation_dts": "2018-07-20T21:59:15-04:00",
+                "reject_dts": "2020-04-23T09:47:53-04:00",
+                "language_iso_code": "ENG"
+            },
+            "auto_order_code": "4FPCGYLT74",
+            "credit_card_attempt": 0,
+            "next_attempt": "2019-03-09T00:00:00-05:00",
+            "items": [
+                {
+                    "auto_order_item_oid": 67895348,
+                    "next_shipment_dts": "2018-08-20T00:00:00-04:00",
+                    "life_time_value": 20.0,
+                    "number_of_rebills": 0,
+                    "rebill_value": 0.0,
+                    "last_order_dts": "2018-07-20T21:59:15-04:00",
+                    "original_item_id": "BONE",
+                    "original_quantity": 1,
+                    "options": [
+                        {
+                            "label": "Addon Treat",
+                            "value": "No thanks"
+                        }
+                    ],
+                    "first_order_dts": "2018-07-20T21:59:15-04:00",
+                    "next_item_id": "BONE"
+                }
+            ],
+            "disabled_dts": "2020-04-23T09:47:53-04:00",
+            "rebill_orders": [],
+            "status": "disabled"
+        },
+        {
+            "auto_order_oid": 3639187,
+            "merchant_id": "DEMO",
+            "original_order_id": "DEMO-0009104026",
+            "original_order": {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104026",
+                "current_stage": "Rejected",
+                "creation_dts": "2018-07-20T22:06:25-04:00",
+                "reject_dts": "2020-04-23T09:47:52-04:00",
+                "language_iso_code": "ENG"
+            },
+            "auto_order_code": "D4MSHFMQZK",
+            "credit_card_attempt": 0,
+            "next_attempt": "2019-03-09T00:00:00-05:00",
+            "items": [
+                {
+                    "auto_order_item_oid": 67895402,
+                    "next_shipment_dts": "2018-08-20T00:00:00-04:00",
+                    "life_time_value": 20.0,
+                    "number_of_rebills": 0,
+                    "rebill_value": 0.0,
+                    "last_order_dts": "2018-07-20T22:06:25-04:00",
+                    "original_item_id": "BONE",
+                    "original_quantity": 1,
+                    "options": [
+                        {
+                            "label": "Addon Treat",
+                            "value": "No thanks"
+                        }
+                    ],
+                    "first_order_dts": "2018-07-20T22:06:25-04:00",
+                    "next_item_id": "BONE"
+                }
+            ],
+            "disabled_dts": "2020-04-23T09:47:53-04:00",
+            "rebill_orders": [],
+            "status": "disabled"
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 2,
+            "offset": 0,
+            "limit": 2,
+            "more": true,
+            "next_offset": 2,
+            "total_records": 3
+        },
+        "payload_name": "auto_orders"
+    }
+}
+```

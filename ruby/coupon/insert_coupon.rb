@@ -68,5 +68,5 @@ coupon.amount_off_subtotal.discount_amount = 11
 #CouponTierQuantityPercent
 
 # coupons do not have expansions
-api_response = coupon_api.insert_coupon(coupon, {_expand: nil})
+api_response = coupon_api.insert_coupon(coupon, {})
 puts api_response

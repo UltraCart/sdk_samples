@@ -55,10 +55,31 @@ def get_auto_order_chunk(auto_order_api, offset, limit)
   sort = nil
 
   # see all these parameters?  that is why you should use getAutoOrdersByQuery() instead of getAutoOrders()
-  api_response = auto_order_api.get_auto_orders(auto_order_code, original_order_id, first_name, last_name,
-    company, city, state, postal_code, country_code, phone, email, original_order_date_begin,
-    original_order_date_end, next_shipment_date_begin, next_shipment_date_end, card_type, item_id, status,
-    limit, offset, since, sort, { '_expand' => expand })
+  api_response = auto_order_api.get_auto_orders(
+    {
+      :'auto_order_code' => auto_order_code,
+      :'original_order_id' => original_order_id,
+      :'first_name' =>  first_name,
+      :'last_name' => last_name,
+      :'company' =>  company,
+      :'city' =>  city,
+      :'state' =>  state,
+      :'postal_code' =>  postal_code,
+      :'country_code' =>  country_code,
+      :'phone' =>  phone,
+      :'email' =>  email,
+      :'original_order_date_begin' =>  original_order_date_begin,
+      :'original_order_date_end' =>  original_order_date_end,
+      :'next_shipment_date_begin' =>  next_shipment_date_begin,
+      :'next_shipment_date_end' =>  next_shipment_date_end,
+      :'card_type' =>  card_type,
+      :'item_id' =>  item_id,
+      :'status' =>  status,
+      :'_limit' =>  limit,
+      :'_offset' =>  offset,
+      :'_since' =>  since,
+      :'_sort' =>  sort,
+      :'_expand' => expand })
 
   api_response.auto_orders || []
 end

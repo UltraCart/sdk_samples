@@ -16,7 +16,7 @@ class UltracartService
 
     customer_profile_oid = 2_698_265
     # customer_profile_oid = @account.profile.ultracart_customer_profile_oid # Integer | The customer oid to retrieve.
-    # opts = {_expand: "_expand_example"}
+    # opts = {:'_expand' => "_expand_example"}
     opts = {}
     begin
       customer_api.get_customer(customer_profile_oid, opts)

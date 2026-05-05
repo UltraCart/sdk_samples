@@ -21,7 +21,7 @@ email = 'test@test.com'
 query = UltracartClient::AutoOrderQuery.new
 query.email = email
 expansion = 'items,items.future_schedules,items.simple_schedule,rebill_orders'
-ao_response = ao_api.get_auto_orders_by_query(query, { _expand: expansion })
+ao_response = ao_api.get_auto_orders_by_query(query, { :'_expand' => expansion })
 
 # there should only be one auto order for a customer.  that's typical.
 # If you are marketing more than one, than you must loop through the result set
@@ -37,7 +37,7 @@ auto_order.items.each do |auto_order_item|
 end
 
 # save the auto order with the updated item.
-ao_api.update_auto_order(auto_order, auto_order.auto_order_oid, { _expand: expansion })
+ao_api.update_auto_order(auto_order, auto_order.auto_order_oid, { :'_expand' => expansion })
 
 
 

@@ -50,7 +50,7 @@ customer.billing = [billing] # notice this is an array of one shipping address (
 #   tags
 #   loyalty
 
-opts = {_expand: 'shipping,billing'}
+opts = {:'_expand' => 'shipping,billing'}
 begin
   customer_response = customer_api.insert_customer(customer, opts)
   puts customer_response.to_json

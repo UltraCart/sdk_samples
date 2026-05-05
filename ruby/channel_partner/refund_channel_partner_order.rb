@@ -17,7 +17,7 @@ expansion = "item,summary,shipping"
 
 # This order MUST be an order associated with this channel partner, or you will receive a 400 Bad Request.
 order_id = 'DEMO-0009106820'
-api_response = channel_partner_api.get_channel_partner_order(order_id, _expand: expansion)
+api_response = channel_partner_api.get_channel_partner_order(order_id, {:'_expand' => expansion})
 
 if api_response.error
   STDERR.puts api_response.error.developer_message
@@ -52,15 +52,15 @@ reverse_affiliate_transactions = true # for a full refund, the affiliate should 
 issue_store_credit = false  # if true, the customer would receive store credit instead of a return on their credit card.
 auto_order_cancel_reason = nil
 
-api_response = channel_partner_api.refund_channel_partner_order(order_id, order,
-  reject_after_refund: reject_after_refund,
-  skip_customer_notifications: skip_customer_notifications,
-  auto_order_cancel: auto_order_cancel,
-  manual_refund: manual_refund,
-  reverse_affiliate_transactions: reverse_affiliate_transactions,
-  issue_store_credit: issue_store_credit,
-  auto_order_cancel_reason: auto_order_cancel_reason,
-  _expand: expansion)
+api_response = channel_partner_api.refund_channel_partner_order(order_id, order, {
+  :'reject_after_refund' => reject_after_refund,
+  :'skip_customer_notifications' => skip_customer_notifications,
+  :'auto_order_cancel' => auto_order_cancel,
+  :'manual_refund' => manual_refund,
+  :'reverse_affiliate_transactions' => reverse_affiliate_transactions,
+  :'issue_store_credit' => issue_store_credit,
+  :'auto_order_cancel_reason' => auto_order_cancel_reason,
+  :'_expand' => expansion })
 
 error = api_response.error
 updated_order = api_response.order

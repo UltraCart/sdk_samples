@@ -29,7 +29,7 @@ _expand = "item,summary,shipping"
 
 # This order MUST be an order associated with this channel partner or you will receive a 400 Bad Request.
 order_id = 'DEMO-0009110366'
-api_response = channel_partner_api.get_channel_partner_order(order_id, { '_expand' => _expand })
+api_response = channel_partner_api.get_channel_partner_order(order_id, { :'_expand' => _expand })
 
 if api_response.error
   STDERR.puts api_response.error.developer_message

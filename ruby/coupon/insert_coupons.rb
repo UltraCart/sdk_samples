@@ -13,5 +13,5 @@ coupons = []
 coupons_request.coupons = coupons
 
 # coupons do not have expansions or placeholders
-api_response = coupon_api.insert_coupons(coupons_request, {_expand: nil, _placeholders: nil})
+api_response = coupon_api.insert_coupons(coupons_request, {})
 puts api_response

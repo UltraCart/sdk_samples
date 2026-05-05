@@ -11,7 +11,7 @@ def get_auto_order():
     expand = "items,items.future_schedules,original_order,rebill_orders"
 
     # If you don't know the oid, use getAutoOrdersByQuery for retrieving auto orders
-    auto_order_oid = 123456789
+    auto_order_oid = 2133352
     api_response = auto_order_api.get_auto_order(auto_order_oid, expand=expand)
     auto_order = api_response.auto_order
     print(auto_order)

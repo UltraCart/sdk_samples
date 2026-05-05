@@ -11,7 +11,8 @@ try:
     """
 
     # Create a digital item to get an item
-    digital_item_oid = insert_sample_digital_item()
+    # TODO - uncomment this if you have no digital items in your account.  but this can only be run once, after which you'll get a duplicate image error
+    # digital_item_oid = insert_sample_digital_item()
 
     # Create Item API client
     item_api = ItemApi(api_client())
@@ -19,16 +20,10 @@ try:
     # Set parameters for getDigitalItems
     limit = 100
     offset = 0
-    since = None  # digital items do not use since. leave as None.
-    sort = None  # if None, use default of original_filename
-    expand = None  # digital items have no expansion. leave as None. this value is ignored
-    placeholders = None  # digital items have no placeholders. leave as None.
 
     # Retrieve digital items
-    api_response = item_api.get_digital_items(limit=limit, offset=offset, since=since,
-                                              sort=sort, expand=expand,
-                                              placeholders=placeholders)
-    digital_items = api_response.get_digital_items()  # assuming this succeeded
+    api_response = item_api.get_digital_items(limit=limit, offset=offset)
+    digital_items = api_response.digital_items  # assuming this succeeded
 
     print('The following items were retrieved via get_digital_items():')
     for digital_item in digital_items:

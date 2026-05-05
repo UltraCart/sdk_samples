@@ -4,7 +4,7 @@ from samples import channel_partner_api_client
 
 # Initialize API
 channel_partner_api = ChannelPartnerApi(channel_partner_api_client())
-channel_partner_oid = 12345
+channel_partner_oid = 18413
 
 # Create preference object
 preference = ChannelPartnerShipToPreference()
@@ -17,7 +17,7 @@ preference.description = "This is a merchant friendly description to help me rem
 # Insert the preference
 api_response = channel_partner_api.insert_channel_partner_ship_to_preference(channel_partner_oid, preference)
 
-if api_response.error is not None:
+if hasattr(api_response, 'error') and api_response.error is not None:
     print(api_response.error.developer_message)
     print(api_response.error.user_message)
     exit()

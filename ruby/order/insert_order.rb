@@ -99,7 +99,7 @@ begin
   cc_token = 'F893C8CBAE34830177F9EA9D97205400'
   cvv_token = '3FA7577E42F7580177F9EAA2FF1F5900'
 
-  get_response = checkout_api.get_cart(_expand: expansion)
+  get_response = checkout_api.get_cart({:'_expand' => expansion})
   if get_response.errors&.length&.positive?
     # handle errors here.
     abort('System error.  Could not retrieve shopping cart.')
@@ -124,7 +124,7 @@ begin
 
   # If the customer already has a customer profile, then load that profile and pull the shipping/billing from there.
   # otherwise populate it manually.
-  customer_response = customer_api.get_customer_by_email(email, { _expand: 'shipping,billing,cards' })
+  customer_response = customer_api.get_customer_by_email(email, { :'_expand' => 'shipping,billing,cards' })
   if customer_response&.customer
 
     cp = customer_response.customer # cp is short for 'customer profile'
@@ -194,7 +194,7 @@ begin
   # the optimal shipping method estimates and ensure that you don't error
   # by selecting a shipping method that is somehow excluded from the possible
   # list for whatever reason (restrictions, locations, item-level constraints, etc)
-  update_response = checkout_api.update_cart(cart, _expand: expansion)
+  update_response = checkout_api.update_cart(cart, {:'_expand' => expansion})
   cart = update_response.cart
 
   # for shipping, check the estimates and select one.  for a completely non-interactive checkout such as this,
@@ -208,7 +208,7 @@ begin
     end
   end
 
-  update_response = checkout_api.update_cart(cart, _expand: expansion)
+  update_response = checkout_api.update_cart(cart, {:'_expand' => expansion})
   cart = update_response.cart
 
   # validate the cart to ensure everything is in order.

@@ -23,7 +23,7 @@ expansion = "items"   # for this example, we're going to change the items after 
 
 # Step 1. Duplicate the order
 order_id_to_duplicate = 'DEMO-0009104436'
-api_response = order_api.duplicate_order(order_id_to_duplicate, opts = { _expand: expansion })
+api_response = order_api.duplicate_order(order_id_to_duplicate, opts = { :'_expand' => expansion })
 new_order = api_response.order
 
 # Step 2. Update the items. I will create a new items array and assign it to the order to remove the old ones completely.
@@ -46,7 +46,7 @@ item.weight = weight
 
 items << item
 new_order.items = items
-update_response = order_api.update_order(new_order.order_id, new_order, opts = { _expand: expansion })
+update_response = order_api.update_order(new_order.order_id, new_order, opts = { :'_expand' => expansion })
 
 updated_order = update_response.order
 

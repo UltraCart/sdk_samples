@@ -8,11 +8,21 @@ def insert_sample_item
   puts "insertSampleItem will attempt to create item #{item_id}"
 
   # Initialize the Item API
-  item_api = UltracartClient::ItemApi.new_using_api_key(Constants::API_KEY)
+  item_api = UltracartClient::ItemApi.new_using_api_key(Constants::API_KEY, Constants::VERIFY_SSL, Constants::DEBUG_MODE)
 
   # Create a new item
   new_item = UltracartClient::Item.new
   new_item.merchant_item_id = item_id
+
+  # these two lines are needed for the update_item_inventory example.  without them, the server will not return back
+  # an item.shipping subobject.
+  new_item.shipping = UltracartClient::ItemShipping.new
+  new_item.shipping.track_inventory = true
+  new_dc = UltracartClient::ItemShippingDistributionCenter.new
+  new_dc.handles = true
+  new_dc.inventory_level = 50
+  new_dc.distribution_center_code = 'DFLT'
+  new_item.shipping.distribution_centers = [new_dc]
 
   # Set pricing
   pricing = UltracartClient::ItemPricing.new
@@ -34,7 +44,7 @@ def insert_sample_item
   new_item.content = content
 
   # Prepare options hash with expand
-  opts = { '_expand' => 'content.multimedia' }
+  opts = { :'_expand' => 'content.multimedia' }
 
   # Print request object
   puts 'insertItem request object follows:'
@@ -84,7 +94,7 @@ def insert_sample_item_and_get_oid
   new_item.content = content
 
   # Prepare options hash with expand
-  opts = { '_expand' => 'content.multimedia' }
+  opts = { :'_expand' => 'content.multimedia' }
 
   # Print request object
   puts 'insertItem request object follows:'
@@ -123,7 +133,7 @@ def delete_sample_item(item_id)
   puts "attempting to retrieve the item object for item id #{item_id}"
 
   # Retrieve the item
-  opts = { '_expand' => nil }
+  opts = { :'_expand' => nil }
   api_response = item_api.get_item_by_merchant_item_id(item_id, opts)
   item = api_response.item
 
@@ -161,7 +171,7 @@ def insert_sample_digital_item(external_id = nil)
   item_api = UltracartClient::ItemApi.new_using_api_key(Constants::API_KEY)
 
   # Insert digital item
-  opts = { '_expand' => nil }
+  opts = { :'_expand' => nil }
   api_response = item_api.insert_digital_item(digital_item, opts)
 
   # Print response object

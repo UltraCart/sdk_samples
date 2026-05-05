@@ -1,0 +1,134 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/channel_partner/orders/by_channel_partner_order_id/ORD847K4M\\ \
+?_expand=item%2Csummary%2Cshipping" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 4235E9647AB9A2019A0D91087780011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 22 Oct 2025 20:16:43 GMT
+```
+
+**Response Body**
+```json
+{
+    "order": {
+        "merchant_id": "DEMO",
+        "order_id": "DEMO-0009106202",
+        "current_stage": "Shipping Department",
+        "creation_dts": "2025-08-11T11:24:25-04:00",
+        "language_iso_code": "ENG",
+        "shipping": {
+            "weight": {
+                "value": 3,
+                "uom": "LB"
+            },
+            "shipping_method": "USPS: Retail Ground",
+            "first_name": "Sarah",
+            "last_name": "Johnson",
+            "address1": "1247 Oak Street",
+            "city": "Denver",
+            "state_region": "CO",
+            "postal_code": "80202",
+            "country_code": "US",
+            "ship_to_residential": true,
+            "tracking_numbers": [
+                ""
+            ],
+            "ship_on_date": "2025-08-11T00:00:00-04:00"
+        },
+        "summary": {
+            "shipping_handling_total": {
+                "value": 16.0,
+                "localized": 16.0,
+                "localized_formatted": "$16.00"
+            },
+            "subtotal": {
+                "value": 59.85,
+                "localized": 59.85,
+                "localized_formatted": "$59.85"
+            },
+            "tax": {
+                "value": 5.77,
+                "localized": 5.77,
+                "localized_formatted": "$5.77"
+            },
+            "total": {
+                "value": 81.62,
+                "localized": 81.62,
+                "localized_formatted": "$81.62"
+            },
+            "shipping_handling_total_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "subtotal_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "taxable_subtotal_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "taxable_subtotal": {
+                "value": 59.85,
+                "localized": 59.85,
+                "localized_formatted": "$59.85"
+            }
+        },
+        "items": [
+            {
+                "merchant_item_id": "SHIRT_BLUE_LARGE",
+                "quantity": 3,
+                "description": "Shirt Blue Large",
+                "cost": {
+                    "value": 19.95,
+                    "localized": 19.95,
+                    "localized_formatted": "$19.95"
+                },
+                "weight": {
+                    "value": 1,
+                    "uom": "LB"
+                },
+                "special_product_type": "",
+                "discount": {
+                    "value": 0,
+                    "localized": 0.0,
+                    "localized_formatted": "$0.00"
+                },
+                "item_reference_oid": 126725645,
+                "accounting_code": "SHIRT_BLUE_LARGE",
+                "distribution_center_code": "DISK",
+                "channel_partner_item_id": "SHIRT_BLUE_LARGE",
+                "unit_cost_with_discount": {
+                    "value": 19.95,
+                    "localized": 19.95,
+                    "localized_formatted": "$19.95"
+                },
+                "total_cost_with_discount": {
+                    "value": 59.85,
+                    "localized": 59.85,
+                    "localized_formatted": "$59.85"
+                },
+                "cogs": 0.0,
+                "tax_product_type": "",
+                "item_index": 1
+            }
+        ]
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "order"
+    }
+}
+```

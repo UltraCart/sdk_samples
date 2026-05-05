@@ -1,0 +1,163 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/item/items/inventory_snapshot" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: E9FDD83A0C9DDC0199CF3387FA80011
+RateLimit-Limit: 4, 4;window=3600
+RateLimit-Remaining: 2
+RateLimit-Reset: 3600
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 10 Oct 2025 17:38:12 GMT
+```
+
+**Response Body**
+```json
+{
+	"inventories": [
+        {
+            "merchant_item_id": "VHX-70O-CUT-K-B",
+            "quantity": 0,
+            "allocated_to_placed_orders": 0,
+            "allocated_to_shopping_carts": 0,
+            "available_to_allocate": 0,
+            "distribution_centers": [
+                {
+                    "code": "DFLT",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "DISK",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "NTAN",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "SCLS",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "SHIPH",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "SHIPW",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "TJDC",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "TREPS",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                }
+            ]
+        },
+        {
+            "merchant_item_id": "VHX-70O-CUT-K-R",
+            "quantity": 0,
+            "allocated_to_placed_orders": 0,
+            "allocated_to_shopping_carts": 0,
+            "available_to_allocate": 0,
+            "distribution_centers": [
+                {
+                    "code": "DFLT",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "DISK",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "NTAN",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "SCLS",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "SHIPH",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "SHIPW",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "TJDC",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                },
+                {
+                    "code": "TREPS",
+                    "quantity": 0,
+                    "allocated_to_placed_orders": 0,
+                    "allocated_to_shopping_carts": 0,
+                    "available_to_allocate": 0
+                }
+            ]
+        },
+    ],
+    "success": true,
+    "metadata": {
+        "payload_name": "inventories"
+    }
+}
+```
+

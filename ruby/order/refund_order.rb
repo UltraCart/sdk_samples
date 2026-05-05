@@ -17,7 +17,7 @@ expansion = "items"
 
 # Step 1. Retrieve the order
 order_id = 'DEMO-0009104436'
-order = order_api.get_order(order_id, opts = { _expand: expansion }).order
+order = order_api.get_order(order_id, opts = { :'_expand' => expansion }).order
 
 order.items.each do |item|
   item.quantity_refunded = item.quantity

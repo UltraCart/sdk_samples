@@ -18,7 +18,7 @@ def add_customer_store_credit():
             description='First credit add',
             vesting_days=10,
             expiration_days=20,  # that's not a lot of time!
-            amount=20
+            amount=20.0
         )
         customer_api.add_customer_store_credit(customer_oid, add_request_1)
 
@@ -27,7 +27,7 @@ def add_customer_store_credit():
             description='Second credit add',
             vesting_days=0,  # immediately available
             expiration_days=90,
-            amount=40
+            amount=40.0
         )
         customer_api.add_customer_store_credit(customer_oid, add_request_2)
 

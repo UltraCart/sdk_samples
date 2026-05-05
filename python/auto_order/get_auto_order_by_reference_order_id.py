@@ -67,7 +67,7 @@ def get_auto_order_by_reference_order_id():
 
     # contact us if you're unsure what you need
     expand = "items,items.future_schedules,original_order,rebill_orders"
-    original_order_id = "DEMO-12345678"
+    original_order_id = "DEMO-0009103116"
     api_response = auto_order_api.get_auto_order_by_reference_order_id(original_order_id, expand=expand)
     auto_order = api_response.auto_order
 

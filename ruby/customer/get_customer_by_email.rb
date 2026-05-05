@@ -22,7 +22,7 @@ begin
   api_response = customer_api.get_customer_by_email(
     email,
     opts: {
-      '_expand' => 'billing,shipping'
+      :'_expand' => 'billing,shipping'
     }
   )
 

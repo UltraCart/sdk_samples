@@ -1,0 +1,348 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/checkout/cart/finalizeOrder" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "cart": {
+        "merchant_id": "DEMO",
+        "cart_id": "D5797CC8D3E6D5019A17A6A782800100",
+        "currency_code": "USD",
+        "base_currency_code": "USD",
+        "billing": {
+            "first_name": "US",
+            "last_name": "Visa",
+            "address1": "123 Main st",
+            "city": "Papillion",
+            "state_region": "NE",
+            "postal_code": "68133",
+            "country_code": "US",
+            "day_phone": "+14026195555",
+            "email": "visa-sandbox-account@fastlane.sb.com"
+        },
+        "shipping": {
+            "first_name": "US",
+            "last_name": "Visa",
+            "address1": "123 Main st",
+            "city": "Papillion",
+            "state_region": "NE",
+            "postal_code": "68133",
+            "country_code": "US",
+            "day_phone": "+14026195555",
+            "shipping_method": "USPS: First Class",
+            "ship_to_residential": true
+        },
+        "checkout": {
+            "ip_address": "127.0.0.1",
+            "screen_branding_theme_code": "DFLT",
+            "user_agent": "unknown",
+            "current_step": "View Cart"
+        },
+        "payment": {
+            "payment_method": "Cash"
+        },
+        "summary": {
+            "subtotal": {
+                "value": 49.95,
+                "localized": 49.95,
+                "localized_formatted": "$49.95"
+            },
+            "subtotal_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "subtotal_with_discount": {
+                "value": 49.95,
+                "localized": 49.95,
+                "localized_formatted": "$49.95"
+            },
+            "tax": {
+                "value": 3.75,
+                "localized": 3.75,
+                "localized_formatted": "$3.75"
+            },
+            "taxable_subtotal": {
+                "value": 49.95,
+                "localized": 49.95,
+                "localized_formatted": "$49.95"
+            },
+            "taxable_subtotal_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "taxable_subtotal_with_discount": {
+                "value": 49.95,
+                "localized": 49.95,
+                "localized_formatted": "$49.95"
+            },
+            "shipping_handling": {
+                "value": 10.65,
+                "localized": 10.65,
+                "localized_formatted": "$10.65"
+            },
+            "shipping_handling_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "shipping_handling_with_discount": {
+                "value": 10.65,
+                "localized": 10.65,
+                "localized_formatted": "$10.65"
+            },
+            "total": {
+                "value": 64.35,
+                "localized": 64.35,
+                "localized_formatted": "$64.35"
+            },
+            "surcharge": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "internal_gift_certificate_amount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            }
+        },
+        "coupons": [],
+        "taxes": {
+            "rate": 0.075,
+            "county": "SARPY"
+        },
+        "items": [
+            {
+                "position": 1,
+                "default_image_url": "https://s3.amazonaws.com/ultracart/im/DEMO/B349A9D38F2A300165CF6C2187051C00?AWSAccessKeyId=AKIAZHH5JGS62ZZ5XJXF&Expires=1761420025&Signature=eaxduVOEBm65%2BR7RGTzxymX05pw%3D",
+                "default_thumbnail_url": "https://s3.amazonaws.com/ultracartthumbs/1574854602073/DEMO/A/B/80-80-ABC490E3B57BC05D1259D08E91906497.jpg",
+                "discount": {
+                    "value": 0.0,
+                    "localized": 0.0,
+                    "localized_formatted": "$0.00"
+                },
+                "total_cost": {
+                    "value": 49.95,
+                    "localized": 49.95,
+                    "localized_formatted": "$49.95"
+                },
+                "total_cost_with_discount": {
+                    "value": 49.95,
+                    "localized": 49.95,
+                    "localized_formatted": "$49.95"
+                },
+                "item_oid": 5768119,
+                "item_id": "B-HSS",
+                "description": "Blue Sweatshirt with Animation",
+                "extended_description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>\n\n<p>Donec id elit non mi porta gravida at eget metus. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec sed odio dui. Curabitur blandit tempus porttitor.\n</p>",
+                "quantity": 1.0,
+                "unit_cost": {
+                    "value": 49.95,
+                    "localized": 49.95,
+                    "localized_formatted": "$49.95"
+                },
+                "unit_cost_with_discount": {
+                    "value": 49.95,
+                    "localized": 49.95,
+                    "localized_formatted": "$49.95"
+                },
+                "view_url": "http://www.testajax.com/catalog/DEMO/shop/hooded-sweatshirt/B-HSS.html"
+            }
+        ]
+    },
+    "options": {}
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 7D803706A59CCB019A17AA454680011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 24 Oct 2025 19:20:34 GMT
+```
+
+**Response Body**
+```json
+{
+    "successful": true,
+    "order_id": "DEMO-0009106289",
+    "errors": [],
+    "order": {
+        "merchant_id": "DEMO",
+        "order_id": "DEMO-0009106289",
+        "current_stage": "Shipping Department",
+        "creation_dts": "2025-10-24T15:20:28-04:00",
+        "language_iso_code": "ENG",
+        "billing": {
+            "first_name": "US",
+            "last_name": "Visa",
+            "address1": "123 Main st",
+            "city": "Papillion",
+            "state_region": "NE",
+            "postal_code": "68133",
+            "country_code": "US",
+            "day_phone": "+14026195555",
+            "day_phone_e164": "+14026195555",
+            "email": "visa-sandbox-account@fastlane.sb.com"
+        },
+        "shipping": {
+            "weight": {
+                "value": 1,
+                "uom": "LB"
+            },
+            "shipping_method": "USPS: First Class",
+            "first_name": "US",
+            "last_name": "Visa",
+            "address1": "123 Main st",
+            "city": "Papillion",
+            "state_region": "NE",
+            "postal_code": "68133",
+            "country_code": "US",
+            "ship_to_residential": true,
+            "day_phone": "+14026195555",
+            "day_phone_e164": "+14026195555",
+            "tracking_numbers": [
+                ""
+            ],
+            "tracking_number_details": []
+        },
+        "taxes": {
+            "tax_county": "SARPY",
+            "tax_rate": 0.075,
+            "tax_rate_state": 0.055,
+            "tax_rate_county": 0.0,
+            "tax_rate_city": 0.02,
+            "tax_rate_postal_code": 0.0
+        },
+        "payment": {
+            "payment_method": "Cash",
+            "payment_status": "Processed",
+            "payment_dts": "2025-10-24T15:20:30-04:00"
+        },
+        "summary": {
+            "shipping_handling_total": {
+                "value": 10.65,
+                "localized": 10.65,
+                "localized_formatted": "$10.65"
+            },
+            "subtotal": {
+                "value": 49.95,
+                "localized": 49.95,
+                "localized_formatted": "$49.95"
+            },
+            "tax": {
+                "value": 3.75,
+                "localized": 3.75,
+                "localized_formatted": "$3.75"
+            },
+            "total": {
+                "value": 64.35,
+                "localized": 64.35,
+                "localized_formatted": "$64.35"
+            },
+            "shipping_handling_total_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "subtotal_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "taxable_subtotal_discount": {
+                "value": 0.0,
+                "localized": 0.0,
+                "localized_formatted": "$0.00"
+            },
+            "taxable_subtotal": {
+                "value": 49.95,
+                "localized": 49.95,
+                "localized_formatted": "$49.95"
+            }
+        },
+        "marketing": {
+            "mailing_list": true
+        },
+        "items": [
+            {
+                "merchant_item_id": "B-HSS",
+                "quantity": 1,
+                "description": "Blue Sweatshirt with Animation",
+                "cost": {
+                    "value": 49.95,
+                    "localized": 49.95,
+                    "localized_formatted": "$49.95"
+                },
+                "weight": {
+                    "value": 1,
+                    "uom": "LB"
+                },
+                "special_product_type": "",
+                "discount": {
+                    "value": 0,
+                    "localized": 0.0,
+                    "localized_formatted": "$0.00"
+                },
+                "item_reference_oid": 127932193,
+                "accounting_code": "B-HSS",
+                "length": {
+                    "value": 2,
+                    "uom": "IN"
+                },
+                "height": {
+                    "value": 2,
+                    "uom": "IN"
+                },
+                "width": {
+                    "value": 2,
+                    "uom": "IN"
+                },
+                "ship_separately": true,
+                "distribution_center_code": "DISK",
+                "unit_cost_with_discount": {
+                    "value": 49.95,
+                    "localized": 49.95,
+                    "localized_formatted": "$49.95"
+                },
+                "total_cost_with_discount": {
+                    "value": 49.95,
+                    "localized": 49.95,
+                    "localized_formatted": "$49.95"
+                },
+                "tax_product_type": "",
+                "item_index": 1
+            }
+        ],
+        "checkout": {
+            "customer_ip_address": "127.0.0.1",
+            "storefront_host_name": "demo-3.ultracartstore.com"
+        },
+        "properties": [
+            {
+                "name": "cashbackEarned",
+                "value": "1"
+            },
+            {
+                "name": "ucacid",
+                "value": "1015256575.527234",
+                "expiration_dts": "2026-04-28T15:20:27-04:00"
+            }
+        ],
+        "utms": [],
+        "current_stage_histories": [
+            {
+                "before_stage": "Accounts Receivable",
+                "after_stage": "Shipping Department",
+                "transition_dts": "2025-10-24T15:20:30-04:00"
+            }
+        ]
+    }
+}
+```

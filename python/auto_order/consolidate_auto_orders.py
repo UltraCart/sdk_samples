@@ -14,11 +14,11 @@ def consolidate_auto_orders():
     expand = "items,items.future_schedules,original_order,rebill_orders"
 
     # set getAutoOrdersByQuery for retrieving auto orders where you can get their auto_order_oid
-    target_auto_order_oid = 123456789
+    target_auto_order_oid = 7829098
 
     consolidate_request = AutoOrderConsolidate()
-    # these are the autoorder_oids you wish to consolidate into the target
-    consolidate_request.source_auto_order_oids = [23456789, 3456789]
+    # these are the auto_order_oid you wish to consolidate into the target
+    consolidate_request.source_auto_order_oids = [7829798, 7806098]
 
     api_response = auto_order_api.consolidate_auto_orders(
         target_auto_order_oid,

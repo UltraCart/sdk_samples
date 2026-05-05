@@ -61,6 +61,20 @@ export class GetOrder {
     }
 }
 
+
+function getItemsSignature(order) {
+
+  // Sort items by merchant_item_id (case-insensitive)
+  const sortedItems = [...order.items].sort((a, b) =>
+    a.merchant_item_id.toLowerCase().localeCompare(b.merchant_item_id.toLowerCase())
+  );
+
+  // Build the signature string
+  return sortedItems
+    .map(item => `${item.merchant_item_id}[${item.quantity}]`)
+    .join(', ');
+}
+
 // Optional: If you want to call the method
 // GetOrder.execute().then(order => {
 //     if (order) {

@@ -1,0 +1,147 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/item/items/226937/reviews" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 35301FA75079A00199DEF2EA1F80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 13 Oct 2025 19:01:29 GMT
+```
+
+**Response Body**
+```json
+{
+    "reviews": [
+        {
+            "review_oid": 22733,
+            "overall": 5.0,
+            "rating_name1": "Durability",
+            "rating_name2": "Price",
+            "rating_name3": "Performance",
+            "rating_name4": "Appearance",
+            "rating_score1": 5.0,
+            "rating_score2": 5.0,
+            "rating_score3": 5.0,
+            "rating_score4": 5.0,
+            "title": "Best Widget EVER!!!!!!!!",
+            "review": "This widget works for everything! My wife works at a sewage plant and this is the only thing that gets the smell out of her clothes. You can also spread it on the lawn to grow fuller grass. Eating this widget increased my IQ by 40 points! I got turned down for Mensa because I'm too smart now!",
+            "status": "approved",
+            "store_feedback": "They have the best widgets! ",
+            "submitted_dts": "2013-06-19T00:00:00-04:00",
+            "helpful_yes_votes": 0,
+            "helperful_no_votes": 0,
+            "reviewed_nickname": "JTTest",
+            "reviewer_location": "Media, OH",
+            "reviewer_email": "jtcontactemail@test.com"
+        },
+        {
+            "review_oid": 23931,
+            "customer_profile_oid": 1726022,
+            "overall": 5.0,
+            "rating_name1": "Durability",
+            "rating_name2": "Price",
+            "rating_name3": "Performance",
+            "rating_name4": "Appearance",
+            "rating_score1": 5.0,
+            "rating_score2": 5.0,
+            "rating_score3": 5.0,
+            "rating_score4": 5.0,
+            "recommend_to_friend": true,
+            "title": "test",
+            "review": "test",
+            "status": "approved",
+            "recommend_store_to_friend": 10,
+            "store_feedback": "test",
+            "submitted_dts": "2013-08-09T11:25:35-04:00",
+            "helpful_yes_votes": 0,
+            "helperful_no_votes": 0
+        },
+        {
+            "review_oid": 46931,
+            "overall": 5.0,
+            "rating_name1": "Durability",
+            "rating_name2": "Price",
+            "rating_name3": "Performance",
+            "rating_name4": "Appearance",
+            "rating_score1": 5.0,
+            "rating_score2": 5.0,
+            "rating_score3": 5.0,
+            "rating_score4": 5.0,
+            "recommend_to_friend": true,
+            "title": "very light but really solid",
+            "review": "test",
+            "status": "unapproved",
+            "recommend_store_to_friend": 10,
+            "store_feedback": "awesome",
+            "submitted_dts": "2016-06-06T00:00:00-04:00",
+            "helpful_yes_votes": 0,
+            "helperful_no_votes": 0,
+            "reviewed_nickname": "test",
+            "reviewer_location": "test, oh",
+            "reviewer_email": "test@test.com"
+        },
+        {
+            "review_oid": 161561,
+            "overall": 0.0,
+            "rating_name1": "Durability",
+            "rating_name2": "Price",
+            "rating_name3": "Performance",
+            "rating_name4": "Appearance",
+            "rating_score1": 0.0,
+            "rating_score2": 0.0,
+            "rating_score3": 0.0,
+            "rating_score4": 0.0,
+            "title": "",
+            "review": "",
+            "status": "unapproved",
+            "submitted_dts": "2022-09-15T00:00:00-04:00",
+            "helpful_yes_votes": 0,
+            "helperful_no_votes": 0,
+            "reviewed_nickname": "",
+            "reviewer_location": "",
+            "reviewer_email": ""
+        },
+        {
+            "review_oid": 206522,
+            "customer_profile_oid": 1050917,
+            "overall": 4.0,
+            "rating_name1": "Durability",
+            "rating_name2": "Price",
+            "rating_name3": "Performance",
+            "rating_name4": "Appearance",
+            "rating_score1": 4.0,
+            "rating_score2": 5.0,
+            "rating_score3": 4.0,
+            "rating_score4": 4.0,
+            "recommend_to_friend": true,
+            "title": "My dog LOVES these treats!",
+            "review": "My dog absolutely loves these dog bone treats. Crunches them up with her little doggie smile. She is literally on cloud nine, happily howling at the moon with joy over these treats. Likes them so much better than the space doggie food from NASA.",
+            "status": "approved",
+            "recommend_store_to_friend": 9,
+            "store_feedback": "Crunch Crunch Crunch, yum yum yum.",
+            "submitted_dts": "2023-08-14T08:42:48-04:00",
+            "helpful_yes_votes": 0,
+            "helperful_no_votes": 0,
+            "order_id": "DEMO-0009104418"
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 5,
+            "offset": 0,
+            "limit": 100,
+            "next_offset": 0,
+            "total_records": 5
+        },
+        "payload_name": "reviews"
+    }
+}
+```

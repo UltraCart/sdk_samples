@@ -1,0 +1,28 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/customer/customers/email_verify/validate_token" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "token": "4F964E18291428AA05DBA67DC89E7D994C342CB5231BB2C73BFB8A7F18219A1A057B1A4ABA3AAD6DBC0A084590B6F3464E5B8749D5C6E7C5889D84D387134CD3"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 7DC3CC15E7A324019A070BCBA680011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 13:53:26 GMT
+```
+
+**Response Body**
+```json
+{
+    "success": true,
+    "metadata": {}
+}
+```

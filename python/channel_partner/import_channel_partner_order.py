@@ -162,7 +162,8 @@ order.billto_title = "Sir"
 order.cc_email = "orders@widgets.com"
 order.channel_partner_order_id = "widget-1245-abc"
 order.consider_recurring = False
-order.coupons = ["10OFF", "BUY1GET1"]
+# order.coupons = ["10OFF", "BUY1GET1"]
+order.coupons = ["10OFF"]
 
 order.credit_card_expiration_month = 5
 order.credit_card_expiration_year = 2032

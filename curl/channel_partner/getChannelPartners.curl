@@ -1,0 +1,35 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/channel_partner/channel_partners" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 8A3364BF864F69019A0D93255280011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 22 Oct 2025 20:18:58 GMT
+```
+
+**Response Body**
+```json
+{
+    "channelPartners": [
+        {
+            "channel_partner_oid": 18413,
+            "name": "sdk_samples testing",
+            "communication_method": "API",
+            "merchant_id": "DEMO",
+            "code": "SDK"
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "payload_name": "channel_partners"
+    }
+}
+```

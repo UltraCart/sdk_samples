@@ -28,8 +28,8 @@ try:
     tax, third_party_email_marketing, variations, wishlist_member
     """
     expand = "kit_definition,options,shipping,tax,variations"
-    api_response = item_api.get_item_by_merchant_item_id(item_id, expand=expand, active=False)
-    item = api_response.get_item()
+    api_response = item_api.get_item_by_merchant_item_id(item_id, expand=expand)
+    item = api_response.item
 
     print('The following item was retrieved via get_item_by_merchant_item_id():')
     print(item)

@@ -25,7 +25,7 @@ def update_customer_example():
         expand = "billing,shipping"
 
         # Retrieve customer details
-        customer = customer_api.get_customer(customer_oid, expand).customer
+        customer = customer_api.get_customer(customer_oid, expand=expand).customer
 
         # TODO: Modify customer details
         # Change billing address (assuming first billing entry)
@@ -33,7 +33,7 @@ def update_customer_example():
 
         # Update customer
         # Notice expand is passed to update to get back the same fields for comparison
-        api_response = customer_api.update_customer(customer_oid, customer, expand)
+        api_response = customer_api.update_customer(customer_oid, customer, expand=expand)
 
         # Verify the update
         print(api_response.customer)

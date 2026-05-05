@@ -1,0 +1,109 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X PUT "https://secure.ultracart.com/rest/v2/customer/customers/11887438\\ \
+?_expand=billing%2Cshipping" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "customer_profile_oid": 11887438,
+    "merchant_id": "DEMO",
+    "email": "sample_enmjguhd@test.com",
+    "billing": [
+        {
+            "customer_profile_oid": 11887438,
+            "customer_billing_oid": 12788316,
+            "first_name": "FirstENMJGUHD",
+            "last_name": "LastENMJGUHD",
+            "company": "CompanyENMJGUHD",
+            "address1": "11960 Johns Creek Parkway",
+            "city": "Duluth",
+            "state_region": "GA",
+            "postal_code": "30097",
+            "country_code": "US",
+            "last_used_dts": "2025-10-21T09:59:18-04:00",
+            "address2": "Apartment 101"
+        }
+    ],
+    "shipping": [
+        {
+            "customer_profile_oid": 11887438,
+            "customer_shipping_oid": 5783940,
+            "first_name": "FirstENMJGUHD",
+            "last_name": "LastENMJGUHD",
+            "company": "CompanyENMJGUHD",
+            "address1": "11960 Johns Creek Parkway",
+            "city": "Duluth",
+            "state_region": "GA",
+            "postal_code": "30097",
+            "country_code": "US",
+            "last_used_dts": "2025-10-21T09:59:19-04:00"
+        }
+    ],
+    "last_modified_dts": "2025-10-21T09:59:19-04:00",
+    "last_modified_by": "API:ApiUserOid=161331",
+    "signup_dts": "2025-10-21T09:59:18-04:00",
+    "fax": ""
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 1FCE7061103A16019A0711377680011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 13:59:22 GMT
+```
+
+**Response Body**
+```json
+{
+    "customer": {
+        "customer_profile_oid": 11887438,
+        "merchant_id": "DEMO",
+        "email": "sample_enmjguhd@test.com",
+        "billing": [
+            {
+                "customer_profile_oid": 11887438,
+                "customer_billing_oid": 12788317,
+                "first_name": "FirstENMJGUHD",
+                "last_name": "LastENMJGUHD",
+                "company": "CompanyENMJGUHD",
+                "address1": "11960 Johns Creek Parkway",
+                "address2": "Apartment 101",
+                "city": "Duluth",
+                "state_region": "GA",
+                "postal_code": "30097",
+                "country_code": "US",
+                "last_used_dts": "2025-10-21T09:59:18-04:00"
+            }
+        ],
+        "shipping": [
+            {
+                "customer_profile_oid": 11887438,
+                "customer_shipping_oid": 5783941,
+                "first_name": "FirstENMJGUHD",
+                "last_name": "LastENMJGUHD",
+                "company": "CompanyENMJGUHD",
+                "address1": "11960 Johns Creek Parkway",
+                "city": "Duluth",
+                "state_region": "GA",
+                "postal_code": "30097",
+                "country_code": "US",
+                "last_used_dts": "2025-10-21T09:59:19-04:00"
+            }
+        ],
+        "last_modified_dts": "2025-10-21T09:59:23-04:00",
+        "last_modified_by": "API:ApiUserOid=161331",
+        "signup_dts": "2025-10-21T09:59:18-04:00",
+        "fax": ""
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "customer"
+    }
+}
+```
+

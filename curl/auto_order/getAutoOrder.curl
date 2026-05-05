@@ -1,0 +1,339 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/auto_order/auto_orders/2133352\\ \
+?_expand=items%2Citems.future_schedules%2Coriginal_order%2Crebill_orders" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: B12A5D3093EB3F019A08231FAA80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 18:58:31 GMT
+```
+
+**Response Body**
+```json
+{
+    "auto_order": {
+        "auto_order_oid": 2133352,
+        "merchant_id": "DEMO",
+        "original_order_id": "DEMO-0009103116",
+        "original_order": {
+            "merchant_id": "DEMO",
+            "order_id": "DEMO-0009103116",
+            "current_stage": "Completed Order",
+            "creation_dts": "2014-07-29T11:37:14-04:00",
+            "language_iso_code": "ENG"
+        },
+        "auto_order_code": "MG494JTC7Z",
+        "credit_card_attempt": 3,
+        "next_attempt": "2021-04-22T00:00:00-04:00",
+        "items": [
+            {
+                "auto_order_item_oid": 37156823,
+                "next_shipment_dts": "2021-04-11T00:00:00-04:00",
+                "life_time_value": 1049.8,
+                "number_of_rebills": 56,
+                "rebill_value": 1029.8,
+                "last_order_dts": "2021-04-12T12:20:43-04:00",
+                "arbitrary_unit_cost": 17.95,
+                "arbitrary_quantity": 1,
+                "original_item_id": "BONE",
+                "original_quantity": 1,
+                "preshipment_notice_sent": true,
+                "future_schedules": [],
+                "first_order_dts": "2014-07-29T11:37:14-04:00",
+                "next_item_id": "BONE"
+            }
+        ],
+        "failure_reason": "04/19/2021 13:55:51 - Credit card declined. Gateway Response:\n\nerror => AuthenticationFailed\nmessage => Your authentication credentials failed.  Please make sure your QuickBooks Payments gateway is properly connected.\n",
+        "disabled_dts": "2021-04-19T13:55:50-04:00",
+        "rebill_orders": [
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103423",
+                "current_stage": "Completed Order",
+                "creation_dts": "2016-08-12T00:08:59-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103432",
+                "current_stage": "Completed Order",
+                "creation_dts": "2016-09-12T00:08:34-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103445",
+                "current_stage": "Completed Order",
+                "creation_dts": "2016-10-12T00:07:34-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103462",
+                "current_stage": "Completed Order",
+                "creation_dts": "2016-11-12T00:07:44-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103476",
+                "current_stage": "Completed Order",
+                "creation_dts": "2016-12-12T00:07:47-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103504",
+                "current_stage": "Completed Order",
+                "creation_dts": "2017-01-12T00:08:14-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103526",
+                "current_stage": "Completed Order",
+                "creation_dts": "2017-02-12T00:06:59-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103556",
+                "current_stage": "Completed Order",
+                "creation_dts": "2017-03-12T00:06:30-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103576",
+                "current_stage": "Completed Order",
+                "creation_dts": "2017-04-12T00:06:10-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103596",
+                "current_stage": "Completed Order",
+                "creation_dts": "2017-05-12T00:05:51-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103618",
+                "current_stage": "Completed Order",
+                "creation_dts": "2017-06-12T00:06:24-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103641",
+                "current_stage": "Completed Order",
+                "creation_dts": "2017-07-12T00:05:37-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103670",
+                "current_stage": "Completed Order",
+                "creation_dts": "2017-08-12T00:05:53-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103693",
+                "current_stage": "Completed Order",
+                "creation_dts": "2017-09-12T00:05:19-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103741",
+                "current_stage": "Completed Order",
+                "creation_dts": "2017-10-12T00:06:41-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103865",
+                "current_stage": "Completed Order",
+                "creation_dts": "2018-02-12T00:05:52-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103898",
+                "current_stage": "Completed Order",
+                "creation_dts": "2018-03-12T02:11:12-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103936",
+                "current_stage": "Completed Order",
+                "creation_dts": "2018-04-12T01:53:22-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103967",
+                "current_stage": "Completed Order",
+                "creation_dts": "2018-05-12T01:57:43-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009103996",
+                "current_stage": "Completed Order",
+                "creation_dts": "2018-06-12T01:26:04-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104024",
+                "current_stage": "Completed Order",
+                "creation_dts": "2018-07-12T01:19:07-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104055",
+                "current_stage": "Completed Order",
+                "creation_dts": "2018-08-12T01:33:10-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104084",
+                "current_stage": "Completed Order",
+                "creation_dts": "2018-09-12T01:27:51-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104188",
+                "current_stage": "Completed Order",
+                "creation_dts": "2018-12-12T01:26:14-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104230",
+                "current_stage": "Completed Order",
+                "creation_dts": "2019-01-12T01:25:24-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104274",
+                "current_stage": "Completed Order",
+                "creation_dts": "2019-02-12T01:31:02-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104380",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2020-04-12T02:07:50-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104381",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2020-05-12T13:08:05-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104382",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2020-06-12T12:02:31-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104384",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2020-07-12T13:33:52-04:00",
+                "refund_dts": "2020-07-21T16:04:34-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104386",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2020-08-12T14:34:35-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104389",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2020-09-12T14:58:57-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104391",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2020-10-12T13:19:03-04:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104394",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2020-11-12T14:23:51-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104399",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2020-12-12T11:29:41-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104404",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2021-01-12T14:09:36-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104407",
+                "current_stage": "Shipping Department",
+                "creation_dts": "2021-02-12T10:09:41-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104411",
+                "current_stage": "Completed Order",
+                "creation_dts": "2021-03-12T12:44:51-05:00",
+                "language_iso_code": "ENG"
+            },
+            {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009104418",
+                "current_stage": "Completed Order",
+                "creation_dts": "2021-04-12T12:21:15-04:00",
+                "language_iso_code": "ENG"
+            }
+        ],
+        "status": "disabled"
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "auto_order"
+    }
+}
+```

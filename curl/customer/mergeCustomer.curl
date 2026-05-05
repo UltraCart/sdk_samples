@@ -1,0 +1,24 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X PUT "https://secure.ultracart.com/rest/v2/customer/customers/11887435/merge" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "email": "sample_DRGMYBOU@test.com"
+}'
+```
+
+**Response Headers**
+```html
+Status: 204 No Content
+X-UltraCart-Request-Id: A35D9D55322B48019A070F1E7180011
+Content-Length: 0
+Date: Tue, 21 Oct 2025 13:57:03 GMT
+```
+
+**Response Body**
+```json
+
+```

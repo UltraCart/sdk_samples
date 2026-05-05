@@ -10,7 +10,7 @@ from ultracart.models import Customer, CustomerBilling, CustomerShipping
 def create_random_email() -> str:
     """Generate a random email for testing purposes."""
     rand = ''.join(random.choices(string.ascii_uppercase, k=8))
-    return f'sample_{rand}.test.com'
+    return f'sample_{rand}@test.com'
 
 
 def insert_sample_customer(email: Optional[str] = None) -> int:
@@ -27,7 +27,7 @@ def insert_sample_customer(email: Optional[str] = None) -> int:
     rand = ''.join(random.choices(string.ascii_uppercase, k=8))
 
     if email is None:
-        email = f'sample_{rand}.test.com'
+        email = f'sample_{rand}@test.com'
 
     print(f'insertSampleCustomer will attempt to create customer {email}')
 
@@ -37,6 +37,7 @@ def insert_sample_customer(email: Optional[str] = None) -> int:
     # Create new customer object
     new_customer = Customer(
         email=email,
+        password='initial_password',
         billing=[
             CustomerBilling(
                 first_name=f"First{rand}",

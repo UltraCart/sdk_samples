@@ -1,0 +1,145 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/customer/customers\\ \
+?_limit=2&_offset=0&_expand=shipping%2Cbilling" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 876C10C3C10BFF019A05B6864080011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 07:40:39 GMT
+```
+
+**Response Body**
+```json
+{
+    "customers": [
+        {
+            "customer_profile_oid": 988221,
+            "merchant_id": "DEMO",
+            "email": "jonathantew@gmail.com",
+            "billing": [
+                {
+                    "customer_profile_oid": 988221,
+                    "customer_billing_oid": 1203788,
+                    "tax_county": "Merced",
+                    "first_name": "test",
+                    "last_name": "test",
+                    "address1": "test",
+                    "city": "MERCEd",
+                    "state_region": "CA",
+                    "postal_code": "95340",
+                    "country_code": "US",
+                    "day_phone": "209-383-9870",
+                    "last_used_dts": "2012-10-05T01:26:56-04:00"
+                }
+            ],
+            "shipping": [
+                {
+                    "customer_profile_oid": 988221,
+                    "customer_shipping_oid": 1220913,
+                    "first_name": "test",
+                    "last_name": "test",
+                    "address1": "test",
+                    "city": "MERCEd",
+                    "state_region": "CA",
+                    "postal_code": "95340",
+                    "country_code": "US",
+                    "day_phone": "209-383-9870",
+                    "last_used_dts": "2012-10-05T01:26:56-04:00"
+                }
+            ],
+            "last_modified_dts": "2020-07-14T09:00:15-04:00",
+            "signup_dts": "2010-11-05T13:26:11-04:00",
+            "fax": ""
+        },
+        {
+            "customer_profile_oid": 993501,
+            "merchant_id": "DEMO",
+            "email": "test@test.com",
+            "billing": [
+                {
+                    "customer_profile_oid": 993501,
+                    "customer_billing_oid": 1274673,
+                    "first_name": "Test",
+                    "last_name": "Test",
+                    "address1": "Test",
+                    "city": "Merced",
+                    "state_region": "Ca",
+                    "postal_code": "95348",
+                    "country_code": "US",
+                    "day_phone": "2093839870",
+                    "evening_phone": "6784854770",
+                    "last_used_dts": "2014-03-06T00:21:34-05:00"
+                },
+                {
+                    "customer_profile_oid": 993501,
+                    "customer_billing_oid": 784568,
+                    "first_name": "test",
+                    "last_name": "test",
+                    "title": "test",
+                    "address1": "test",
+                    "city": "MERCED",
+                    "state_region": "CA",
+                    "postal_code": "95340",
+                    "country_code": "US",
+                    "day_phone": "209-383-9870",
+                    "last_used_dts": "2014-03-06T00:05:43-05:00"
+                },
+                {
+                    "customer_profile_oid": 993501,
+                    "customer_billing_oid": 861420,
+                    "tax_county": "Merced",
+                    "first_name": "test",
+                    "last_name": "test",
+                    "address1": "21",
+                    "city": "merced",
+                    "state_region": "ca",
+                    "postal_code": "95340",
+                    "country_code": "US",
+                    "day_phone": "2223334444",
+                    "last_used_dts": "2012-03-07T11:37:46-05:00"
+                }
+            ],
+            "shipping": [
+                {
+                    "customer_profile_oid": 993501,
+                    "customer_shipping_oid": 1296711,
+                    "first_name": "Test",
+                    "last_name": "Test",
+                    "title": "Test",
+                    "company": "Test",
+                    "address1": "Test",
+                    "city": "Merced",
+                    "state_region": "Ca",
+                    "postal_code": "95348",
+                    "country_code": "US",
+                    "day_phone": "2093839870",
+                    "last_used_dts": "2014-03-06T00:21:34-05:00"
+                }
+            ],
+            "last_modified_dts": "2021-09-01T16:29:55-04:00",
+            "last_modified_by": "demo",
+            "fax": ""
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 2,
+            "offset": 0,
+            "limit": 2,
+            "more": true,
+            "next_offset": 2,
+            "total_records": 838
+        },
+        "payload_name": "customers"
+    }
+}
+```

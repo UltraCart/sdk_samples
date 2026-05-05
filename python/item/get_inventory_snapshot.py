@@ -14,8 +14,8 @@ try:
     inventories = api_response.inventories
 
     # Iterate and print inventories
-    for inventory in inventories:
-        print(inventory)
+    #for inventory in inventories:
+    #   print(inventory)
 
 except ApiException as e:
     print('An ApiException occurred. Please review the following error:')

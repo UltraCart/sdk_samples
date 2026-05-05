@@ -19,21 +19,22 @@ call ItemApi.get_reviews() to get all reviews where you can then grab the oid fr
 item_api = ItemApi(api_client())
 
 # Example OIDs (replace with actual values)
-merchant_item_oid = 123456
-review_oid = 987654
+merchant_item_oid = 226937
+review_oid = 206522
 
 # Retrieve the specific review
 api_response = item_api.get_review(review_oid, merchant_item_oid)
 
 # Check for errors
-if api_response.get_error() is not None:
-    error = api_response.get_error()
-    print(f"Developer Message: {error.get_developer_message()}")
-    print(f"User Message: {error.get_user_message()}")
+if hasattr(api_response, 'error') and api_response.error is not None:
+    error = api_response.error
+    print(f"Developer Message: {error.developer_message}")
+    print(f"User Message: {error.user_message}")
     raise Exception("Review retrieval failed")
 
-# Get the review
-review = api_response.get_review()
+else:
+    # Get the review
+    review = api_response.review
 
-# Print the review
-print(review)
+    # Print the review
+    # print(review)

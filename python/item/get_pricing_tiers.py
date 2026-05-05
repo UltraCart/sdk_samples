@@ -17,4 +17,4 @@ except Exception as e:
     print(e)
     raise
 
-print(api_response.get_pricing_tiers())
+# print(api_response.pricing_tiers)

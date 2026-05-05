@@ -1,0 +1,144 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/channel_partner/import" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "associate_with_customer_profile_if_present": true,
+    "auto_approve_purchase_order": true,
+    "billto_address1": "11460 Johns Creek Parkway",
+    "billto_address2": "Suite 101",
+    "billto_city": "Duluth",
+    "billto_company": "Widgets Inc",
+    "billto_country_code": "US",
+    "billto_day_phone": "6784153823",
+    "billto_evening_phone": "6784154019",
+    "billto_first_name": "John",
+    "billto_last_name": "Smith",
+    "billto_postal_code": "30097",
+    "billto_state_region": "GA",
+    "billto_title": "Sir",
+    "cc_email": "orders@widgets.com",
+    "channel_partner_order_id": "widget-1245-abc",
+    "consider_recurring": false,
+    "coupons": [
+        "10OFF"
+    ],
+    "credit_card_expiration_month": 5,
+    "credit_card_expiration_year": 2032,
+    "credit_card_type": "VISA",
+    "custom_field1": "Whatever",
+    "custom_field2": "You",
+    "custom_field3": "Want",
+    "custom_field4": "Can",
+    "custom_field5": "Go",
+    "custom_field6": "In",
+    "custom_field7": "CustomFields",
+    "delivery_date": "2025-10-22T16:38:20+00:00",
+    "email": "ceo@widgets.com",
+    "gift": false,
+    "gift_email": "sally@aol.com",
+    "gift_message": "Congratulations on your promotion!",
+    "ip_address": "34.125.95.217",
+    "items": [
+        {
+            "merchant_item_id": "shirt",
+            "quantity": 1.0,
+            "upsell": false,
+            "options": [
+                {
+                    "name": "Size",
+                    "value": "Small"
+                },
+                {
+                    "name": "Color",
+                    "value": "Orange"
+                }
+            ]
+        }
+    ],
+    "mailing_list_opt_in": true,
+    "no_realtime_payment_processing": true,
+    "payment_method": "Credit Card",
+    "rotating_transaction_gateway_code": "MyStripe",
+    "screen_branding_theme_code": "SF1986",
+    "ship_on_date": "2025-10-22T16:38:20+00:00",
+    "ship_to_residential": true,
+    "shipping_method": "FedEx: Ground",
+    "shipto_address1": "55 Main Street",
+    "shipto_address2": "Suite 202",
+    "shipto_city": "Duluth",
+    "shipto_company": "Widgets Inc",
+    "shipto_country_code": "US",
+    "shipto_day_phone": "6785552323",
+    "shipto_evening_phone": "7703334444",
+    "shipto_first_name": "Sally",
+    "shipto_last_name": "McGonkyDee",
+    "shipto_postal_code": "30097",
+    "shipto_state_region": "GA",
+    "shipto_title": "Director",
+    "skip_payment_processing": true,
+    "special_instructions": "Please wrap this in bubble wrap because my FedEx delivery guy is abusive to packages",
+    "store_completed": true,
+    "storefront_host_name": "store.mysite.com",
+    "store_if_payment_declines": false,
+    "tax_county": "Gwinnett",
+    "tax_exempt": false,
+    "transaction": {
+        "successful": true,
+        "details": [
+            {
+                "name": "AVS Code",
+                "value": "X"
+            },
+            {
+                "name": "Authorization Code",
+                "value": "123456"
+            },
+            {
+                "name": "CVV Code",
+                "value": "M"
+            },
+            {
+                "name": "Response Code",
+                "value": "Authorized"
+            },
+            {
+                "name": "Reason Code",
+                "value": "1"
+            },
+            {
+                "name": "Response Subcode",
+                "value": "1"
+            },
+            {
+                "name": "Transaction ID",
+                "value": "1234567890"
+            }
+        ]
+    },
+    "treat_warnings_as_errors": true
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 07F7FA848E2892019A0DA4E00380011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 22 Oct 2025 20:38:37 GMT
+```
+
+**Response Body**
+```json
+{
+    "import_errors": [],
+    "import_warnings": [],
+    "order_id": "DEMO-0009106288",
+    "success": true,
+    "metadata": {}
+}
+```

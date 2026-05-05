@@ -1,0 +1,69 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/customer/customers/11887425/store_credit" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 322B0AEFD79F82019A05C8E57D80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 08:00:43 GMT
+```
+
+**Response Body**
+```json
+{
+    "customer_store_credit": {
+        "total": 60.0,
+        "available": 40.0,
+        "vesting": 20.0,
+        "expiring": -20.0,
+        "past_ledgers": [
+            {
+                "gift_certificate_ledger_oid": 2759200,
+                "gift_certificate_oid": 1452693,
+                "description": "Internal Create",
+                "entry_dts": "2025-10-21T04:00:42-04:00",
+                "amount": 0.0,
+                "action": ""
+            },
+            {
+                "gift_certificate_ledger_oid": 2759203,
+                "gift_certificate_oid": 1452693,
+                "description": "Second credit add",
+                "entry_dts": "2025-10-21T04:00:43-04:00",
+                "amount": 40.0,
+                "action": ""
+            }
+        ],
+        "future_ledgers": [
+            {
+                "gift_certificate_ledger_oid": 2759201,
+                "gift_certificate_oid": 1452693,
+                "description": "First credit add",
+                "entry_dts": "2025-10-31T04:00:42-04:00",
+                "amount": 20.0,
+                "action": "Vesting"
+            },
+            {
+                "gift_certificate_ledger_oid": 2759202,
+                "gift_certificate_oid": 1452693,
+                "description": "First credit add",
+                "entry_dts": "2025-11-10T04:00:42-05:00",
+                "amount": -20.0,
+                "action": "Expiring"
+            }
+        ]
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "customer_store_credit"
+    }
+}
+```
+

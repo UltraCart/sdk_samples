@@ -1,0 +1,188 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/auto_order/auto_orders/reference_order_id/DEMO-0009105296\\ \
+?_expand=items%2Citems.future_schedules%2Coriginal_order%2Crebill_orders" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Error Response Headers**
+```html
+Status: 400 Bad Request
+X-UltraCart-Request-Id: 0E246866DC1F24019A080D398580011
+UC-REST-ERROR: The order does not use a credit card for payment.
+Content-Type: application/json; charset=UTF-8
+Connection: close
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 18:34:36 GMT
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: BC9161454A8AE3019A0821F77B80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 18:57:16 GMT
+```
+
+**Response Body**
+```json
+{
+    "auto_order": {
+        "auto_order_oid": 8330599,
+        "merchant_id": "DEMO",
+        "original_order_id": "DEMO-0009106215",
+        "original_order": {
+            "merchant_id": "DEMO",
+            "order_id": "DEMO-0009106215",
+            "current_stage": "Shipping Department",
+            "creation_dts": "2025-08-16T14:00:37-04:00",
+            "language_iso_code": "ENG"
+        },
+        "enabled": true,
+        "auto_order_code": "T6TZ5PMLQZ",
+        "credit_card_attempt": 0,
+        "items": [
+            {
+                "auto_order_item_oid": 127932171,
+                "next_shipment_dts": "2025-08-31T00:00:00-04:00",
+                "frequency": "Monthly",
+                "life_time_value": 0.0,
+                "number_of_rebills": 0,
+                "rebill_value": 0.0,
+                "last_order_dts": "2025-08-16T14:00:37-04:00",
+                "arbitrary_unit_cost": 59.99,
+                "original_item_id": "99-AO",
+                "original_quantity": 1,
+                "future_schedules": [
+                    {
+                        "shipment_dts": "2025-08-31T00:00:00-04:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 1
+                    },
+                    {
+                        "shipment_dts": "2025-09-30T00:00:00-04:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 2
+                    },
+                    {
+                        "shipment_dts": "2025-10-30T00:00:00-04:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 3
+                    },
+                    {
+                        "shipment_dts": "2025-11-30T00:00:00-05:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 4
+                    },
+                    {
+                        "shipment_dts": "2025-12-30T00:00:00-05:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 5
+                    },
+                    {
+                        "shipment_dts": "2026-01-30T00:00:00-05:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 6
+                    },
+                    {
+                        "shipment_dts": "2026-02-28T00:00:00-05:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 7
+                    },
+                    {
+                        "shipment_dts": "2026-03-28T00:00:00-04:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 8
+                    },
+                    {
+                        "shipment_dts": "2026-04-28T00:00:00-04:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 9
+                    },
+                    {
+                        "shipment_dts": "2026-05-28T00:00:00-04:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 10
+                    },
+                    {
+                        "shipment_dts": "2026-06-28T00:00:00-04:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 11
+                    },
+                    {
+                        "shipment_dts": "2026-07-28T00:00:00-04:00",
+                        "item_id": "99-AO",
+                        "unit_cost": 59.99,
+                        "rebill_count": 12
+                    }
+                ],
+                "calculated_next_shipment_dts": "2025-08-31T00:00:00-04:00"
+            }
+        ],
+        "rebill_orders": [],
+        "status": "active"
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "auto_order"
+    }
+}
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "The order does not use a credit card for payment.",
+        "user_message": "The order does not use a credit card for payment."
+    },
+    "metadata": {}
+}
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "The order has truncated credit card information (no longer on file) and can not be used to establish an auto order.",
+        "user_message": "The order has truncated credit card information (no longer on file) and can not be used to establish an auto order."
+    },
+    "metadata": {}
+}
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "The order does not use a credit card for payment.",
+        "user_message": "The order does not use a credit card for payment."
+    },
+    "metadata": {}
+}
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "An auto order already exists for the specified order id.",
+        "user_message": "An auto order already exists for the specified order id."
+    },
+    "metadata": {}
+}
+```

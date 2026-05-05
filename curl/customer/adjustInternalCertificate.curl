@@ -1,0 +1,34 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/customer/customers/1901934/adjust_cashback_balance" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9ba531f25214860199e2f539c3800100992dc2bbaeb40d0199e2f539c3800100" \
+  -d $'{
+    "description": "Adjusting customer cashback balance because they called and complained about product.",
+    "expiration_days": 365,
+    "vesting_days": 45,
+    "adjustment_amount": 59.0,
+    "order_id": "DEMO-12345"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 41625152EBFB1A0199E31457B880011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 14 Oct 2025 14:16:25 GMT
+```
+
+**Response Body**
+```json
+{
+    "adjustment_amount": 59.0,
+    "balance_amount": 0.0,
+    "success": true,
+    "metadata": {}
+}
+```

@@ -13,6 +13,18 @@ make a bad assumption and corrupt a thousand auto orders. UltraCart support is r
 # Initialize the API client
 auto_order_api = AutoOrderApi(api_client())
 
+# see https://www.ultracart.com/api/#resource_auto_order.html for list
+expand = "items,items.future_schedules,original_order,rebill_orders"
+
+# If you don't know the oid, use getAutoOrdersByQuery for retrieving auto orders
+auto_order_oid = 2133352
+first_auto_order = auto_order_api.get_auto_order(auto_order_oid, expand=expand).auto_order
+
+auto_order_oid = 5712889
+second_auto_order = auto_order_api.get_auto_order(auto_order_oid, expand=expand).auto_order
+
+# TODO - update the auto orders in some fashion.  whatever changes you wish to make
+
 # The async parameter is what it seems. True if async.
 # The max records allowed depends on the async flag. Sync max is 20, Async max is 100.
 async_flag = True  # if true, success returns back a 204 No Content. False returns back the updated orders.
@@ -20,14 +32,14 @@ async_flag = True  # if true, success returns back a 204 No Content. False retur
 # Since we're async, nothing is returned, so we don't care about expansions.
 # If you are doing a synchronous operation, then set your expand appropriately.
 # See getAutoOrders() sample for expansion samples.
-expand = None
+expand = ''
 
 # Mostly used for UI, not needed for a pure scripting operation
 placeholders = False
 
 # TODO: This should be an array of auto orders that have been updated.
 # See any getAutoOrders method for retrieval.
-auto_orders = []
+auto_orders = [first_auto_order, second_auto_order]
 
 # Create the request object and set the auto orders
 auto_orders_request = AutoOrdersRequest()
@@ -35,7 +47,7 @@ auto_orders_request.auto_orders = auto_orders
 
 # Perform the batch update
 api_response = auto_order_api.update_auto_orders_batch(auto_orders_request, expand=expand, placeholders=placeholders,
-                                                       async_flag=async_flag)
+                                                       async_req=async_flag)
 
 if api_response is not None:
     # Something went wrong if we have a response

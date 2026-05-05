@@ -1,0 +1,95 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/customer/customers\\ \
+?_expand=billing%2Cshipping" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "email": "sample_SWLQRDUZ@test.com",
+    "password": "initial_password",
+    "billing": [
+        {
+            "first_name": "FirstSWLQRDUZ",
+            "last_name": "LastSWLQRDUZ",
+            "company": "CompanySWLQRDUZ",
+            "country_code": "US",
+            "state_region": "GA",
+            "city": "Duluth",
+            "postal_code": "30097",
+            "address1": "11960 Johns Creek Parkway"
+        }
+    ],
+    "shipping": [
+        {
+            "first_name": "FirstSWLQRDUZ",
+            "last_name": "LastSWLQRDUZ",
+            "company": "CompanySWLQRDUZ",
+            "country_code": "US",
+            "state_region": "GA",
+            "city": "Duluth",
+            "postal_code": "30097",
+            "address1": "11960 Johns Creek Parkway"
+        }
+    ]
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 1D38EE767AE81B019A070CD3B880011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 13:54:34 GMT
+```
+
+**Response Body**
+```json
+{
+    "customer": {
+        "customer_profile_oid": 11887433,
+        "merchant_id": "DEMO",
+        "email": "sample_swlqrduz@test.com",
+        "billing": [
+            {
+                "customer_profile_oid": 11887433,
+                "customer_billing_oid": 12788311,
+                "first_name": "FirstSWLQRDUZ",
+                "last_name": "LastSWLQRDUZ",
+                "company": "CompanySWLQRDUZ",
+                "address1": "11960 Johns Creek Parkway",
+                "city": "Duluth",
+                "state_region": "GA",
+                "postal_code": "30097",
+                "country_code": "US",
+                "last_used_dts": "2025-10-21T09:54:33-04:00"
+            }
+        ],
+        "shipping": [
+            {
+                "customer_profile_oid": 11887433,
+                "customer_shipping_oid": 5783935,
+                "first_name": "FirstSWLQRDUZ",
+                "last_name": "LastSWLQRDUZ",
+                "company": "CompanySWLQRDUZ",
+                "address1": "11960 Johns Creek Parkway",
+                "city": "Duluth",
+                "state_region": "GA",
+                "postal_code": "30097",
+                "country_code": "US",
+                "last_used_dts": "2025-10-21T09:54:33-04:00"
+            }
+        ],
+        "last_modified_dts": "2025-10-21T09:54:34-04:00",
+        "last_modified_by": "API:ApiUserOid=161331",
+        "signup_dts": "2025-10-21T09:54:32-04:00",
+        "fax": ""
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "customer"
+    }
+}
+```

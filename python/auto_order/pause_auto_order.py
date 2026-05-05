@@ -17,7 +17,7 @@ from samples import api_client
 auto_order_api = AutoOrderApi(api_client())
 
 expand = "items"  # see https://www.ultracart.com/api/#resource_auto_order.html for list
-auto_order_oid = 123456789  # get an auto order and update it.  There are many ways to retrieve an auto order.
+auto_order_oid = 5712828  # get an auto order and update it.  There are many ways to retrieve an auto order.
 get_response = auto_order_api.get_auto_order(auto_order_oid, expand=expand)
 auto_order = get_response.auto_order
 

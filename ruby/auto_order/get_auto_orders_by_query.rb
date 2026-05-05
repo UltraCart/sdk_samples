@@ -97,10 +97,10 @@ def get_auto_order_chunk(auto_order_api, offset, limit)
   query.email = "support@ultracart.com"
 
   opts = {
-    _limit: limit,
-    _offset: offset,
-    _sort: "next_shipment_dts",
-    _expand: expand
+    :'_limit' => limit,
+    :'_offset' => offset,
+    :'_sort' => "next_shipment_dts",
+    :'_expand' => expand
   }
 
   api_response = auto_order_api.get_auto_orders_by_query(query, opts)

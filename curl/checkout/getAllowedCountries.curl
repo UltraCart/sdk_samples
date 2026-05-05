@@ -1,0 +1,33 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/checkout/allowedCountries" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 45888AD903823E019A17B2198E80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 24 Oct 2025 19:28:59 GMT
+```
+
+**Response Body**
+(This list is truncated to keep the docs short.)
+```json
+{
+    "countries": [
+        {
+            "name": "Afghanistan",
+            "iso_2_code": "AF"
+        },
+        {
+            "name": "Zimbabwe",
+            "iso_2_code": "ZW"
+        }
+    ]
+}
+```

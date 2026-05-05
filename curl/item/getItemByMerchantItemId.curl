@@ -1,0 +1,37 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/item/items/merchant_item_id/sample_VSJZDIEA\\ \
+?_expand=" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 18D2C671989CCF0199CF3AD36E80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 10 Oct 2025 17:46:03 GMT
+```
+
+**Response Body**
+```json
+{
+    "item": {
+        "merchant_item_oid": 6730082,
+        "merchant_id": "DEMO",
+        "merchant_item_id": "sample_VSJZDIEA",
+        "description": "Sample description for item sample_VSJZDIEA",
+        "description_translated_text_instance_oid": 70676879,
+        "parent_category_path": "/",
+        "last_modified_dts": "2025-10-10T13:46:03-04:00",
+        "creation_dts": "2025-10-10T13:46:03-04:00"
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "item"
+    }
+}
+```

@@ -24,7 +24,10 @@ def main():
             comments="I really want this for my birthday",
             priority=3  # Low priority
         )
-        first_created_wish_item = customer_api.insert_wish_list_item(customer_oid, first_wish_item)
+        first_created_wish_item = customer_api.insert_wish_list_item(customer_oid, first_wish_item).wishlist_item
+
+        # print("First created wishlist item:")
+        # print(first_created_wish_item)
 
         # Add second wish list item
         second_wish_item = CustomerWishListItem(
@@ -33,29 +36,34 @@ def main():
             comments="Christmas Idea!",
             priority=5  # High priority
         )
-        second_created_wish_item = customer_api.insert_wish_list_item(customer_oid, second_wish_item)
+        second_created_wish_item = customer_api.insert_wish_list_item(customer_oid, second_wish_item).wishlist_item
+
+        # print("Second created wishlist item:")
+        # print(second_created_wish_item)
+
+
 
         # Retrieve one wishlist item
         first_created_wish_item_copy = customer_api.get_customer_wish_list_item(
             customer_oid,
-            first_created_wish_item.customer_wishlist_item_oid
+            first_created_wish_item['customer_wishlist_item_oid']
         ).wishlist_item
 
         # Retrieve all wishlist items
         all_wish_list_items = customer_api.get_customer_wish_list(customer_oid).wishlist_items
 
         # Update an item
-        second_created_wish_item.priority = 4
+        second_created_wish_item['priority'] = 4
         updated_second_wish_item = customer_api.update_wish_list_item(
             customer_oid,
-            second_created_wish_item.customer_wishlist_item_oid,
+            second_created_wish_item['customer_wishlist_item_oid'],
             second_created_wish_item
         )
 
         # Delete a wish list item
         customer_api.delete_wish_list_item(
             customer_oid,
-            first_created_wish_item.customer_wishlist_item_oid
+            first_created_wish_item['customer_wishlist_item_oid']
         )
 
         # Clean up

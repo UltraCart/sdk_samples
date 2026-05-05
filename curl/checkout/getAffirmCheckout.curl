@@ -1,0 +1,23 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/checkout/cart/7FD88BAC1FEC55019A17AF331A800100/affirmCheckout" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: F8311CCE3A4EDE019A17B1270980011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 24 Oct 2025 19:27:57 GMT
+```
+
+**Response Body**
+```json
+{
+    "checkout_json": "{\"shipping_amount\":1065,\"tax_amount\":375,\"metadata\":{\"shipping_type\":\"USPS: First Class\"},\"total\":6435,\"shipping\":{\"address\":{\"zipcode\":\"68133\",\"country\":\"US\",\"city\":\"Papillion\",\"state\":\"NE\",\"line1\":\"123 Main st\"},\"name\":{\"full\":\"US Visa\"},\"phone_number\":\"+14026195555\",\"email\":\"visa-sandbox-account@fastlane.sb.com\"},\"merchant\":{\"user_cancel_url\":\"\",\"user_confirmation_url\":\"\"},\"config\":{\"financial_product_key\":\"fpkey\"},\"items\":[{\"item_image_url\":\"http://demo-3.ultracartstore.com/itemmultimedia/DEMO/B-HSS/pull-over-hoodie.png\",\"qty\":1,\"item_url\":\"http://demo-3.ultracartstore.com/shop/B-HSS.html\",\"display_name\":\"Blue Sweatshirt with Animation\",\"sku\":\"B-HSS\",\"unit_price\":4995}],\"billing\":{\"address\":{\"zipcode\":\"68133\",\"country\":\"US\",\"city\":\"Papillion\",\"state\":\"NE\",\"line1\":\"123 Main st\"},\"name\":{\"full\":\"US Visa\"},\"phone_number\":\"+14026195555\",\"email\":\"visa-sandbox-account@fastlane.sb.com\"}}"
+}
+```

@@ -1,0 +1,53 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X PUT "https://secure.ultracart.com/rest/v2/item/digital_library/235448" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100" \
+  -d $'{
+    "digital_item_oid": 235448,
+    "description": "I have updated the description to this sentence.",
+    "original_filename": "ISS_earth.en.jpg",
+    "file_size": 68354,
+    "creation_dts": "2025-10-13T15:13:54-04:00",
+    "mime_type": "image/jpeg",
+    "click_wrap_agreement": "You hereby agree that the earth is round. No debate.",
+    "pdf_meta": {
+        "custom_header": "",
+        "custom_footer": ""
+    }
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 0CDD7174A01B3C0199DEFE57CB80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Mon, 13 Oct 2025 19:13:54 GMT
+```
+
+**Response Body**
+```json
+{
+    "digital_item": {
+        "digital_item_oid": 235448,
+        "description": "I have updated the description to this sentence.",
+        "original_filename": "ISS_earth.en.jpg",
+        "file_size": 68354,
+        "creation_dts": "2025-10-13T15:13:54-04:00",
+        "mime_type": "image/jpeg",
+        "click_wrap_agreement": "You hereby agree that the earth is round. No debate.",
+        "pdf_meta": {
+            "custom_header": "",
+            "custom_footer": ""
+        }
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "digital_item"
+    }
+}
+```

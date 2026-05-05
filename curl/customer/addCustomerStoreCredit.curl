@@ -1,0 +1,31 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/customer/customers/1901934/store_credit" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9ba531f25214860199e2f539c3800100992dc2bbaeb40d0199e2f539c3800100" \
+  -d $'{
+    "amount": 20.0,
+    "description": "Customer is super cool and I wanted to give them store credit.",
+    "expiration_days": 365,
+    "vesting_days": 45
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: E3F83763E604D10199E31235C380011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 14 Oct 2025 14:14:05 GMT
+```
+
+**Response Body**
+```json
+{
+    "success": true,
+    "metadata": {}
+}
+```

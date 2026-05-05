@@ -1,0 +1,26 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X DELETE "https://secure.ultracart.com/rest/v2/channel_partner/cancel/by_ultracart_order_id/DEMO-0009106201" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 6D84494A48D346019A087AB3F480011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 20:34:11 GMT
+```
+
+**Response Body**
+```json
+{
+    "cancel_errors": [
+        "Cant tell if we can cancel because the DC doesnt have a transport configured."
+    ],
+    "metadata": {}
+}
+```

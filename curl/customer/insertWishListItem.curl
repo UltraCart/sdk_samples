@@ -1,0 +1,43 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/customer/customers/11887434/wishlist" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "customer_profile_oid": 11887434,
+    "merchant_item_oid": 6733822,
+    "comments": "I really want this for my birthday",
+    "priority": 3
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 000D2212409A10019A070E166F80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 13:55:55 GMT
+```
+
+**Response Body**
+```json
+{
+    "wishlist_item": {
+        "customer_profile_oid": 11887434,
+        "customer_wishlist_item_oid": 726095,
+        "merchant_item_oid": 6733822,
+        "add_dts": "2025-10-21T09:55:55-04:00",
+        "position": 0,
+        "priority": 3,
+        "comments": "I really want this for my birthday"
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "wishlist_item"
+    }
+}
+```
+

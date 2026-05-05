@@ -10,10 +10,10 @@ from flask import session, request
 checkout_api = CheckoutApi(api_client())
 
 # this should be retrieved from a session or cookie
-cart_id = '123456789123456789123456789123456789'
+cart_id = '7FD88BAC1FEC55019A17AF331A800100'
 
 api_response = checkout_api.get_affirm_checkout(cart_id)
-if api_response.errors is not None and len(api_response.errors) > 0:
+if hasattr(api_response, 'errors') and api_response.errors is not None:
     # TODO: display errors to customer about the failure
     for error in api_response.errors:
         print(error)

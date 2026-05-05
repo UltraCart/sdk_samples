@@ -1,0 +1,69 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X PUT "https://secure.ultracart.com/rest/v2/auto_order/auto_orders/5712828/pause" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "auto_order_oid": 5712828,
+    "merchant_id": "DEMO",
+    "original_order_id": "DEMO-0009104932",
+    "auto_order_code": "6M2FX8J5SP",
+    "credit_card_attempt": 3,
+    "next_attempt": "2023-01-31T00:00:00-05:00",
+    "items": [
+        {
+            "auto_order_item_oid": 101035775,
+            "next_shipment_dts": "2023-01-22T00:00:00-05:00",
+            "life_time_value": 20.0,
+            "number_of_rebills": 0,
+            "rebill_value": 0.0,
+            "last_order_dts": "2022-12-22T09:42:11-05:00",
+            "original_item_id": "BONE",
+            "original_quantity": 1.0,
+            "options": [
+                {
+                    "label": "Addon Treat",
+                    "value": "No thanks"
+                }
+            ],
+            "first_order_dts": "2022-12-22T09:42:11-05:00",
+            "next_item_id": "BONE"
+        }
+    ],
+    "failure_reason": "01/28/2023 10:30:22 - Credit card declined. Gateway Response:\n\nfailure_message => The card number is not a valid credit card number.; code: invalid_number; request-id: req_8J1pk9rjhIPIq0\nrotatingTransactionGatewayCode => STRIPE\nrotatingTransactionGatewayName => Stripe Connect\n",
+    "disabled_dts": "2023-01-28T10:30:20-05:00",
+    "status": "disabled"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: A18089B97C2873019A0854B25480011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 19:52:40 GMT
+```
+
+**Response Body**
+```json
+{
+    "auto_order": {
+        "auto_order_oid": 5712828,
+        "merchant_id": "DEMO",
+        "original_order_id": "DEMO-0009104932",
+        "auto_order_code": "6M2FX8J5SP",
+        "credit_card_attempt": 3,
+        "next_attempt": "2023-01-31T00:00:00-05:00",
+        "failure_reason": "01/28/2023 10:30:22 - Credit card declined. Gateway Response:\n\nfailure_message => The card number is not a valid credit card number.; code: invalid_number; request-id: req_8J1pk9rjhIPIq0\nrotatingTransactionGatewayCode => STRIPE\nrotatingTransactionGatewayName => Stripe Connect\n",
+        "disabled_dts": "2023-01-28T10:30:20-05:00",
+        "status": "disabled"
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "auto_order"
+    }
+}
+```

@@ -25,10 +25,10 @@ taxes
 expand = "item,summary,shipping"
 
 # This order MUST be an order associated with this channel partner or you will receive a 400 Bad Request.
-channel_partner_order_id = 'MY-CALL-CENTER-BLAH-BLAH'
+channel_partner_order_id = 'ORD847K4M'
 api_response = channel_partner_api.get_channel_partner_order_by_channel_partner_order_id(channel_partner_order_id, expand=expand)
 
-if api_response.error is not None:
+if hasattr(api_response, 'error') and api_response.error is not None:
     print(api_response.error.developer_message)
     print(api_response.error.user_message)
     exit()

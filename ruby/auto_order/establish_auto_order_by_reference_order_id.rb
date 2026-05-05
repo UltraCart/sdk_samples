@@ -11,7 +11,7 @@ auto_order_api = UltracartClient::AutoOrderApi.new_using_api_key(Constants::API_
 expand = "items,items.future_schedules,original_order,rebill_orders"
 
 original_order_id = "DEMO-123457"
-api_response = auto_order_api.establish_auto_order_by_reference_order_id(original_order_id, { '_expand' => expand })
+api_response = auto_order_api.establish_auto_order_by_reference_order_id(original_order_id, { :'_expand' => expand })
 
 empty_auto_order = api_response.auto_order
 auto_order_oid = empty_auto_order.auto_order_oid
@@ -29,6 +29,6 @@ items << item
 empty_auto_order.items = items
 
 validate_original_order = 'No'
-api_response = auto_order_api.update_auto_order(auto_order_oid, empty_auto_order,  { '_expand' => expand, validate_original_order: validate_original_order })
+api_response = auto_order_api.update_auto_order(auto_order_oid, empty_auto_order,  { :'_expand' => expand, :'validate_original_order' => validate_original_order })
 updated_auto_order = api_response.auto_order
 puts updated_auto_order.inspect

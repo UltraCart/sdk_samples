@@ -28,7 +28,8 @@ summary                     upsell_after
 """
 
 # Assuming you have a function to get cookies in your Python framework
-cart_id = request.cookies.get('UltraCartShoppingCartID')  # Replace with your actual cookie handling
+# cart_id = request.cookies.get('UltraCartShoppingCartID')  # Replace with your actual cookie handling
+cart_id = 'D5797CC8D3E6D5019A17A6A782800100'
 
 if cart_id is None:
     api_response = checkout_api.get_cart(expand=expand)
@@ -37,6 +38,9 @@ else:
 cart = api_response.cart
 
 # TODO - add some items, collect billing and shipping, use hosted fields to collect payment, etc.
+# for this example, I created the cart in the 'Manual Order Entry' screen at https://secure.ultracart.com/merchant/orderentry/orderEntryApp.do
+# and after saving and validating the cart, I grabbed the cart id from the console window.  This is the javascript variable
+# for the cart id in the Manual Order Entry screen: app.data.cart.attributes.shoppingCartId
 
 finalize_request = CartFinalizeOrderRequest()
 finalize_request.cart = cart

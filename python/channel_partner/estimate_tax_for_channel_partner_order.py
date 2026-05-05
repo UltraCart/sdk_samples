@@ -25,7 +25,7 @@ color_option.name = "Color"
 color_option.value = "Orange"
 
 item.options = [size_option, color_option]
-item.quantity = 1
+item.quantity = 1.0
 item.upsell = False
 
 order.items = [item]
@@ -38,4 +38,14 @@ order.shipto_city = "Duluth"
 order.shipto_company = "Widgets Inc"
 order.shipto_country_code = "US"
 order.shipto_day_phone = "6785552323"
-ord
+order.shipto_evening_phone = "7703334444"
+order.shipto_first_name = "Sally"
+order.shipto_last_name = "McGonkyDee"
+order.shipto_postal_code = "30097"
+order.shipto_state_region = "GA"
+order.shipto_title = "Director"
+
+api_response = channel_partner_api.estimate_tax_for_channel_partner_order(order)
+tax = api_response.arbitrary_tax
+
+print(tax)

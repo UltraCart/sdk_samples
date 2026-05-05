@@ -12,18 +12,18 @@ ItemApi.getItemByMerchantItemId() to retrieve the item, and then it's oid $item-
 item_api = ItemApi(api_client())
 
 # Specify the merchant item OID
-merchant_item_oid = 123456
+merchant_item_oid = 226937
 
 # Retrieve reviews
-api_response = item_api.get_item_reviews(merchant_item_oid)
+api_response = item_api.get_reviews(merchant_item_oid)
 
 # Check for errors
-if api_response.error is not None:
+if hasattr(api_response, 'error') and api_response.error is not None:
     print(f"Developer Message: {api_response.error.developer_message}")
     print(f"User Message: {api_response.error.user_message}")
     exit()
 
 # Process and print reviews
 reviews = api_response.reviews
-for review in reviews:
-    print(review)
+#for review in reviews:
+#    print(review)

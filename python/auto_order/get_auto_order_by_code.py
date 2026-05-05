@@ -72,7 +72,7 @@ def get_auto_order_by_code():
 
     # contact us if you're unsure what you need
     expand = "items,items.future_schedules,original_order,rebill_orders"
-    code = "RT2A9CBSX9"
+    code = "MG494JTC7Z"
     api_response = auto_order_api.get_auto_order_by_code(code, expand=expand)
     auto_order = api_response.auto_order
 

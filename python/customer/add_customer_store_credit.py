@@ -6,7 +6,7 @@ from ultracart.models import CustomerStoreCreditAddRequest
 customer_api = CustomerApi(api_client())
 
 # Set the email and retrieve customer
-email = "test@ultracart.com"
+email = "test@test.com"
 customer = customer_api.get_customer_by_email(email).customer
 customer_oid = customer.customer_profile_oid
 
@@ -22,7 +22,7 @@ store_credit_request = CustomerStoreCreditAddRequest(
 api_response = customer_api.add_customer_store_credit(customer_oid, store_credit_request)
 
 # Check for errors
-if api_response.error is not None:
+if hasattr(api_response, 'error') and api_response.error is not None:
     print(f"Developer Message: {api_response.error.developer_message}")
     print(f"User Message: {api_response.error.user_message}")
     exit()

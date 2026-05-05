@@ -45,11 +45,11 @@ from samples import channel_partner_api_client
 
 channel_partner_api = ChannelPartnerApi(channel_partner_api_client())
 
-ultracart_order_id = 'DEMO-12345678980'
+ultracart_order_id = 'DEMO-0009106201'
 
 try:
-    cancel_result = channel_partner_api.cancel_order_by_ultracart_order_id(ultracart_order_id)
-    if not cancel_result.success:
+    cancel_result = channel_partner_api.cancel_order_by_ultra_cart_order_id(ultracart_order_id)
+    if not hasattr(cancel_result, 'success'):
         for error in cancel_result.cancel_errors:
             print(error)
 

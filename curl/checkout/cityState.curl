@@ -1,0 +1,36 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/checkout/city_state" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "merchant_id": "DEMO",
+    "cart_id": "25787516233C82019A17A39E9B800100",
+    "currency_code": "USD",
+    "base_currency_code": "USD",
+    "shipping": {
+        "postal_code": "44233"
+    }
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 132D5D69FBC5BA019A17A3A0E480011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 24 Oct 2025 19:13:11 GMT
+```
+
+**Response Body**
+```json
+{
+    "city": "HINCKLEY",
+    "state": "OH",
+    "zip": "44233",
+    "validZip": true
+}
+```

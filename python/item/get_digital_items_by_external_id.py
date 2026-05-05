@@ -12,24 +12,27 @@ try:
     """
 
     # Generate a unique external ID
-    external_id = str(uuid.uuid4())
+    # external_id = str(uuid.uuid4())
+    external_id = 'something_random'
     print(f'My external id is {external_id}')
 
     # Create digital item with a specific external id I can later use
-    digital_item_oid = insert_sample_digital_item(external_id)
+    # TODO - uncomment this if you need to create a digital item, but this will error if it has run before with a duplicate image error
+    # digital_item_oid = insert_sample_digital_item(external_id)
 
     # Create Item API client
     item_api = ItemApi(api_client())
 
     # Retrieve digital items by external ID
     api_response = item_api.get_digital_items_by_external_id(external_id)
-    digital_items = api_response.get_digital_items()  # assuming this succeeded
+    digital_items = api_response.digital_items  # assuming this succeeded
 
     print('The following item was retrieved via get_digital_items_by_external_id():')
     print(digital_items)
 
     # Delete the sample digital item
-    delete_sample_digital_item(digital_item_oid)
+    # TODO - uncomment this if you created the sample digital item above
+    # delete_sample_digital_item(digital_item_oid)
 
 except Exception as e:
     print('An exception occurred. Please review the following error:')

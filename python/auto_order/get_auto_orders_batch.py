@@ -66,9 +66,9 @@ def get_auto_orders_batch():
     # rebill_orders.summary
     # rebill_orders.taxes
 
-    # contact us if you're unsure what you need
+    # contact us if you're unsure what expansions you need
     expand = "items,items.future_schedules,original_order,rebill_orders"
-    auto_order_oids = [123456, 234567, 345678, 456789]
+    auto_order_oids = [7829098, 7829798, 7806098, 6134349]
     batch_request = AutoOrderQueryBatch()
     batch_request.auto_order_oids = auto_order_oids
     api_response = auto_order_api.get_auto_orders_batch(batch_request, expand=expand)

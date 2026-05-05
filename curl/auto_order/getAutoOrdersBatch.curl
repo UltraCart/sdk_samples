@@ -1,0 +1,329 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/auto_order/auto_orders/batch\\ \
+?_expand=items%2Citems.future_schedules%2Coriginal_order%2Crebill_orders" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 9e188d66d77f64019a05ae05ac80010039ccbebb1df9b9019a05ae05ac800100" \
+  -d $'{
+    "auto_order_oids": [
+        7829098,
+        7829798,
+        7806098,
+        6134349
+    ]
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: E94144BC91E10D019A082FBA2D80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 Oct 2025 19:12:17 GMT
+```
+
+**Response Body**
+```json
+{
+    "auto_orders": [
+        {
+            "auto_order_oid": 7829098,
+            "merchant_id": "DEMO",
+            "original_order_id": "DEMO-0009105961",
+            "auto_order_code": "D145Q68GF1",
+            "credit_card_attempt": 0,
+            "items": [
+                {
+                    "auto_order_item_oid": 123446475,
+                    "next_shipment_dts": "2030-01-01T00:00:00-05:00",
+                    "life_time_value": 0.0,
+                    "number_of_rebills": 0,
+                    "rebill_value": 0.0,
+                    "last_order_dts": "2025-03-05T14:46:32-05:00",
+                    "arbitrary_unit_cost": 0.0,
+                    "original_item_id": "BASEBALL",
+                    "original_quantity": 1,
+                    "first_order_dts": "2025-03-05T14:46:32-05:00",
+                    "paused": true
+                },
+                {
+                    "auto_order_item_oid": 123638865,
+                    "next_shipment_dts": "2030-01-01T00:00:00-05:00",
+                    "life_time_value": 20.0,
+                    "number_of_rebills": 0,
+                    "rebill_value": 0.0,
+                    "last_order_dts": "2025-03-13T03:16:30-04:00",
+                    "original_item_id": "BONE",
+                    "original_quantity": 1,
+                    "options": [
+                        {
+                            "label": "Addon Treat",
+                            "value": "No thanks"
+                        }
+                    ],
+                    "first_order_dts": "2025-03-13T03:16:30-04:00"
+                },
+                {
+                    "auto_order_item_oid": 123645101,
+                    "next_shipment_dts": "2030-01-01T00:00:00-05:00",
+                    "life_time_value": 20.0,
+                    "number_of_rebills": 0,
+                    "rebill_value": 0.0,
+                    "last_order_dts": "2025-03-13T10:26:02-04:00",
+                    "original_item_id": "BONE",
+                    "original_quantity": 1,
+                    "options": [
+                        {
+                            "label": "Addon Treat",
+                            "value": "No thanks"
+                        }
+                    ],
+                    "first_order_dts": "2025-03-13T10:26:02-04:00",
+                    "paused": true
+                }
+            ],
+            "rebill_orders": [],
+            "completed": true,
+            "status": "disabled"
+        },
+        {
+            "auto_order_oid": 7829798,
+            "merchant_id": "DEMO",
+            "original_order_id": "DEMO-0009105971",
+            "original_order": {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009105971",
+                "current_stage": "Completed Order",
+                "creation_dts": "2025-03-13T10:26:00-04:00",
+                "language_iso_code": "ENG"
+            },
+            "auto_order_code": "G6J39YZ9BB",
+            "credit_card_attempt": 0,
+            "items": [],
+            "rebill_orders": [],
+            "completed": true,
+            "status": "merged",
+            "merged_dts": "2025-10-21T14:29:01-04:00",
+            "merged_into_auto_order_oid": 7829098
+        },
+        {
+            "auto_order_oid": 7806098,
+            "merchant_id": "DEMO",
+            "original_order_id": "DEMO-0009105947",
+            "auto_order_code": "QYL5S7S9FX",
+            "credit_card_attempt": 0,
+            "items": [],
+            "rebill_orders": [],
+            "completed": true,
+            "status": "merged",
+            "merged_dts": "2025-10-21T14:29:01-04:00",
+            "merged_into_auto_order_oid": 7829098
+        },
+        {
+            "auto_order_oid": 6134349,
+            "merchant_id": "DEMO",
+            "original_order_id": "DEMO-0009105136",
+            "original_order": {
+                "merchant_id": "DEMO",
+                "order_id": "DEMO-0009105136",
+                "current_stage": "Completed Order",
+                "creation_dts": "2023-06-15T09:17:17-04:00",
+                "language_iso_code": "ENG"
+            },
+            "auto_order_code": "66375557M1",
+            "credit_card_attempt": 0,
+            "next_attempt": "2025-10-16T00:00:00-04:00",
+            "items": [
+                {
+                    "auto_order_item_oid": 105167256,
+                    "next_shipment_dts": "2025-01-02T00:00:00-05:00",
+                    "life_time_value": 100.0,
+                    "number_of_rebills": 18,
+                    "rebill_value": 80.0,
+                    "last_order_dts": "2024-12-02T14:05:48-05:00",
+                    "arbitrary_unit_cost": 0.0,
+                    "original_item_id": "BONE",
+                    "original_quantity": 1,
+                    "options": [
+                        {
+                            "label": "Addon Treat",
+                            "value": "No thanks"
+                        }
+                    ],
+                    "future_schedules": [],
+                    "first_order_dts": "2023-06-15T09:17:18-04:00",
+                    "next_item_id": "BONE"
+                }
+            ],
+            "failure_reason": "10/15/2025 14:01:22 - Using old method and cant determine frequency.  Pushing off order for 1 day.  Please check the auto order configuration on item [Bone]",
+            "rebill_orders": [
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105224",
+                    "current_stage": "Shipping Department",
+                    "creation_dts": "2023-07-15T12:25:05-04:00",
+                    "language_iso_code": "ENG"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105260",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2023-08-15T14:55:08-04:00",
+                    "reject_dts": "2025-09-30T14:21:26-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105339",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2023-09-15T12:06:03-04:00",
+                    "reject_dts": "2025-09-30T14:21:25-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105411",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2023-10-15T15:01:24-04:00",
+                    "reject_dts": "2023-10-25T15:04:00-04:00",
+                    "language_iso_code": "ENG"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105449",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2023-11-15T14:26:24-05:00",
+                    "reject_dts": "2025-09-30T14:21:24-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105487",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2023-12-15T10:47:56-05:00",
+                    "reject_dts": "2025-09-30T14:21:24-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105502",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-01-02T11:08:41-05:00",
+                    "reject_dts": "2025-09-30T14:21:24-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105546",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-02-02T13:51:29-05:00",
+                    "reject_dts": "2025-09-30T14:21:24-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105593",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-03-02T15:38:51-05:00",
+                    "reject_dts": "2025-09-30T14:21:23-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105658",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-05-02T10:38:47-04:00",
+                    "reject_dts": "2025-09-30T14:21:23-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105711",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-06-02T14:13:45-04:00",
+                    "reject_dts": "2025-09-30T14:21:22-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105745",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-07-02T14:05:39-04:00",
+                    "reject_dts": "2025-09-30T14:21:22-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105760",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-08-02T10:45:35-04:00",
+                    "reject_dts": "2025-09-30T14:21:21-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105797",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-09-02T10:56:00-04:00",
+                    "reject_dts": "2025-09-30T14:21:21-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105829",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-10-02T14:05:29-04:00",
+                    "reject_dts": "2025-09-30T14:21:20-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105862",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-11-02T14:05:35-04:00",
+                    "reject_dts": "2025-09-30T14:21:20-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                },
+                {
+                    "merchant_id": "DEMO",
+                    "order_id": "DEMO-0009105892",
+                    "current_stage": "Rejected",
+                    "creation_dts": "2024-12-02T14:05:49-05:00",
+                    "reject_dts": "2025-09-30T14:21:20-04:00",
+                    "language_iso_code": "ENG",
+                    "reject_reason": "Abandoned"
+                }
+            ],
+            "status": "disabled"
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 4,
+            "offset": 0,
+            "limit": 100,
+            "next_offset": 0,
+            "total_records": 4
+        },
+        "payload_name": "auto_orders"
+    }
+}
+```
