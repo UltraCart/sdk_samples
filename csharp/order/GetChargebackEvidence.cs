@@ -152,7 +152,7 @@ namespace SdkSample.order
             Kv("Placed",   order.CreationDts);
             Kv("Stage",    order.CurrentStage);
             Kv("Currency", order.CurrencyCode);
-            if (order.Summary != null) Kv("Order Total", Money(ToDouble(order.Summary.Total), order.CurrencyCode));
+            if (order.Summary != null) Kv("Order Total", Money(ToDouble(MoneyValue(order.Summary.Total)), order.CurrencyCode));
 
             Subsection("Customer");
             OrderBilling billing = order.Billing;
@@ -160,31 +160,34 @@ namespace SdkSample.order
             {
                 Kv("Name",  JoinNonEmpty(" ", billing.FirstName, billing.LastName));
                 Kv("Email", billing.Email);
-                Kv("Phone", billing.Phone);
+                // First populated phone wins
+                Kv("Phone", billing.DayPhone ?? billing.EveningPhone ?? billing.CellPhone);
             }
             Customer cp = order.CustomerProfile;
             Kv("Customer Profile", cp != null ? $"yes (oid {cp.CustomerProfileOid?.ToString() ?? "?"})" : "no (guest checkout)");
             OrderMarketing marketing = order.Marketing;
-            if (marketing != null && !string.IsNullOrEmpty(marketing.OriginalSourceCode))
-                Kv("Original Source", marketing.OriginalSourceCode);
+            if (marketing != null && !string.IsNullOrEmpty(marketing.AdvertisingSource))
+                Kv("Advertising Source", marketing.AdvertisingSource);
+            if (marketing != null && !string.IsNullOrEmpty(marketing.ReferralCode))
+                Kv("Referral Code", marketing.ReferralCode);
 
             Subsection("Billing Address");
             RenderAddress(billing?.FirstName, billing?.LastName, billing?.Company,
                           billing?.Address1, billing?.Address2, billing?.City,
-                          billing?.State, billing?.PostalCode, billing?.CountryCode);
+                          billing?.StateRegion, billing?.PostalCode, billing?.CountryCode);
 
             OrderShipping shipping = order.Shipping;
             Subsection("Shipping Address");
             RenderAddress(shipping?.FirstName, shipping?.LastName, shipping?.Company,
                           shipping?.Address1, shipping?.Address2, shipping?.City,
-                          shipping?.State, shipping?.PostalCode, shipping?.CountryCode);
+                          shipping?.StateRegion, shipping?.PostalCode, shipping?.CountryCode);
 
             Subsection("Items");
             foreach (OrderItem item in order.Items ?? new List<OrderItem>())
             {
                 if (item.KitComponent == true) continue; // skip kit components
                 int qty = item.Quantity.HasValue ? (int)item.Quantity.Value : 0;
-                double cost = ToDouble(item.Cost);
+                double cost = ToDouble(MoneyValue(item.Cost)); // OrderItem.Cost is a Currency
                 Console.WriteLine(
                     $"  {Pad(Shorten(item.MerchantItemId ?? "", 12), 12)} {Pad(Shorten(item.Description ?? "", 32), 32)} qty {qty} @ {Money(cost, order.CurrencyCode)} = {Money(qty * cost, order.CurrencyCode)}"
                 );
@@ -193,10 +196,10 @@ namespace SdkSample.order
             if (order.Summary != null)
             {
                 Console.WriteLine();
-                Kv("Subtotal", Money(ToDouble(order.Summary.Subtotal), order.CurrencyCode));
-                if (order.Summary.Tax              != null) Kv("Tax",      Money(ToDouble(order.Summary.Tax), order.CurrencyCode));
-                if (order.Summary.ShippingHandling != null) Kv("Shipping", Money(ToDouble(order.Summary.ShippingHandling), order.CurrencyCode));
-                Kv("Total",    Money(ToDouble(order.Summary.Total), order.CurrencyCode));
+                Kv("Subtotal", Money(ToDouble(MoneyValue(order.Summary.Subtotal)), order.CurrencyCode));
+                if (order.Summary.Tax                   != null) Kv("Tax",      Money(ToDouble(MoneyValue(order.Summary.Tax)), order.CurrencyCode));
+                if (order.Summary.ShippingHandlingTotal != null) Kv("Shipping", Money(ToDouble(MoneyValue(order.Summary.ShippingHandlingTotal)), order.CurrencyCode));
+                Kv("Total",    Money(ToDouble(MoneyValue(order.Summary.Total)), order.CurrencyCode));
             }
 
             Subsection("Payment");
@@ -214,7 +217,7 @@ namespace SdkSample.order
                     {
                         string status = tx.Successful == true ? "approved" : "failed";
                         Console.WriteLine(
-                            $"  {Pad(tx.Dts ?? "", 21)} {Pad(tx.TransactionType ?? "", 12)} {Pad(Money(ToDouble(tx.Amount), order.CurrencyCode), 12)} {status}"
+                            $"  {Pad(tx.TransactionTimestamp ?? "", 21)} {Pad(Shorten(tx.TransactionGateway ?? "", 30), 30)} {status}"
                         );
                     }
                 }
@@ -222,7 +225,8 @@ namespace SdkSample.order
 
             Subsection("Marketing / Attribution");
             List<OrderUtm> utms = order.Utms ?? new List<OrderUtm>();
-            if (marketing != null) Kv("Affiliate ID", marketing.AffiliateId?.ToString() ?? "(none)");
+            // Affiliate attribution lives on OrderAffiliate (expansion=affiliate); not pulled
+            // here to keep the chargeback request light.
             if (utms.Count == 0)
             {
                 Console.WriteLine("  No UTM clicks captured.");
@@ -488,7 +492,15 @@ namespace SdkSample.order
             return string.Join(sep, parts.Where(p => !string.IsNullOrEmpty(p)));
         }
 
-        private static double ToDouble(decimal? d) => d.HasValue ? (double)d.Value : 0.0;
+        // SDK money fields are Currency objects, not raw numbers. Pull the localized
+        // value off; null-safe for missing/optional fields.
+        private static double? MoneyValue(Currency c)
+        {
+            if (c == null || !c.Localized.HasValue) return null;
+            return (double)c.Localized.Value;
+        }
+
+        private static double ToDouble(double? d) => d.HasValue ? d.Value : 0.0;
 
         private static string Money(double amount, string currency)
         {

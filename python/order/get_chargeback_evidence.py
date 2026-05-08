@@ -159,6 +159,14 @@ def kv(label, value, width=22):
     print(f"  {(label + ':').ljust(width)} {value if value is not None else ''}")
 
 
+# SDK money fields are Currency objects, not raw numbers. Pull the localized
+# value off; None-safe for missing/optional fields.
+def money_value(currency):
+    if currency is None:
+        return None
+    return getattr(currency, "localized", None)
+
+
 def money(amount, currency):
     if amount is None:
         return ""
@@ -184,7 +192,7 @@ def render_address(address):
     line2 = address.address2 or ""
     city_row = (
         (address.city or "")
-        + (f", {address.state}" if address.state else "")
+        + (f", {address.state_region}" if address.state_region else "")
         + " " + (address.postal_code or "")
     ).strip()
     country = address.country_code or ""
@@ -230,7 +238,7 @@ kv("Placed", order.creation_dts)
 kv("Stage", order.current_stage)
 kv("Currency", order.currency_code)
 if order.summary is not None:
-    kv("Order Total", money(order.summary.total, order.currency_code))
+    kv("Order Total", money(money_value(order.summary.total), order.currency_code))
 
 subsection("Customer")
 billing = order.billing
@@ -238,15 +246,18 @@ if billing is not None:
     name = " ".join(filter(None, [billing.first_name, billing.last_name])).strip()
     kv("Name", name)
     kv("Email", billing.email)
-    kv("Phone", billing.phone)
+    # First populated phone wins
+    kv("Phone", billing.day_phone or billing.evening_phone or billing.cell_phone)
 cp = order.customer_profile
 if cp is not None:
     kv("Customer Profile", f"yes (oid {cp.customer_profile_oid or '?'})")
 else:
     kv("Customer Profile", "no (guest checkout)")
 marketing = order.marketing
-if marketing is not None and marketing.original_source_code:
-    kv("Original Source", marketing.original_source_code)
+if marketing is not None and getattr(marketing, "advertising_source", None):
+    kv("Advertising Source", marketing.advertising_source)
+if marketing is not None and getattr(marketing, "referral_code", None):
+    kv("Referral Code", marketing.referral_code)
 
 subsection("Billing Address")
 render_address(billing)
@@ -259,15 +270,17 @@ for item in order.items or []:
     if item.kit_component:  # skip kit components - they are sub-rows of a parent kit
         continue
     qty = item.quantity or 0
-    cost = item.cost or 0
+    cost = money_value(item.cost) or 0  # OrderItem.cost is a Currency object
     print(f"  {shorten(item.merchant_item_id or '', 12).ljust(12)} {shorten(item.description or '', 32).ljust(32)} qty {qty} @ {money(cost, order.currency_code)} = {money(qty * cost, order.currency_code)}")
 
 if order.summary is not None:
     print()
-    kv("Subtotal", money(order.summary.subtotal, order.currency_code))
-    if order.summary.tax is not None:                kv("Tax", money(order.summary.tax, order.currency_code))
-    if order.summary.shipping_handling is not None:  kv("Shipping", money(order.summary.shipping_handling, order.currency_code))
-    kv("Total", money(order.summary.total, order.currency_code))
+    kv("Subtotal", money(money_value(order.summary.subtotal), order.currency_code))
+    if order.summary.tax is not None:
+        kv("Tax", money(money_value(order.summary.tax), order.currency_code))
+    if getattr(order.summary, "shipping_handling_total", None) is not None:
+        kv("Shipping", money(money_value(order.summary.shipping_handling_total), order.currency_code))
+    kv("Total", money(money_value(order.summary.total), order.currency_code))
 
 subsection("Payment")
 payment = order.payment
@@ -282,12 +295,12 @@ if payment is not None:
         subsection("Transactions")
         for tx in transactions:
             status = "approved" if tx.successful else "failed"
-            print(f"  {(tx.dts or '').ljust(21)} {(tx.transaction_type or '').ljust(12)} {money(tx.amount, order.currency_code).ljust(12)} {status}")
+            print(f"  {(tx.transaction_timestamp or '').ljust(21)} {shorten(tx.transaction_gateway or '', 30).ljust(30)} {status}")
 
 subsection("Marketing / Attribution")
 utms = order.utms or []
-if marketing is not None:
-    kv("Affiliate ID", marketing.affiliate_id or "(none)")
+# Affiliate attribution lives on OrderAffiliate (expansion=affiliate); not pulled
+# here to keep the chargeback request light.
 if not utms:
     print("  No UTM clicks captured.")
 else:
@@ -327,7 +340,7 @@ else:
         for ro in rebill_orders:
             ro_id = ro.order_id or ""
             marker = "  *** THIS ORDER" if ro_id.lower() == order_id.lower() else ""
-            ro_total = money(ro.summary.total, ro.currency_code or "USD") if ro.summary else ""
+            ro_total = money(money_value(ro.summary.total), ro.currency_code or "USD") if ro.summary else ""
             print(f"  {(ro.creation_dts or '').ljust(22)} {ro_id.ljust(22)} {ro_total.ljust(10)} {ro.current_stage or ''}{marker}")
 
     if auto_order_emails:

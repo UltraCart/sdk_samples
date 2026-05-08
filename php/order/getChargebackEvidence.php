@@ -180,7 +180,7 @@ function renderOrderOverview($order): void {
 
     $summary = $order->getSummary();
     if ($summary !== null) {
-        kv('Order Total', money($summary->getTotal(), $order->getCurrencyCode()));
+        kv('Order Total', money(moneyValue($summary->getTotal()), $order->getCurrencyCode()));
     }
 
     // Customer
@@ -189,7 +189,8 @@ function renderOrderOverview($order): void {
     if ($billing !== null) {
         kv('Name',  trim(($billing->getFirstName() ?? '') . ' ' . ($billing->getLastName() ?? '')));
         kv('Email', $billing->getEmail());
-        kv('Phone', $billing->getPhone());
+        // First populated phone wins - billing has separate day/evening/cell fields
+        kv('Phone', $billing->getDayPhone() ?? $billing->getEveningPhone() ?? $billing->getCellPhone());
     }
     $cp = $order->getCustomerProfile();
     if ($cp !== null) {
@@ -198,8 +199,11 @@ function renderOrderOverview($order): void {
         kv('Customer Profile', 'no (guest checkout)');
     }
     $marketing = $order->getMarketing();
-    if ($marketing !== null && $marketing->getOriginalSourceCode() !== null) {
-        kv('Original Source', $marketing->getOriginalSourceCode());
+    if ($marketing !== null && $marketing->getAdvertisingSource() !== null) {
+        kv('Advertising Source', $marketing->getAdvertisingSource());
+    }
+    if ($marketing !== null && $marketing->getReferralCode() !== null) {
+        kv('Referral Code', $marketing->getReferralCode());
     }
 
     // Addresses
@@ -220,7 +224,7 @@ function renderOrderOverview($order): void {
         $sku   = $item->getMerchantItemId() ?? '';
         $desc  = $item->getDescription() ?? '';
         $qty   = $item->getQuantity() ?? 0;
-        $cost  = $item->getCost() ?? 0;
+        $cost  = moneyValue($item->getCost()) ?? 0; // OrderItem.cost is a Currency object
         $total = $qty * $cost;
         echo sprintf(
             "  %-12s %-32s qty %s @ %s = %s\n",
@@ -232,13 +236,15 @@ function renderOrderOverview($order): void {
         );
     }
 
-    // Totals
+    // Totals - OrderSummary money fields are Currency objects
     if ($summary !== null) {
         echo "\n";
-        kv('Subtotal', money($summary->getSubtotal(), $order->getCurrencyCode()));
-        if ($summary->getTax() !== null)             kv('Tax',      money($summary->getTax(), $order->getCurrencyCode()));
-        if ($summary->getShippingHandling() !== null) kv('Shipping', money($summary->getShippingHandling(), $order->getCurrencyCode()));
-        kv('Total', money($summary->getTotal(), $order->getCurrencyCode()));
+        kv('Subtotal', money(moneyValue($summary->getSubtotal()), $order->getCurrencyCode()));
+        if ($summary->getTax() !== null)
+            kv('Tax', money(moneyValue($summary->getTax()), $order->getCurrencyCode()));
+        if ($summary->getShippingHandlingTotal() !== null)
+            kv('Shipping', money(moneyValue($summary->getShippingHandlingTotal()), $order->getCurrencyCode()));
+        kv('Total', money(moneyValue($summary->getTotal()), $order->getCurrencyCode()));
     }
 
     // Payment
@@ -258,10 +264,9 @@ function renderOrderOverview($order): void {
             subsection('Transactions');
             foreach ($transactions as $tx) {
                 echo sprintf(
-                    "  %-21s %-12s %-12s %s\n",
-                    $tx->getDts() ?? '',
-                    $tx->getTransactionType() ?? '',
-                    money($tx->getAmount(), $order->getCurrencyCode()),
+                    "  %-21s %-30s %s\n",
+                    $tx->getTransactionTimestamp() ?? '',
+                    shorten($tx->getTransactionGateway() ?? '', 30),
                     $tx->getSuccessful() ? 'approved' : 'failed'
                 );
             }
@@ -271,9 +276,9 @@ function renderOrderOverview($order): void {
     // Marketing attribution
     subsection('Marketing / Attribution');
     $utms = $order->getUtms() ?? [];
-    if ($marketing !== null) {
-        kv('Affiliate ID', $marketing->getAffiliateId() ?? '(none)');
-    }
+    // Affiliate attribution lives on OrderAffiliate (expansion=affiliate); not pulled
+    // here to keep the chargeback request light. Add 'affiliate' to the order
+    // expansion list above if you need it.
     if (empty($utms)) {
         echo "  No UTM clicks captured.\n";
     } else {
@@ -335,7 +340,7 @@ function renderSubscription($auto_order, array $rebill_orders, string $current_o
             $marker    = strcasecmp($ro_id, $current_order_id) === 0 ? '  *** THIS ORDER' : '';
             $ro_summary = $ro->getSummary();
             $ro_total   = $ro_summary !== null
-                ? money($ro_summary->getTotal(), $ro->getCurrencyCode() ?? 'USD')
+                ? money(moneyValue($ro_summary->getTotal()), $ro->getCurrencyCode() ?? 'USD')
                 : '';
             echo sprintf(
                 "  %-22s %-22s %-10s %s%s\n",
@@ -473,7 +478,7 @@ function renderAddress($address): void {
     $line2   = $address->getAddress2() ?? '';
     $cityRow = trim(
         ($address->getCity() ?? '') .
-        (($address->getState() ?? null) !== null ? ', ' . $address->getState() : '') .
+        (($address->getStateRegion() ?? null) !== null ? ', ' . $address->getStateRegion() : '') .
         ' ' . ($address->getPostalCode() ?? '')
     );
     $country = $address->getCountryCode() ?? '';
@@ -512,6 +517,13 @@ function subsection(string $title): void {
 
 function kv(string $label, ?string $value): void {
     echo sprintf("  %-22s %s\n", $label . ':', $value ?? '');
+}
+
+// SDK money fields are Currency objects, not raw numbers. Pull the localized
+// value off; null-safe for missing/optional fields.
+function moneyValue($currency): ?float {
+    if ($currency === null) return null;
+    return $currency->getLocalized();
 }
 
 function money(?float $amount, ?string $currency): string {

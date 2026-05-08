@@ -144,19 +144,24 @@ public class GetChargebackEvidence {
         kv("Placed",   order.getCreationDts());
         kv("Stage",    order.getCurrentStage());
         kv("Currency", order.getCurrencyCode());
-        if (order.getSummary() != null) kv("Order Total", money(toDouble(order.getSummary().getTotal()), order.getCurrencyCode()));
+        if (order.getSummary() != null) kv("Order Total", money(toDouble(moneyValue(order.getSummary().getTotal())), order.getCurrencyCode()));
 
         subsection("Customer");
         OrderBilling billing = order.getBilling();
         if (billing != null) {
             kv("Name",  joinNonEmpty(" ", billing.getFirstName(), billing.getLastName()));
             kv("Email", billing.getEmail());
-            kv("Phone", billing.getPhone());
+            // First populated phone wins
+            String phone = billing.getDayPhone() != null ? billing.getDayPhone()
+                : billing.getEveningPhone() != null ? billing.getEveningPhone()
+                : billing.getCellPhone();
+            kv("Phone", phone);
         }
         Customer cp = order.getCustomerProfile();
         kv("Customer Profile", cp != null ? "yes (oid " + (cp.getCustomerProfileOid() != null ? cp.getCustomerProfileOid() : "?") + ")" : "no (guest checkout)");
         OrderMarketing marketing = order.getMarketing();
-        if (marketing != null && marketing.getOriginalSourceCode() != null) kv("Original Source", marketing.getOriginalSourceCode());
+        if (marketing != null && marketing.getAdvertisingSource() != null) kv("Advertising Source", marketing.getAdvertisingSource());
+        if (marketing != null && marketing.getReferralCode() != null)      kv("Referral Code", marketing.getReferralCode());
 
         subsection("Billing Address");
         renderAddress(billing != null ? billing.getFirstName() : null,
@@ -165,7 +170,7 @@ public class GetChargebackEvidence {
                       billing != null ? billing.getAddress1()  : null,
                       billing != null ? billing.getAddress2()  : null,
                       billing != null ? billing.getCity()      : null,
-                      billing != null ? billing.getState()     : null,
+                      billing != null ? billing.getStateRegion() : null,
                       billing != null ? billing.getPostalCode(): null,
                       billing != null ? billing.getCountryCode() : null);
 
@@ -177,7 +182,7 @@ public class GetChargebackEvidence {
                       shipping != null ? shipping.getAddress1()  : null,
                       shipping != null ? shipping.getAddress2()  : null,
                       shipping != null ? shipping.getCity()      : null,
-                      shipping != null ? shipping.getState()     : null,
+                      shipping != null ? shipping.getStateRegion() : null,
                       shipping != null ? shipping.getPostalCode(): null,
                       shipping != null ? shipping.getCountryCode() : null);
 
@@ -186,7 +191,7 @@ public class GetChargebackEvidence {
         for (OrderItem item : items) {
             if (Boolean.TRUE.equals(item.getKitComponent())) continue; // skip kit components - sub-rows of a parent kit
             int qty     = item.getQuantity() != null ? item.getQuantity().intValue() : 0;
-            double cost = toDouble(item.getCost());
+            double cost = toDouble(moneyValue(item.getCost())); // OrderItem.cost is a Currency
             System.out.printf("  %-12s %-32s qty %d @ %s = %s%n",
                 shorten(safeStr(item.getMerchantItemId()), 12),
                 shorten(safeStr(item.getDescription()), 32),
@@ -198,10 +203,10 @@ public class GetChargebackEvidence {
 
         if (order.getSummary() != null) {
             System.out.println();
-            kv("Subtotal", money(toDouble(order.getSummary().getSubtotal()), order.getCurrencyCode()));
-            if (order.getSummary().getTax() != null)              kv("Tax",      money(toDouble(order.getSummary().getTax()), order.getCurrencyCode()));
-            if (order.getSummary().getShippingHandling() != null) kv("Shipping", money(toDouble(order.getSummary().getShippingHandling()), order.getCurrencyCode()));
-            kv("Total",    money(toDouble(order.getSummary().getTotal()), order.getCurrencyCode()));
+            kv("Subtotal", money(toDouble(moneyValue(order.getSummary().getSubtotal())), order.getCurrencyCode()));
+            if (moneyValue(order.getSummary().getTax()) != null)              kv("Tax",      money(toDouble(moneyValue(order.getSummary().getTax())), order.getCurrencyCode()));
+            if (moneyValue(order.getSummary().getShippingHandlingTotal()) != null) kv("Shipping", money(toDouble(moneyValue(order.getSummary().getShippingHandlingTotal())), order.getCurrencyCode()));
+            kv("Total",    money(toDouble(moneyValue(order.getSummary().getTotal())), order.getCurrencyCode()));
         }
 
         subsection("Payment");
@@ -215,10 +220,9 @@ public class GetChargebackEvidence {
                 subsection("Transactions");
                 for (OrderPaymentTransaction tx : transactions) {
                     String status = Boolean.TRUE.equals(tx.getSuccessful()) ? "approved" : "failed";
-                    System.out.printf("  %-21s %-12s %-12s %s%n",
-                        safeStr(tx.getDts()),
-                        safeStr(tx.getTransactionType()),
-                        money(toDouble(tx.getAmount()), order.getCurrencyCode()),
+                    System.out.printf("  %-21s %-30s %s%n",
+                        safeStr(tx.getTransactionTimestamp()),
+                        shorten(safeStr(tx.getTransactionGateway()), 30),
                         status
                     );
                 }
@@ -227,7 +231,8 @@ public class GetChargebackEvidence {
 
         subsection("Marketing / Attribution");
         List<OrderUtm> utms = order.getUtms() != null ? order.getUtms() : Collections.emptyList();
-        if (marketing != null) kv("Affiliate ID", marketing.getAffiliateId() != null ? marketing.getAffiliateId().toString() : "(none)");
+        // Affiliate attribution lives on OrderAffiliate (expansion=affiliate); not pulled
+        // here to keep the chargeback request light.
         if (utms.isEmpty()) {
             System.out.println("  No UTM clicks captured.");
         } else {
@@ -279,7 +284,7 @@ public class GetChargebackEvidence {
             for (Order ro : sorted) {
                 String roId    = safeStr(ro.getOrderId());
                 String marker  = roId.equalsIgnoreCase(currentOrderId) ? "  *** THIS ORDER" : "";
-                String roTotal = ro.getSummary() != null ? money(toDouble(ro.getSummary().getTotal()), ro.getCurrencyCode() != null ? ro.getCurrencyCode() : "USD") : "";
+                String roTotal = ro.getSummary() != null ? money(toDouble(moneyValue(ro.getSummary().getTotal())), ro.getCurrencyCode() != null ? ro.getCurrencyCode() : "USD") : "";
                 System.out.printf("  %-22s %-22s %-10s %s%s%n",
                     safeStr(ro.getCreationDts()),
                     roId,
@@ -483,8 +488,15 @@ public class GetChargebackEvidence {
         return sb.toString();
     }
 
-    private static double toDouble(java.math.BigDecimal bd) {
-        return bd != null ? bd.doubleValue() : 0.0;
+    // SDK money fields are Currency objects, not raw numbers. Pull the localized
+    // value off; null-safe for missing/optional fields.
+    private static Double moneyValue(Currency c) {
+        if (c == null || c.getLocalized() == null) return null;
+        return c.getLocalized().doubleValue();
+    }
+
+    private static double toDouble(Double d) {
+        return d != null ? d : 0.0;
     }
 
     private static String money(double amount, String currency) {

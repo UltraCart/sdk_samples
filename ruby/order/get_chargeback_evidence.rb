@@ -90,6 +90,14 @@ def kv(label, value, width = 22)
   puts "  #{(label + ':').ljust(width)} #{value || ''}"
 end
 
+# SDK money fields are Currency objects, not raw numbers. Pull the localized
+# value off; nil-safe for missing/optional fields.
+def money_value(currency)
+  return nil if currency.nil?
+
+  currency.respond_to?(:localized) ? currency.localized : nil
+end
+
 def money(amount, currency)
   return '' if amount.nil?
 
@@ -109,7 +117,7 @@ def render_address(addr)
   end
 
   name = [addr.first_name, addr.last_name].compact.join(' ').strip
-  city_row = [addr.city, addr.state].compact.reject(&:empty?).join(', ').strip
+  city_row = [addr.city, addr.state_region].compact.reject(&:empty?).join(', ').strip
   city_row = "#{city_row} #{addr.postal_code}".strip if addr.postal_code
 
   [name, addr.company, addr.address1, addr.address2, city_row, addr.country_code]
@@ -206,14 +214,15 @@ section('1. ORDER OVERVIEW')
 kv('Placed',   order.creation_dts)
 kv('Stage',    order.current_stage)
 kv('Currency', order.currency_code)
-kv('Order Total', money(order.summary.total, order.currency_code)) if order.summary
+kv('Order Total', money(money_value(order.summary.total), order.currency_code)) if order.summary
 
 subsection('Customer')
 billing = order.billing
 if billing
   kv('Name', [billing.first_name, billing.last_name].compact.join(' ').strip)
   kv('Email', billing.email)
-  kv('Phone', billing.phone)
+  # First populated phone wins
+  kv('Phone', billing.day_phone || billing.evening_phone || billing.cell_phone)
 end
 cp = order.customer_profile
 if cp
@@ -222,7 +231,8 @@ else
   kv('Customer Profile', 'no (guest checkout)')
 end
 marketing = order.marketing
-kv('Original Source', marketing.original_source_code) if marketing && marketing.original_source_code
+kv('Advertising Source', marketing.advertising_source) if marketing && marketing.respond_to?(:advertising_source) && marketing.advertising_source
+kv('Referral Code', marketing.referral_code)            if marketing && marketing.respond_to?(:referral_code)      && marketing.referral_code
 
 subsection('Billing Address')
 render_address(billing)
@@ -235,7 +245,7 @@ subsection('Items')
   next if item.kit_component # skip kit components - they are sub-rows of a parent kit
 
   qty  = item.quantity || 0
-  cost = item.cost || 0
+  cost = money_value(item.cost) || 0 # OrderItem.cost is a Currency object
   printf(
     "  %-12s %-32s qty %s @ %s = %s\n",
     shorten(item.merchant_item_id || '', 12),
@@ -248,10 +258,12 @@ end
 
 if order.summary
   puts
-  kv('Subtotal', money(order.summary.subtotal, order.currency_code))
-  kv('Tax',      money(order.summary.tax, order.currency_code))               unless order.summary.tax.nil?
-  kv('Shipping', money(order.summary.shipping_handling, order.currency_code)) unless order.summary.shipping_handling.nil?
-  kv('Total',    money(order.summary.total, order.currency_code))
+  kv('Subtotal', money(money_value(order.summary.subtotal), order.currency_code))
+  kv('Tax',      money(money_value(order.summary.tax), order.currency_code))                  unless order.summary.tax.nil?
+  if order.summary.respond_to?(:shipping_handling_total) && !order.summary.shipping_handling_total.nil?
+    kv('Shipping', money(money_value(order.summary.shipping_handling_total), order.currency_code))
+  end
+  kv('Total',    money(money_value(order.summary.total), order.currency_code))
 end
 
 subsection('Payment')
@@ -268,10 +280,9 @@ if payment
     transactions.each do |tx|
       status = tx.successful ? 'approved' : 'failed'
       printf(
-        "  %-21s %-12s %-12s %s\n",
-        tx.dts || '',
-        tx.transaction_type || '',
-        money(tx.amount, order.currency_code),
+        "  %-21s %-30s %s\n",
+        tx.transaction_timestamp || '',
+        shorten(tx.transaction_gateway || '', 30),
         status
       )
     end
@@ -280,7 +291,8 @@ end
 
 subsection('Marketing / Attribution')
 utms = order.utms || []
-kv('Affiliate ID', marketing.affiliate_id || '(none)') if marketing
+# Affiliate attribution lives on OrderAffiliate (expansion=affiliate); not pulled
+# here to keep the chargeback request light.
 if utms.empty?
   puts '  No UTM clicks captured.'
 else
@@ -329,7 +341,7 @@ else
     rebill_orders.each do |ro|
       ro_id    = ro.order_id || ''
       marker   = ro_id.casecmp(order_id) == 0 ? '  *** THIS ORDER' : ''
-      ro_total = ro.summary ? money(ro.summary.total, ro.currency_code || 'USD') : ''
+      ro_total = ro.summary ? money(money_value(ro.summary.total), ro.currency_code || 'USD') : ''
       printf(
         "  %-22s %-22s %-10s %s%s\n",
         ro.creation_dts || '',
