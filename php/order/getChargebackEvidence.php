@@ -174,7 +174,7 @@ function renderHeader(string $order_id): void {
 function renderOrderOverview($order): void {
     section('1. ORDER OVERVIEW');
 
-    kv('Placed',       $order->getCreationDate());
+    kv('Placed',       $order->getCreationDts());
     kv('Stage',        $order->getCurrentStage());
     kv('Currency',     $order->getCurrencyCode());
 
@@ -304,7 +304,7 @@ function renderSubscription($auto_order, array $rebill_orders, string $current_o
     kv('Next Attempt',        $auto_order->getNextAttempt() ?? '(none scheduled)');
     if ($auto_order->getCanceledDts() !== null) {
         kv('Canceled',          $auto_order->getCanceledDts());
-        kv('Canceled By',       $auto_order->getCancelledByUser() ?? '');
+        kv('Canceled By',       $auto_order->getCanceledByUser() ?? '');
         kv('Cancel Reason',     $auto_order->getCancelReason() ?? '');
     }
     kv('Total Rebills',       (string) count($rebill_orders));
@@ -328,7 +328,7 @@ function renderSubscription($auto_order, array $rebill_orders, string $current_o
         subsection('Rebill Timeline');
         // Sort by creation date ascending so the earliest rebill is at the top.
         usort($rebill_orders, function ($a, $b) {
-            return strcmp($a->getCreationDate() ?? '', $b->getCreationDate() ?? '');
+            return strcmp($a->getCreationDts() ?? '', $b->getCreationDts() ?? '');
         });
         foreach ($rebill_orders as $ro) {
             $ro_id     = $ro->getOrderId() ?? '';
@@ -339,7 +339,7 @@ function renderSubscription($auto_order, array $rebill_orders, string $current_o
                 : '';
             echo sprintf(
                 "  %-22s %-22s %-10s %s%s\n",
-                $ro->getCreationDate() ?? '',
+                $ro->getCreationDts() ?? '',
                 $ro_id,
                 $ro_total,
                 $ro->getCurrentStage() ?? '',
