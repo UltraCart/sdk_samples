@@ -95,17 +95,13 @@ if ($emails_response->getError() !== null) {
 }
 $emails = $emails_response->getEmails() ?? [];
 
-$page_view_response = $order_api->getOrderPageViewHistory($order_id);
-if ($page_view_response->getError() !== null) {
-    fail('getOrderPageViewHistory', $page_view_response->getError());
-}
-$page_views        = $page_view_response->getPageViews() ?? [];
-$session_referrer  = $page_view_response->getReferrer();
-
-// Auto-order chain (if applicable)
-$auto_order        = null;
-$auto_order_emails = [];
-$rebill_orders     = [];
+// Auto-order chain (if applicable). Resolve this BEFORE pulling page views
+// because a rebill's own page view history is empty - the customer never
+// went through checkout for the rebill, so the meaningful history lives
+// on the original order that started the subscription.
+$auto_order         = null;
+$auto_order_emails  = [];
+$rebill_orders      = [];
 $auto_order_pointer = $order->getAutoOrder();   // populated by ?_expand=auto_order
 if ($auto_order_pointer !== null && $auto_order_pointer->getAutoOrderOid() !== null) {
     $auto_order_oid = $auto_order_pointer->getAutoOrderOid();
@@ -124,6 +120,26 @@ if ($auto_order_pointer !== null && $auto_order_pointer->getAutoOrderOid() !== n
     $auto_order_emails = $ao_emails_response->getEmails() ?? [];
 }
 
+// For a rebill chargeback, the page view history that matters is the one
+// from the ORIGINAL order's checkout session. Rebills are charged
+// automatically; the customer's intent and journey were captured at signup.
+$page_view_order_id     = $order_id;
+$page_view_is_redirected = false;
+if ($auto_order !== null) {
+    $original_order_id = $auto_order->getOriginalOrderId();
+    if ($original_order_id !== null && strcasecmp($original_order_id, $order_id) !== 0) {
+        $page_view_order_id      = $original_order_id;
+        $page_view_is_redirected = true;
+    }
+}
+
+$page_view_response = $order_api->getOrderPageViewHistory($page_view_order_id);
+if ($page_view_response->getError() !== null) {
+    fail('getOrderPageViewHistory', $page_view_response->getError());
+}
+$page_views       = $page_view_response->getPageViews() ?? [];
+$session_referrer = $page_view_response->getReferrer();
+
 // --------------------------------------------------------------------
 // Render the report
 // --------------------------------------------------------------------
@@ -134,7 +150,7 @@ renderHeader($order_id);
 renderOrderOverview($order);
 renderSubscription($auto_order, $rebill_orders, $order_id, $auto_order_emails);
 renderEmails($emails);
-renderPageViewHistory($page_views, $session_referrer);
+renderPageViewHistory($page_views, $session_referrer, $page_view_order_id, $page_view_is_redirected);
 renderFooter();
 
 if (!$is_cli) echo '</pre></body></html>';
@@ -389,13 +405,20 @@ function renderEmailDetail(int $i, $email): void {
     echo "\n";
 }
 
-function renderPageViewHistory(array $page_views, ?string $session_referrer): void {
+function renderPageViewHistory(array $page_views, ?string $session_referrer, string $source_order_id, bool $is_redirected): void {
     section('4. PAGE VIEW HISTORY (' . count($page_views) . ' views)');
 
+    if ($is_redirected) {
+        echo "  Note: this is a subscription rebill. The disputed order itself has no\n";
+        echo "  checkout session of its own. The page views below are from the ORIGINAL\n";
+        echo "  order that started the subscription, where the customer's intent was\n";
+        echo "  captured during signup.\n\n";
+        kv('Source order',     $source_order_id);
+    }
     kv('Session referrer', $session_referrer ?? '(direct or unknown)');
 
     if (empty($page_views)) {
-        echo "\n  No page views captured for this order's session.\n";
+        echo "\n  No page views captured" . ($is_redirected ? ' for the original order.' : " for this order's session.") . "\n";
         echo "\n";
         return;
     }
