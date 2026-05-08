@@ -209,10 +209,14 @@ function renderOrderOverview($order): void {
     subsection('Shipping Address');
     renderAddress($order->getShipping());
 
-    // Items
+    // Items - skip kit components (they're sub-rows of a parent kit, not
+    // independently-purchased items, and printing them inflates the list).
     subsection('Items');
     $items = $order->getItems() ?? [];
     foreach ($items as $item) {
+        if ($item->getKitComponent()) {
+            continue;
+        }
         $sku   = $item->getMerchantItemId() ?? '';
         $desc  = $item->getDescription() ?? '';
         $qty   = $item->getQuantity() ?? 0;
