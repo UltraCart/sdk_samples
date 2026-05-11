@@ -32,6 +32,14 @@ namespace SdkSample.order
     ///      auto-order-level email log. For rebills specifically, the page-view
     ///      lookup pivots to the ORIGINAL order (the rebill itself has no
     ///      checkout session).
+    ///   5. Shipment journey data via the shipping.tracking_number_details
+    ///      expansion - carrier, current status, ETA, and per-scan event
+    ///      history. The standard "proof of delivery" exhibit for "item not
+    ///      received" chargebacks. NOTE: package tracking is an OPTIONAL feature
+    ///      that the merchant has to enable on their UltraCart account. If it
+    ///      is not enabled, or if tracking has not yet been posted for the
+    ///      order, the array will be empty and the section falls back to the
+    ///      plain TrackingNumbers list (if any).
     ///
     /// Requires the May 2026 SDK build with GetOrderEmails,
     /// GetOrderPageViewHistory, and GetAutoOrderEmails.
@@ -42,6 +50,7 @@ namespace SdkSample.order
         {
             "billing",                  // address customer entered for billing
             "shipping",                 // address goods shipped to
+            "shipping.tracking_number_details", // carrier scans, delivery status, ETA (requires the optional package-tracking feature)
             "payment",                  // payment method, card last four, gateway info
             "payment.transaction",      // auth/capture/refund timeline
             "summary",                  // totals, tax, shipping, weights
@@ -124,6 +133,7 @@ namespace SdkSample.order
 
             RenderHeader(orderId);
             RenderOrderOverview(order);
+            RenderShipmentTracking(order.Shipping);
             RenderSubscription(autoOrder, rebillOrders, orderId, autoOrderEmails);
             RenderEmails(emails);
             RenderPageViewHistory(pageViews, sessionReferrer, pageViewOrderId, pageViewIsRedirected);
@@ -241,9 +251,81 @@ namespace SdkSample.order
             }
         }
 
+        private static void RenderShipmentTracking(OrderShipping shipping)
+        {
+            Section("2. SHIPMENT TRACKING");
+
+            if (shipping == null)
+            {
+                Console.WriteLine("  No shipping address on file - this order may not have been a physical shipment.");
+                return;
+            }
+
+            List<OrderTrackingNumberDetails> trackingDetails = shipping.TrackingNumberDetails ?? new List<OrderTrackingNumberDetails>();
+            List<string> plainTrackings = shipping.TrackingNumbers ?? new List<string>();
+
+            if (trackingDetails.Count > 0)
+            {
+                // Rich tracking data - carrier, status, ETA, per-scan events.
+                for (int idx = 0; idx < trackingDetails.Count; idx++)
+                {
+                    OrderTrackingNumberDetails td = trackingDetails[idx];
+                    if (trackingDetails.Count > 1) Subsection($"Shipment {idx + 1} of {trackingDetails.Count}");
+
+                    Kv("Carrier",           td.ShippingMethod);
+                    Kv("Tracking #",        td.TrackingNumber);
+                    string statusText = ((td.Status ?? "") + "  " + (td.StatusDescription ?? "")).Trim();
+                    Kv("Status",            statusText.Length == 0 ? null : statusText);
+                    Kv("Tracking URL",      td.TrackingUrl);
+                    Kv("Shipped",           td.ShippedDateFormatted ?? td.ShippedDate);
+                    Kv("Expected Delivery", td.ExpectedDeliveryDateFormatted ?? td.ExpectedDeliveryDate);
+                    Kv("Actual Delivery",   td.ActualDeliveryDateFormatted   ?? td.ActualDeliveryDate);
+
+                    List<OrderTrackingNumberDetail> events = td.Details ?? new List<OrderTrackingNumberDetail>();
+                    if (events.Count == 0)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("  No tracking events captured yet.");
+                    }
+                    else
+                    {
+                        Subsection("Tracking Events");
+                        // Most carriers feed events newest-first; preserve whatever order the API returned.
+                        foreach (OrderTrackingNumberDetail ev in events)
+                        {
+                            string when = ev.EventDts ?? ((ev.EventLocalDate ?? "") + " " + (ev.EventLocalTime ?? "")).Trim();
+                            string tag = ev.TagDescription ?? ev.Tag ?? "";
+                            string location = JoinNonEmpty(", ", ev.City, ev.State);
+                            Console.WriteLine($"  {Pad(when, 22)} {Pad(Shorten(tag, 22), 22)} {location}");
+                            if (!string.IsNullOrEmpty(ev.SubtagMessage))
+                                Console.WriteLine($"  {new string(' ', 22)} {ev.SubtagMessage}");
+                        }
+                    }
+                }
+            }
+            else if (plainTrackings.Count > 0)
+            {
+                // Feature not enabled (or carrier feed unavailable) - fall back to
+                // the plain tracking numbers we have on file.
+                Console.WriteLine("  Detailed carrier scan data is not available for this order.");
+                Console.WriteLine("  (Detailed tracking is an optional UltraCart feature that must be enabled");
+                Console.WriteLine("  on the merchant account. Falling back to the plain tracking numbers below.)");
+                Subsection("Tracking Numbers");
+                foreach (string tn in plainTrackings) Console.WriteLine("  " + tn);
+            }
+            else
+            {
+                Console.WriteLine("  No shipment tracking on file for this order.");
+                Console.WriteLine("  This is expected for digital goods, will-call/pickup orders, or orders");
+                Console.WriteLine("  where tracking has not yet been posted by the carrier. Detailed carrier");
+                Console.WriteLine("  scan data also requires the optional package-tracking feature to be");
+                Console.WriteLine("  enabled on the merchant account.");
+            }
+        }
+
         private static void RenderSubscription(AutoOrder autoOrder, List<Order> rebillOrders, string currentOrderId, List<AutoOrderEmail> autoOrderEmails)
         {
-            Section("2. SUBSCRIPTION DETAILS");
+            Section("3. SUBSCRIPTION DETAILS");
 
             if (autoOrder == null)
             {
@@ -311,7 +393,7 @@ namespace SdkSample.order
 
         private static void RenderEmails(List<OrderEmail> emails)
         {
-            Section($"3. EMAIL DELIVERY ({emails.Count} messages)");
+            Section($"4. EMAIL DELIVERY ({emails.Count} messages)");
             if (emails.Count == 0)
             {
                 Console.WriteLine("  No email delivery records on file for this order.");
@@ -376,7 +458,7 @@ namespace SdkSample.order
 
         private static void RenderPageViewHistory(List<OrderPageView> pageViews, string sessionReferrer, string sourceOrderId, bool isRedirected)
         {
-            Section($"4. PAGE VIEW HISTORY ({pageViews.Count} views)");
+            Section($"5. PAGE VIEW HISTORY ({pageViews.Count} views)");
             if (isRedirected)
             {
                 Console.WriteLine("  Note: this is a subscription rebill. The disputed order itself has no");

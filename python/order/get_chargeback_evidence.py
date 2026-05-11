@@ -21,6 +21,13 @@ What this sample demonstrates:
      that has occurred on it, and the auto-order-level email log. For rebills
      specifically, the page-view lookup pivots to the ORIGINAL order, since
      the rebill itself has no checkout session.
+  5. Shipment journey data via the shipping.tracking_number_details expansion
+     - carrier, current status, ETA, and per-scan event history. This is the
+     standard "proof of delivery" exhibit for "item not received" chargebacks.
+     NOTE: package tracking is an OPTIONAL feature that the merchant has to
+     enable on their UltraCart account. If it is not enabled, or if tracking
+     has not yet been posted for the order, the array will be empty and the
+     section will say so.
 
 Usage:
     PYTHONPATH=. python order/get_chargeback_evidence.py DEMO-0009104976
@@ -51,6 +58,7 @@ auto_order_api = AutoOrderApi(client)
 order_expansion = ",".join([
     "billing",                  # address customer entered for billing
     "shipping",                 # address goods shipped to
+    "shipping.tracking_number_details",  # carrier scans, delivery status, ETA (requires the optional package-tracking feature)
     "payment",                  # payment method, card last four, gateway info
     "payment.transaction",      # auth/capture/refund timeline
     "summary",                  # totals, tax, shipping, weights
@@ -310,8 +318,68 @@ else:
     kv("Most recent UTM campaign", most_recent.utm_campaign)
     kv("UTM clicks captured", str(len(utms)))
 
-# Section 2: Subscription
-section("2. SUBSCRIPTION DETAILS")
+# Section 2: Shipment tracking
+section("2. SHIPMENT TRACKING")
+shipping = order.shipping
+if shipping is None:
+    print("  No shipping address on file - this order may not have been a physical shipment.")
+else:
+    tracking_details = getattr(shipping, "tracking_number_details", None) or []
+    plain_trackings = getattr(shipping, "tracking_numbers", None) or []
+
+    if tracking_details:
+        # Rich tracking data - carrier, status, ETA, per-scan events.
+        for idx, td in enumerate(tracking_details, start=1):
+            if len(tracking_details) > 1:
+                subsection(f"Shipment {idx} of {len(tracking_details)}")
+            kv("Carrier",           getattr(td, "shipping_method", None))
+            kv("Tracking #",        getattr(td, "tracking_number", None))
+            status = getattr(td, "status", None) or ""
+            desc = getattr(td, "status_description", None) or ""
+            kv("Status",            f"{status}  {desc}".strip() or None)
+            kv("Tracking URL",      getattr(td, "tracking_url", None))
+            kv("Shipped",           getattr(td, "shipped_date_formatted", None) or getattr(td, "shipped_date", None))
+            kv("Expected Delivery", getattr(td, "expected_delivery_date_formatted", None) or getattr(td, "expected_delivery_date", None))
+            kv("Actual Delivery",   getattr(td, "actual_delivery_date_formatted", None) or getattr(td, "actual_delivery_date", None))
+
+            events = getattr(td, "details", None) or []
+            if not events:
+                print()
+                print("  No tracking events captured yet.")
+            else:
+                subsection("Tracking Events")
+                # Most carriers feed events newest-first; preserve whatever order the API returned.
+                for ev in events:
+                    when = getattr(ev, "event_dts", None) or (
+                        f"{getattr(ev, 'event_local_date', '') or ''} {getattr(ev, 'event_local_time', '') or ''}".strip()
+                    )
+                    tag = getattr(ev, "tag_description", None) or getattr(ev, "tag", None) or ""
+                    city = getattr(ev, "city", None) or ""
+                    state = getattr(ev, "state", None) or ""
+                    location = ", ".join(filter(None, [city, state]))
+                    sub = getattr(ev, "subtag_message", None) or ""
+                    print(f"  {(when or '').ljust(22)} {shorten(tag, 22).ljust(22)} {location}")
+                    if sub:
+                        print(f"  {' ' * 22} {sub}")
+    elif plain_trackings:
+        # Feature not enabled (or carrier feed unavailable) - fall back to the
+        # plain tracking numbers we have on file.
+        print("  Detailed carrier scan data is not available for this order.")
+        print("  (Detailed tracking is an optional UltraCart feature that must be enabled")
+        print("  on the merchant account. Falling back to the plain tracking numbers below.)")
+        print()
+        subsection("Tracking Numbers")
+        for tn in plain_trackings:
+            print(f"  {tn}")
+    else:
+        print("  No shipment tracking on file for this order.")
+        print("  This is expected for digital goods, will-call/pickup orders, or orders")
+        print("  where tracking has not yet been posted by the carrier. Detailed carrier")
+        print("  scan data also requires the optional package-tracking feature to be")
+        print("  enabled on the merchant account.")
+
+# Section 3: Subscription
+section("3. SUBSCRIPTION DETAILS")
 if auto_order is None:
     print("  This order is NOT part of an auto order subscription.")
 else:
@@ -351,16 +419,16 @@ else:
         subsection("Subscription-Level Emails")
         print("  No subscription-level emails on record.")
 
-# Section 3: Emails
-section(f"3. EMAIL DELIVERY ({len(emails)} messages)")
+# Section 4: Emails
+section(f"4. EMAIL DELIVERY ({len(emails)} messages)")
 if not emails:
     print("  No email delivery records on file for this order.")
 else:
     for i, email in enumerate(emails, start=1):
         render_email_detail(i, email)
 
-# Section 4: Page view history
-section(f"4. PAGE VIEW HISTORY ({len(page_views)} views)")
+# Section 5: Page view history
+section(f"5. PAGE VIEW HISTORY ({len(page_views)} views)")
 if page_view_is_redirected:
     print("  Note: this is a subscription rebill. The disputed order itself has no")
     print("  checkout session of its own. The page views below are from the ORIGINAL")

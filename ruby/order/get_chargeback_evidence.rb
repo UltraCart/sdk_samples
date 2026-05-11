@@ -20,6 +20,13 @@
 #      that has occurred on it, and the auto-order-level email log. For rebills
 #      specifically, the page-view lookup pivots to the ORIGINAL order, since
 #      the rebill itself has no checkout session.
+#   5. Shipment journey data via the shipping.tracking_number_details expansion
+#      - carrier, current status, ETA, and per-scan event history. This is the
+#      standard "proof of delivery" exhibit for "item not received" chargebacks.
+#      NOTE: package tracking is an OPTIONAL feature that the merchant has to
+#      enable on their UltraCart account. If it is not enabled, or if tracking
+#      has not yet been posted for the order, the array will be empty and the
+#      section will fall back to the plain tracking_numbers list (if any).
 #
 # Usage:
 #   ruby order/get_chargeback_evidence.rb DEMO-0009104976
@@ -42,6 +49,7 @@ auto_order_api = UltracartClient::AutoOrderApi.new_using_api_key(Constants::API_
 order_expansion = %w[
   billing
   shipping
+  shipping.tracking_number_details
   payment
   payment.transaction
   summary
@@ -303,8 +311,68 @@ else
   kv('UTM clicks captured', utms.length.to_s)
 end
 
-# Section 2: Subscription
-section('2. SUBSCRIPTION DETAILS')
+# Section 2: Shipment tracking
+section('2. SHIPMENT TRACKING')
+shipping = order.shipping
+if shipping.nil?
+  puts '  No shipping address on file - this order may not have been a physical shipment.'
+else
+  tracking_details = shipping.respond_to?(:tracking_number_details) ? (shipping.tracking_number_details || []) : []
+  plain_trackings  = shipping.respond_to?(:tracking_numbers)        ? (shipping.tracking_numbers || [])        : []
+
+  if !tracking_details.empty?
+    # Rich tracking data - carrier, status, ETA, per-scan events.
+    tracking_details.each_with_index do |td, idx|
+      subsection("Shipment #{idx + 1} of #{tracking_details.length}") if tracking_details.length > 1
+      kv('Carrier',           td.respond_to?(:shipping_method) ? td.shipping_method : nil)
+      kv('Tracking #',        td.respond_to?(:tracking_number) ? td.tracking_number : nil)
+      status_text = "#{td.respond_to?(:status) ? td.status : ''}  #{td.respond_to?(:status_description) ? td.status_description : ''}".strip
+      kv('Status',            status_text.empty? ? nil : status_text)
+      kv('Tracking URL',      td.respond_to?(:tracking_url) ? td.tracking_url : nil)
+      kv('Shipped',           (td.respond_to?(:shipped_date_formatted) && td.shipped_date_formatted) || (td.respond_to?(:shipped_date) ? td.shipped_date : nil))
+      kv('Expected Delivery', (td.respond_to?(:expected_delivery_date_formatted) && td.expected_delivery_date_formatted) || (td.respond_to?(:expected_delivery_date) ? td.expected_delivery_date : nil))
+      kv('Actual Delivery',   (td.respond_to?(:actual_delivery_date_formatted) && td.actual_delivery_date_formatted) || (td.respond_to?(:actual_delivery_date) ? td.actual_delivery_date : nil))
+
+      events = td.respond_to?(:details) ? (td.details || []) : []
+      if events.empty?
+        puts
+        puts '  No tracking events captured yet.'
+      else
+        subsection('Tracking Events')
+        # Most carriers feed events newest-first; preserve whatever order the API returned.
+        events.each do |ev|
+          when_s = (ev.respond_to?(:event_dts) && ev.event_dts) ||
+                   "#{ev.respond_to?(:event_local_date) ? ev.event_local_date : ''} #{ev.respond_to?(:event_local_time) ? ev.event_local_time : ''}".strip
+          tag = (ev.respond_to?(:tag_description) && ev.tag_description) || (ev.respond_to?(:tag) ? ev.tag : '') || ''
+          city = ev.respond_to?(:city) ? (ev.city || '') : ''
+          state = ev.respond_to?(:state) ? (ev.state || '') : ''
+          location = [city, state].reject { |s| s.nil? || s.empty? }.join(', ')
+          sub = ev.respond_to?(:subtag_message) ? (ev.subtag_message || '') : ''
+          printf("  %-22s %-22s %s\n", when_s || '', shorten(tag, 22), location)
+          puts "  #{' ' * 22} #{sub}" unless sub.empty?
+        end
+      end
+    end
+  elsif !plain_trackings.empty?
+    # Feature not enabled (or carrier feed unavailable) - fall back to the
+    # plain tracking numbers we have on file.
+    puts '  Detailed carrier scan data is not available for this order.'
+    puts '  (Detailed tracking is an optional UltraCart feature that must be enabled'
+    puts '  on the merchant account. Falling back to the plain tracking numbers below.)'
+    puts
+    subsection('Tracking Numbers')
+    plain_trackings.each { |tn| puts "  #{tn}" }
+  else
+    puts '  No shipment tracking on file for this order.'
+    puts '  This is expected for digital goods, will-call/pickup orders, or orders'
+    puts '  where tracking has not yet been posted by the carrier. Detailed carrier'
+    puts '  scan data also requires the optional package-tracking feature to be'
+    puts '  enabled on the merchant account.'
+  end
+end
+
+# Section 3: Subscription
+section('3. SUBSCRIPTION DETAILS')
 if auto_order.nil?
   puts '  This order is NOT part of an auto order subscription.'
 else
@@ -362,16 +430,16 @@ else
   end
 end
 
-# Section 3: Emails
-section("3. EMAIL DELIVERY (#{emails.length} messages)")
+# Section 4: Emails
+section("4. EMAIL DELIVERY (#{emails.length} messages)")
 if emails.empty?
   puts '  No email delivery records on file for this order.'
 else
   emails.each_with_index { |email, i| render_email_detail(i + 1, email) }
 end
 
-# Section 4: Page view history
-section("4. PAGE VIEW HISTORY (#{page_views.length} views)")
+# Section 5: Page view history
+section("5. PAGE VIEW HISTORY (#{page_views.length} views)")
 if page_view_is_redirected
   puts '  Note: this is a subscription rebill. The disputed order itself has no'
   puts '  checkout session of its own. The page views below are from the ORIGINAL'
