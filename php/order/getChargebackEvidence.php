@@ -11,8 +11,9 @@
  *      Notice we list every expansion explicitly - no shortcuts. Listing them
  *      individually keeps your payload small and forces you to think about
  *      what evidence each one represents.
- *   2. Email delivery records (the customer was notified, when, by which path,
- *      whether they opened/bounced/clicked).
+ *   2. Email delivery records via the dedicated /emails endpoint (not via
+ *      expansion). Use the dedicated endpoint for chargeback work - it is the
+ *      canonical full-fidelity source for SES delivery events on every order.
  *   3. Page view history (the customer was on your site, navigated through
  *      pages, spent time before placing the order).
  *   4. Auto-order detection: a large fraction of chargebacks are subscription
@@ -20,6 +21,14 @@
  *      an auto order, this sample pulls the parent subscription, every rebill
  *      that has occurred on it, and the auto-order-level email log so you can
  *      show the rebill schedule was disclosed and notified.
+ *   5. Shipment journey data via the shipping.tracking_number_details
+ *      expansion - carrier, current status, ETA, and per-scan event history.
+ *      The standard "proof of delivery" exhibit for "item not received"
+ *      chargebacks. NOTE: package tracking is an OPTIONAL feature that the
+ *      merchant has to enable on their UltraCart account. If it is not
+ *      enabled, or if tracking has not yet been posted for the order, the
+ *      array will be empty and the section falls back to the plain
+ *      tracking_numbers list (if any).
  *
  * Usage:
  *   php order/getChargebackEvidence.php DEMO-0009104976
@@ -59,6 +68,7 @@ $auto_order_api = AutoOrderApi::usingApiKey(Constants::API_KEY, false, false);
 $order_expansion = implode(',', [
     'billing',                 // address customer entered for billing
     'shipping',                // address goods shipped to
+    'shipping.tracking_number_details', // carrier scans, delivery status, ETA (requires the optional package-tracking feature)
     'payment',                 // payment method, card last four, gateway info
     'payment.transaction',     // auth/capture/refund timeline
     'summary',                 // totals, tax, shipping, weights
@@ -148,6 +158,7 @@ if (!$is_cli) echo '<html lang="en"><body><pre>';
 
 renderHeader($order_id);
 renderOrderOverview($order);
+renderShipmentTracking($order->getShipping());
 renderSubscription($auto_order, $rebill_orders, $order_id, $auto_order_emails);
 renderEmails($emails);
 renderPageViewHistory($page_views, $session_referrer, $page_view_order_id, $page_view_is_redirected);
@@ -292,8 +303,77 @@ function renderOrderOverview($order): void {
     echo "\n";
 }
 
+function renderShipmentTracking($shipping): void {
+    section('2. SHIPMENT TRACKING');
+
+    if ($shipping === null) {
+        echo "  No shipping address on file - this order may not have been a physical shipment.\n\n";
+        return;
+    }
+
+    $tracking_details = method_exists($shipping, 'getTrackingNumberDetails')
+        ? ($shipping->getTrackingNumberDetails() ?? [])
+        : [];
+    $plain_trackings = method_exists($shipping, 'getTrackingNumbers')
+        ? ($shipping->getTrackingNumbers() ?? [])
+        : [];
+
+    if (!empty($tracking_details)) {
+        // Rich tracking data - carrier, status, ETA, per-scan events.
+        foreach ($tracking_details as $idx => $td) {
+            if (count($tracking_details) > 1) {
+                subsection('Shipment ' . ($idx + 1) . ' of ' . count($tracking_details));
+            }
+            kv('Carrier',           $td->getShippingMethod());
+            kv('Tracking #',        $td->getTrackingNumber());
+            $status_text = trim(($td->getStatus() ?? '') . '  ' . ($td->getStatusDescription() ?? ''));
+            kv('Status',            $status_text === '' ? null : $status_text);
+            kv('Tracking URL',      $td->getTrackingUrl());
+            kv('Shipped',           $td->getShippedDateFormatted()           ?? $td->getShippedDate());
+            kv('Expected Delivery', $td->getExpectedDeliveryDateFormatted() ?? $td->getExpectedDeliveryDate());
+            kv('Actual Delivery',   $td->getActualDeliveryDateFormatted()   ?? $td->getActualDeliveryDate());
+
+            $events = $td->getDetails() ?? [];
+            if (empty($events)) {
+                echo "\n  No tracking events captured yet.\n";
+            } else {
+                subsection('Tracking Events');
+                // Most carriers feed events newest-first; preserve whatever order the API returned.
+                foreach ($events as $ev) {
+                    $when = $ev->getEventDts()
+                        ?? trim(($ev->getEventLocalDate() ?? '') . ' ' . ($ev->getEventLocalTime() ?? ''));
+                    $tag = $ev->getTagDescription() ?? $ev->getTag() ?? '';
+                    $location = implode(', ', array_filter([$ev->getCity(), $ev->getState()]));
+                    echo sprintf("  %-22s %-22s %s\n", $when ?? '', shorten($tag, 22), $location);
+                    $sub = $ev->getSubtagMessage() ?? '';
+                    if ($sub !== '') {
+                        echo str_repeat(' ', 25) . $sub . "\n";
+                    }
+                }
+            }
+        }
+    } elseif (!empty($plain_trackings)) {
+        // Feature not enabled (or carrier feed unavailable) - fall back to the
+        // plain tracking numbers we have on file.
+        echo "  Detailed carrier scan data is not available for this order.\n";
+        echo "  (Detailed tracking is an optional UltraCart feature that must be enabled\n";
+        echo "  on the merchant account. Falling back to the plain tracking numbers below.)\n";
+        subsection('Tracking Numbers');
+        foreach ($plain_trackings as $tn) {
+            echo "  $tn\n";
+        }
+    } else {
+        echo "  No shipment tracking on file for this order.\n";
+        echo "  This is expected for digital goods, will-call/pickup orders, or orders\n";
+        echo "  where tracking has not yet been posted by the carrier. Detailed carrier\n";
+        echo "  scan data also requires the optional package-tracking feature to be\n";
+        echo "  enabled on the merchant account.\n";
+    }
+    echo "\n";
+}
+
 function renderSubscription($auto_order, array $rebill_orders, string $current_order_id, array $auto_order_emails): void {
-    section('2. SUBSCRIPTION DETAILS');
+    section('3. SUBSCRIPTION DETAILS');
 
     if ($auto_order === null) {
         echo "  This order is NOT part of an auto order subscription.\n";
@@ -369,7 +449,7 @@ function renderSubscription($auto_order, array $rebill_orders, string $current_o
 }
 
 function renderEmails(array $emails): void {
-    section('3. EMAIL DELIVERY (' . count($emails) . ' messages)');
+    section('4. EMAIL DELIVERY (' . count($emails) . ' messages)');
 
     if (empty($emails)) {
         echo "  No email delivery records on file for this order.\n";
@@ -401,8 +481,8 @@ function renderEmailDetail(int $i, $email): void {
 
     if ($email->getDeliveryDts() !== null)
         echo sprintf("      Delivered:        %s\n", $email->getDeliveryDts());
-    if ($email->getReportingMTA() !== null)
-        echo sprintf("      Reporting MTA:    %s\n", $email->getReportingMTA());
+    if ($email->getReportingMta() !== null)
+        echo sprintf("      Reporting MTA:    %s\n", $email->getReportingMta());
     if ($email->getSmtpResponse() !== null)
         echo sprintf("      SMTP response:    %s\n", $email->getSmtpResponse());
     if ($email->getBounceType() !== null)
@@ -415,7 +495,7 @@ function renderEmailDetail(int $i, $email): void {
 }
 
 function renderPageViewHistory(array $page_views, ?string $session_referrer, string $source_order_id, bool $is_redirected): void {
-    section('4. PAGE VIEW HISTORY (' . count($page_views) . ' views)');
+    section('5. PAGE VIEW HISTORY (' . count($page_views) . ' views)');
 
     if ($is_redirected) {
         echo "  Note: this is a subscription rebill. The disputed order itself has no\n";

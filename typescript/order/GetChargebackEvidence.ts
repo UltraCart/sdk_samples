@@ -34,6 +34,14 @@ import {
  *      the parent subscription, every rebill, and the auto-order-level email
  *      log. For rebills specifically, the page-view lookup pivots to the
  *      ORIGINAL order (the rebill itself has no checkout session).
+ *   5. Shipment journey data via the shipping.tracking_number_details
+ *      expansion - carrier, current status, ETA, and per-scan event history.
+ *      The standard "proof of delivery" exhibit for "item not received"
+ *      chargebacks. NOTE: package tracking is an OPTIONAL feature that the
+ *      merchant has to enable on their UltraCart account. If it is not
+ *      enabled, or if tracking has not yet been posted for the order, the
+ *      array will be empty and the section falls back to the plain
+ *      tracking_numbers list (if any).
  *
  * Run:
  *   NODE_TLS_REJECT_UNAUTHORIZED=0 node order/GetChargebackEvidence.js DEMO-0009104976
@@ -50,6 +58,9 @@ export class GetChargebackEvidence {
         const orderExpansion = [
             'billing',
             'shipping',
+            // shipping.tracking_number_details - carrier scans, delivery status,
+            // ETA (requires the optional package-tracking feature).
+            'shipping.tracking_number_details',
             'payment',
             'payment.transaction',
             'summary',
@@ -119,6 +130,7 @@ export class GetChargebackEvidence {
 
             renderHeader(orderId);
             renderOrderOverview(order);
+            renderShipmentTracking(order.shipping);
             renderSubscription(autoOrder, rebillOrders, orderId, autoOrderEmails);
             renderEmails(emails);
             renderPageViewHistory(pageViews, sessionReferrer, pageViewOrderId, pageViewIsRedirected);
@@ -226,13 +238,71 @@ function renderOrderOverview(order: Order): void {
     }
 }
 
+function renderShipmentTracking(shipping: any): void {
+    section('2. SHIPMENT TRACKING');
+
+    if (!shipping) {
+        console.log('  No shipping address on file - this order may not have been a physical shipment.');
+        return;
+    }
+
+    const trackingDetails: any[] = shipping.tracking_number_details || [];
+    const plainTrackings: string[] = shipping.tracking_numbers || [];
+
+    if (trackingDetails.length > 0) {
+        // Rich tracking data - carrier, status, ETA, per-scan events.
+        trackingDetails.forEach((td, idx) => {
+            if (trackingDetails.length > 1) subsection(`Shipment ${idx + 1} of ${trackingDetails.length}`);
+
+            kv('Carrier',           td.shipping_method);
+            kv('Tracking #',        td.tracking_number);
+            const statusText = `${td.status || ''}  ${td.status_description || ''}`.trim();
+            kv('Status',            statusText || null);
+            kv('Tracking URL',      td.tracking_url);
+            kv('Shipped',           td.shipped_date_formatted           || td.shipped_date);
+            kv('Expected Delivery', td.expected_delivery_date_formatted || td.expected_delivery_date);
+            kv('Actual Delivery',   td.actual_delivery_date_formatted   || td.actual_delivery_date);
+
+            const events: any[] = td.details || [];
+            if (events.length === 0) {
+                console.log();
+                console.log('  No tracking events captured yet.');
+            } else {
+                subsection('Tracking Events');
+                // Most carriers feed events newest-first; preserve whatever order the API returned.
+                for (const ev of events) {
+                    const when = ev.event_dts || `${ev.event_local_date || ''} ${ev.event_local_time || ''}`.trim();
+                    const tag = ev.tag_description || ev.tag || '';
+                    const location = [ev.city, ev.state].filter(Boolean).join(', ');
+                    console.log(`  ${pad(when || '', 22)} ${pad(shorten(tag, 22), 22)} ${location}`);
+                    if (ev.subtag_message) console.log(`  ${' '.repeat(22)} ${ev.subtag_message}`);
+                }
+            }
+        });
+    } else if (plainTrackings.length > 0) {
+        // Feature not enabled (or carrier feed unavailable) - fall back to the
+        // plain tracking numbers we have on file.
+        console.log('  Detailed carrier scan data is not available for this order.');
+        console.log('  (Detailed tracking is an optional UltraCart feature that must be enabled');
+        console.log('  on the merchant account. Falling back to the plain tracking numbers below.)');
+        subsection('Tracking Numbers');
+        for (const tn of plainTrackings) console.log(`  ${tn}`);
+    } else {
+        console.log('  No shipment tracking on file for this order.');
+        console.log('  This is expected for digital goods, will-call/pickup orders, or orders');
+        console.log('  where tracking has not yet been posted by the carrier. Detailed carrier');
+        console.log('  scan data also requires the optional package-tracking feature to be');
+        console.log('  enabled on the merchant account.');
+    }
+}
+
 function renderSubscription(
     autoOrder: AutoOrder | undefined,
     rebillOrders: Order[],
     currentOrderId: string,
     autoOrderEmails: AutoOrderEmail[]
 ): void {
-    section('2. SUBSCRIPTION DETAILS');
+    section('3. SUBSCRIPTION DETAILS');
 
     if (!autoOrder) {
         console.log('  This order is NOT part of an auto order subscription.');
@@ -291,7 +361,7 @@ function renderSubscription(
 }
 
 function renderEmails(emails: OrderEmail[]): void {
-    section(`3. EMAIL DELIVERY (${emails.length} messages)`);
+    section(`4. EMAIL DELIVERY (${emails.length} messages)`);
     if (emails.length === 0) {
         console.log('  No email delivery records on file for this order.');
         return;
@@ -328,7 +398,7 @@ function renderPageViewHistory(
     sourceOrderId: string,
     isRedirected: boolean
 ): void {
-    section(`4. PAGE VIEW HISTORY (${pageViews.length} views)`);
+    section(`5. PAGE VIEW HISTORY (${pageViews.length} views)`);
     if (isRedirected) {
         console.log("  Note: this is a subscription rebill. The disputed order itself has no");
         console.log("  checkout session of its own. The page views below are from the ORIGINAL");

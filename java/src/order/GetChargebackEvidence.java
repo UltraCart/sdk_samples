@@ -32,6 +32,14 @@ import java.util.*;
  *      the parent subscription, every rebill, and the auto-order-level email
  *      log. For rebills specifically, the page-view lookup pivots to the
  *      ORIGINAL order (the rebill itself has no checkout session).
+ *   5. Shipment journey data via the shipping.tracking_number_details
+ *      expansion - carrier, current status, ETA, and per-scan event history.
+ *      The standard "proof of delivery" exhibit for "item not received"
+ *      chargebacks. NOTE: package tracking is an OPTIONAL feature that the
+ *      merchant has to enable on their UltraCart account. If it is not
+ *      enabled, or if tracking has not yet been posted for the order, the
+ *      array will be empty and the section falls back to the plain
+ *      trackingNumbers list (if any).
  *
  * Requires the May 2026 SDK build with getOrderEmails,
  * getOrderPageViewHistory, and getAutoOrderEmails.
@@ -41,6 +49,7 @@ public class GetChargebackEvidence {
     private static final String ORDER_EXPANSION = String.join(",",
         "billing",                  // address customer entered for billing
         "shipping",                 // address goods shipped to
+        "shipping.tracking_number_details", // carrier scans, delivery status, ETA (requires the optional package-tracking feature)
         "payment",                  // payment method, card last four, gateway info
         "payment.transaction",      // auth/capture/refund timeline
         "summary",                  // totals, tax, shipping, weights
@@ -118,6 +127,7 @@ public class GetChargebackEvidence {
 
         renderHeader(orderId);
         renderOrderOverview(order);
+        renderShipmentTracking(order.getShipping());
         renderSubscription(autoOrder, rebillOrders, orderId, autoOrderEmails);
         renderEmails(emails);
         renderPageViewHistory(pageViews, sessionReferrer, pageViewOrderId, pageViewIsRedirected);
@@ -244,8 +254,74 @@ public class GetChargebackEvidence {
         }
     }
 
+    private void renderShipmentTracking(OrderShipping shipping) {
+        section("2. SHIPMENT TRACKING");
+
+        if (shipping == null) {
+            System.out.println("  No shipping address on file - this order may not have been a physical shipment.");
+            return;
+        }
+
+        List<OrderTrackingNumberDetails> trackingDetails = shipping.getTrackingNumberDetails() != null
+                ? shipping.getTrackingNumberDetails() : Collections.emptyList();
+        List<String> plainTrackings = shipping.getTrackingNumbers() != null
+                ? shipping.getTrackingNumbers() : Collections.emptyList();
+
+        if (!trackingDetails.isEmpty()) {
+            // Rich tracking data - carrier, status, ETA, per-scan events.
+            for (int idx = 0; idx < trackingDetails.size(); idx++) {
+                OrderTrackingNumberDetails td = trackingDetails.get(idx);
+                if (trackingDetails.size() > 1) subsection("Shipment " + (idx + 1) + " of " + trackingDetails.size());
+
+                kv("Carrier",           td.getShippingMethod());
+                kv("Tracking #",        td.getTrackingNumber());
+                String statusText = (safeStr(td.getStatus()) + "  " + safeStr(td.getStatusDescription())).trim();
+                kv("Status",            statusText.isEmpty() ? null : statusText);
+                kv("Tracking URL",      td.getTrackingUrl());
+                kv("Shipped",           td.getShippedDateFormatted() != null ? td.getShippedDateFormatted() : td.getShippedDate());
+                kv("Expected Delivery", td.getExpectedDeliveryDateFormatted() != null ? td.getExpectedDeliveryDateFormatted() : td.getExpectedDeliveryDate());
+                kv("Actual Delivery",   td.getActualDeliveryDateFormatted()   != null ? td.getActualDeliveryDateFormatted()   : td.getActualDeliveryDate());
+
+                List<OrderTrackingNumberDetail> events = td.getDetails() != null ? td.getDetails() : Collections.emptyList();
+                if (events.isEmpty()) {
+                    System.out.println();
+                    System.out.println("  No tracking events captured yet.");
+                } else {
+                    subsection("Tracking Events");
+                    // Most carriers feed events newest-first; preserve whatever order the API returned.
+                    for (OrderTrackingNumberDetail ev : events) {
+                        String when = ev.getEventDts() != null
+                                ? ev.getEventDts()
+                                : (safeStr(ev.getEventLocalDate()) + " " + safeStr(ev.getEventLocalTime())).trim();
+                        String tag = ev.getTagDescription() != null ? ev.getTagDescription()
+                                : (ev.getTag() != null ? ev.getTag() : "");
+                        String location = joinNonEmpty(", ", ev.getCity(), ev.getState());
+                        System.out.printf("  %-22s %-22s %s%n", safeStr(when), shorten(tag, 22), location);
+                        if (ev.getSubtagMessage() != null && !ev.getSubtagMessage().isEmpty()) {
+                            System.out.printf("  %22s %s%n", "", ev.getSubtagMessage());
+                        }
+                    }
+                }
+            }
+        } else if (!plainTrackings.isEmpty()) {
+            // Feature not enabled (or carrier feed unavailable) - fall back to
+            // the plain tracking numbers we have on file.
+            System.out.println("  Detailed carrier scan data is not available for this order.");
+            System.out.println("  (Detailed tracking is an optional UltraCart feature that must be enabled");
+            System.out.println("  on the merchant account. Falling back to the plain tracking numbers below.)");
+            subsection("Tracking Numbers");
+            for (String tn : plainTrackings) System.out.println("  " + tn);
+        } else {
+            System.out.println("  No shipment tracking on file for this order.");
+            System.out.println("  This is expected for digital goods, will-call/pickup orders, or orders");
+            System.out.println("  where tracking has not yet been posted by the carrier. Detailed carrier");
+            System.out.println("  scan data also requires the optional package-tracking feature to be");
+            System.out.println("  enabled on the merchant account.");
+        }
+    }
+
     private void renderSubscription(AutoOrder autoOrder, List<Order> rebillOrders, String currentOrderId, List<AutoOrderEmail> autoOrderEmails) {
-        section("2. SUBSCRIPTION DETAILS");
+        section("3. SUBSCRIPTION DETAILS");
         if (autoOrder == null) {
             System.out.println("  This order is NOT part of an auto order subscription.");
             return;
@@ -308,7 +384,7 @@ public class GetChargebackEvidence {
     }
 
     private void renderEmails(List<OrderEmail> emails) {
-        section("3. EMAIL DELIVERY (" + emails.size() + " messages)");
+        section("4. EMAIL DELIVERY (" + emails.size() + " messages)");
         if (emails.isEmpty()) {
             System.out.println("  No email delivery records on file for this order.");
             return;
@@ -371,7 +447,7 @@ public class GetChargebackEvidence {
     }
 
     private void renderPageViewHistory(List<OrderPageView> pageViews, String sessionReferrer, String sourceOrderId, boolean isRedirected) {
-        section("4. PAGE VIEW HISTORY (" + pageViews.size() + " views)");
+        section("5. PAGE VIEW HISTORY (" + pageViews.size() + " views)");
         if (isRedirected) {
             System.out.println("  Note: this is a subscription rebill. The disputed order itself has no");
             System.out.println("  checkout session of its own. The page views below are from the ORIGINAL");
