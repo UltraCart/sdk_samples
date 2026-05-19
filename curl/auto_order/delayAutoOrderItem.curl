@@ -1,0 +1,160 @@
+# Delay one item's next shipment in an auto-order
+
+**Fetch with expansion, mutate, persist. UltraCart does not support PATCH.**
+
+This sample walks through the canonical pattern for editing one item's shipment
+date inside an auto-order:
+
+1. GET the auto-order by reference order id with the `items` expansion.
+2. Mutate the target item IN PLACE (preserving every other field on every item).
+3. PUT the full auto-order back.
+4. Re-GET and verify the change actually persisted.
+
+Sending a stripped-down item object on PUT is unsafe -- fields you omit
+(`frequency`, `paused`, `arbitrary_*`, `options`, etc.) can be lost, and updates
+to items in unusual states (e.g. mid free-trial) may silently no-op. Always
+echo the full item objects as returned by GET, then mutate only the field(s)
+you intend to change.
+
+The examples below use `jq` for JSON manipulation and shell variables for the
+reference order id, target item id, and new dates. Replace the API key, ids,
+and dates with your own.
+
+Alternative lookup: if you have the auto_order_code instead of the original
+order id, swap the URL on step 1 to
+`/auto_order/auto_orders/code/{auto_order_code}` and rerun.
+
+---
+
+## Step 1 - GET the full auto-order by reference order id
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+REFERENCE_ORDER_ID="DEMO-0009103116"
+ITEM_ID="ITEM001"
+SIMPLE_KEY="<your simple key>"
+
+curl -X GET "https://secure.ultracart.com/rest/v2/auto_order/auto_orders/reference_order_id/${REFERENCE_ORDER_ID}?_expand=items" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: ${SIMPLE_KEY}" \
+  -o auto_order.json
+```
+
+**Response Body** (saved to `auto_order.json`)
+```json
+{
+    "auto_order": {
+        "auto_order_oid": 5712848,
+        "original_order_id": "DEMO-0009103116",
+        "auto_order_code": "6N8DKS6VTF",
+        "enabled": true,
+        "items": [
+            {
+                "auto_order_item_oid": 101036395,
+                "original_item_id": "ITEM001",
+                "original_quantity": 1,
+                "next_shipment_dts": "2026-06-14T00:00:00-04:00",
+                "next_preshipment_notice_dts": "2026-06-11T00:00:00-04:00",
+                "frequency": "Monthly",
+                "options": [],
+                "future_schedules": []
+            }
+        ]
+    },
+    "success": true
+}
+```
+
+---
+
+## Step 2 - Mutate the target item in place
+
+Add 30 days to the target item's `next_shipment_dts` and 27 days for the
+preshipment notice (3 days before shipment). `jq` walks every item but only
+updates fields on the one whose `original_item_id` matches; every other item
+and every other field on the target item passes through untouched.
+
+```bash
+NEW_SHIPMENT_DTS=$(date -d "$(jq -r --arg id "$ITEM_ID" \
+    '.auto_order.items[] | select(.original_item_id == $id) | .next_shipment_dts' \
+    auto_order.json) + 30 days" --iso-8601=seconds)
+
+NEW_NOTICE_DTS=$(date -d "${NEW_SHIPMENT_DTS} - 3 days" --iso-8601=seconds)
+
+jq --arg id "$ITEM_ID" \
+   --arg ship "$NEW_SHIPMENT_DTS" \
+   --arg notice "$NEW_NOTICE_DTS" \
+   '.auto_order.items |= map(
+       if .original_item_id == $id then
+           .next_shipment_dts = $ship
+         | .next_preshipment_notice_dts = $notice
+       else .
+       end
+   )' auto_order.json > auto_order_modified.json
+```
+
+The critical bit: `map(if matches then mutate else . end)`. The `else .` clause
+echoes the item unchanged. Do NOT rebuild the items array with just three or
+four fields per item; that is the sparse-PUT mistake that loses data on
+fields you didn't intend to touch.
+
+---
+
+## Step 3 - PUT the full auto-order
+
+The PUT body is the entire `auto_order` object exactly as we received it,
+with only the two date fields on the target item changed.
+
+**Request**
+```bash
+AUTO_ORDER_OID=$(jq -r '.auto_order.auto_order_oid' auto_order_modified.json)
+
+curl -X PUT "https://secure.ultracart.com/rest/v2/auto_order/auto_orders/${AUTO_ORDER_OID}?validate_original_order=No&_expand=items" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: ${SIMPLE_KEY}" \
+  -d @<(jq '.auto_order' auto_order_modified.json)
+```
+
+**Response Body** (truncated)
+```json
+{
+    "auto_order": {
+        "auto_order_oid": 5712848,
+        "items": [
+            {
+                "auto_order_item_oid": 101036395,
+                "original_item_id": "ITEM001",
+                "next_shipment_dts": "2026-07-14T00:00:00-04:00",
+                "next_preshipment_notice_dts": "2026-07-11T00:00:00-04:00",
+                "frequency": "Monthly"
+            }
+        ]
+    },
+    "success": true
+}
+```
+
+---
+
+## Step 4 - Re-GET and verify
+
+Critical step. UltraCart can echo a value back in the PUT response without it
+sticking for items in unusual states (e.g. mid free-trial). A fresh GET is
+the only way to know the change persisted.
+
+```bash
+curl -s -X GET "https://secure.ultracart.com/rest/v2/auto_order/auto_orders/reference_order_id/${REFERENCE_ORDER_ID}?_expand=items" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: ${SIMPLE_KEY}" \
+| jq --arg id "$ITEM_ID" --arg expected "$NEW_SHIPMENT_DTS" '
+    (.auto_order.items[] | select(.original_item_id == $id) | .next_shipment_dts) as $actual
+    | if $actual == $expected
+      then "VERIFIED: next_shipment_dts persisted as " + $actual
+      else "WARNING: Re-GET shows next_shipment_dts = " + $actual + ", expected " + $expected + ".\nThe PUT was accepted but the value did not stick on re-read.\nThis commonly indicates the item is in a state UltraCart manages automatically (e.g. mid free-trial). Escalate for human review."
+      end
+'
+```
