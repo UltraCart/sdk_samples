@@ -8,6 +8,7 @@ use ultracart\v2\api\OrderApi;
 use ultracart\v2\api\ItemApi;
 use ultracart\v2\api\FulfillmentApi;
 use ultracart\v2\api\AutoOrderApi;
+use ultracart\v2\api\FraudApi;
 
 class Samples
 {
@@ -49,6 +50,12 @@ class Samples
     public static function getFulfillmentApi(): FulfillmentApi
     {
         return FulfillmentApi::usingApiKey(Constants::API_KEY, Constants::MAX_RETRY_SECONDS,
+            Constants::VERIFY_SSL, Constants::DEBUG);
+    }
+
+    public static function getFraudApi(): FraudApi
+    {
+        return FraudApi::usingApiKey(Constants::API_KEY, Constants::MAX_RETRY_SECONDS,
             Constants::VERIFY_SSL, Constants::DEBUG);
     }
 

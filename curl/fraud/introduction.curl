@@ -1,0 +1,19 @@
+The Fraud API (alpha) lets you manage UltraCart's fraud rule engine over plain HTTP.
+Fraud rules inspect incoming orders and take an action (flag for review, decline, exempt,
+etc.) when their conditions match. The API also exposes the lookup values you need to build
+rules and a quick way to decline a known-bad email address.
+
+Every request needs two headers:
+  -H "X-UltraCart-Api-Version: 2017-03-01"
+  -H "x-ultracart-simple-key: <your simple key>"
+
+The simple key below has fraud_read and fraud_write rights and only works in the UltraCart
+development system.  Create your own Simple Key:
+https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
+
+The samples in this directory:
+  getFraudLookupValues.curl - GET  /rest/v2/fraud/lookup_values
+  searchFraudRules.curl     - POST /rest/v2/fraud/rules/search
+  insertFraudRule.curl      - POST /rest/v2/fraud/rules
+  deleteFraudRule.curl      - DELETE /rest/v2/fraud/rules/{fraud_rule_oid}
+  declineEmail.curl         - POST /rest/v2/fraud/decline_email

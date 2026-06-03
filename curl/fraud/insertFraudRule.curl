@@ -1,0 +1,46 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+
+insertFraudRule creates a single fraud rule.  Each rule has a rule_type (what it inspects), a
+failure_action (what happens when it matches), and type-specific fields such as an amount
+threshold, country code, ip address, or email.  This example flags large single credit card
+transactions over $1,000 for manual review.  Call getFraudLookupValues.curl to see every valid
+rule_type and the other lookup values.
+
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/fraud/rules" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100" \
+  -d $'{
+    "rule_type": "credit card single transaction exceeds",
+    "amount_threshold": 1000.00,
+    "failure_action": "Flag For Review",
+    "auto_note": "Large single transaction - review before shipping"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+Content-Type: application/json; charset=UTF-8
+```
+
+**Response Body**
+```json
+{
+    "fraud_rule": {
+        "fraud_rule_oid": 2706022,
+        "rule_type": "credit card single transaction exceeds",
+        "rule_group": "creditCardRules",
+        "failure_action": "Flag For Review",
+        "auto_note": "Large single transaction - review before shipping",
+        "description": "If transaction amount exceeds 1000.00, then flag for review",
+        "amount_threshold": 1000.0,
+        "created_by": "API",
+        "created_dts": "2026-06-03T06:56:28-04:00"
+    },
+    "success": true,
+    "metadata": {}
+}
+```

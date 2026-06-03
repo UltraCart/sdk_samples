@@ -1,0 +1,26 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+
+declineEmail is a shortcut for telling UltraCart to decline orders from a specific email address.
+It is the quick alternative to building a full "address email" fraud rule by hand.  A successful
+call returns 204 No Content with an empty body.
+
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/fraud/decline_email" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100" \
+  -d $'{
+    "email": "chargeback-charlie@example.com"
+}'
+```
+
+**Response Headers**
+```html
+Status: 204 No Content
+```
+
+**Response Body**
+```text
+(empty)
+```

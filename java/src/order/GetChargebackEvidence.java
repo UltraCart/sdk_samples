@@ -224,7 +224,7 @@ public class GetChargebackEvidence {
         if (payment != null) {
             kv("Method", payment.getPaymentMethod());
             OrderPaymentCreditCard cc = payment.getCreditCard();
-            if (cc != null) kv("Card", (safeStr(cc.getCardType()) + " ending " + (cc.getCardNumberTruncated() != null ? cc.getCardNumberTruncated() : "????")).trim());
+            if (cc != null) kv("Card", (safeStr(cc.getCardType() != null ? cc.getCardType().getValue() : null) + " ending " + (cc.getCardNumberTruncated() != null ? cc.getCardNumberTruncated() : "????")).trim());
             List<OrderPaymentTransaction> transactions = payment.getTransactions() != null ? payment.getTransactions() : Collections.emptyList();
             if (!transactions.isEmpty()) {
                 subsection("Transactions");
@@ -348,7 +348,7 @@ public class GetChargebackEvidence {
                 System.out.printf("  %-12s %-32s frequency: %s%n",
                     shorten(safeStr(aoi.getOriginalItemId()), 12),
                     shorten(safeStr(aoi.getOriginalItemId()), 32),
-                    safeStr(aoi.getFrequency())
+                    safeStr(aoi.getFrequency() != null ? aoi.getFrequency().getValue() : null)
                 );
             }
         }
@@ -365,7 +365,7 @@ public class GetChargebackEvidence {
                     safeStr(ro.getCreationDts()),
                     roId,
                     roTotal,
-                    safeStr(ro.getCurrentStage()),
+                    safeStr(ro.getCurrentStage() != null ? ro.getCurrentStage().getValue() : null),
                     marker
                 );
             }
@@ -397,9 +397,9 @@ public class GetChargebackEvidence {
 
     private void renderOrderEmailDetail(int i, OrderEmail email) {
         renderEmailDetailFields(i,
-            email.getSendDts(), email.getEmail(), email.getSubject(), email.isInternal(),
-            email.isDelivered(), email.isSkipped(), email.getBounceDts(),
-            email.isOpened(), email.getOpenedDts(), email.isClicked(), email.getClickedDts(),
+            email.getSendDts(), email.getEmail(), email.getSubject(), email.getInternal(),
+            email.getDelivered(), email.getSkipped(), email.getBounceDts(),
+            email.getOpened(), email.getOpenedDts(), email.getClicked(), email.getClickedDts(),
             email.getDeliveryDts(), email.getReportingMta(), email.getSmtpResponse(),
             email.getBounceType(), email.getBounceSubType(), email.getBounceDiagnosticCode(),
             email.getSkipReason()
@@ -408,9 +408,9 @@ public class GetChargebackEvidence {
 
     private void renderAutoOrderEmailDetail(int i, AutoOrderEmail email) {
         renderEmailDetailFields(i,
-            email.getSendDts(), email.getEmail(), email.getSubject(), email.isInternal(),
-            email.isDelivered(), email.isSkipped(), email.getBounceDts(),
-            email.isOpened(), email.getOpenedDts(), email.isClicked(), email.getClickedDts(),
+            email.getSendDts(), email.getEmail(), email.getSubject(), email.getInternal(),
+            email.getDelivered(), email.getSkipped(), email.getBounceDts(),
+            email.getOpened(), email.getOpenedDts(), email.getClicked(), email.getClickedDts(),
             email.getDeliveryDts(), email.getReportingMta(), email.getSmtpResponse(),
             email.getBounceType(), email.getBounceSubType(), email.getBounceDiagnosticCode(),
             email.getSkipReason()
@@ -566,7 +566,7 @@ public class GetChargebackEvidence {
 
     // SDK money fields are Currency objects, not raw numbers. Pull the localized
     // value off; null-safe for missing/optional fields.
-    private static Double moneyValue(Currency c) {
+    private static Double moneyValue(com.ultracart.admin.v2.models.Currency c) {
         if (c == null || c.getLocalized() == null) return null;
         return c.getLocalized().doubleValue();
     }
@@ -580,7 +580,7 @@ public class GetChargebackEvidence {
         return String.format("%s$%,.2f %s", sign, Math.abs(amount), currency != null ? currency : "").trim();
     }
 
-    private static void failOp(String operation, Error error) {
+    private static void failOp(String operation, com.ultracart.admin.v2.models.Error error) {
         System.err.println("ERROR in " + operation + ":");
         System.err.println("  Developer message: " + (error.getDeveloperMessage() != null ? error.getDeveloperMessage() : ""));
         System.err.println("  User message:      " + (error.getUserMessage()      != null ? error.getUserMessage()      : ""));

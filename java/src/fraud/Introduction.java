@@ -1,0 +1,25 @@
+package fraud;
+
+/**
+ * The Fraud API (alpha) lets you manage UltraCart's fraud rule engine programmatically.
+ * Fraud rules inspect incoming orders and take an action (flag for review, decline, exempt,
+ * etc.) when their conditions match. The API also exposes the lookup values you need to build
+ * rules and a quick way to decline a known-bad email address.
+ *
+ * The samples in this directory:
+ *   GetFraudLookupValues.java - retrieve the lookup values (countries, affiliates, rule types,
+ *                               ip range types, rule groups) used when building rules.
+ *   SearchFraudRules.java      - search existing fraud rules by criteria.
+ *   InsertFraudRule.java       - create several fraud rules of different types.
+ *   DeleteFraudRule.java       - delete a fraud rule by its oid (self-contained: inserts one first).
+ *   DeclineEmail.java          - decline a specific email address.
+ *
+ * This key has fraud_read and fraud_write rights.  Create a Simple Key:
+ * https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
+ */
+public class Introduction {
+    public static void execute() {
+        System.out.println("--- Introduction ---");
+        System.out.println("See the other samples in this directory for fraud API usage.");
+    }
+}

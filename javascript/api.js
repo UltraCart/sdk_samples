@@ -5,12 +5,13 @@ import {
     CheckoutApi,
     CouponApi,
     CustomerApi,
+    FraudApi,
     FulfillmentApi, GiftCertificateApi, ItemApi, OauthApi, OrderApi, WebhookApi
 } from 'ultra_cart_rest_api_v2';
 
 // sample key yo. only works in dev, so get your own.
 // See this article: https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key
-let apiKey = '93debaee9cc581019851fe9010200100fc2f3ea91f359c019851fe9010200100';
+let apiKey = 'fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100';
 const apiClient = new ApiClient();
 apiClient.defaultHeaders['X-UltraCart-Api-Version'] = '2017-03-01';
 apiClient.authentications.ultraCartSimpleApiKey.apiKey = apiKey;
@@ -21,6 +22,7 @@ export const channelPartnerApi = new ChannelPartnerApi(apiClient);
 export const checkoutApi = new CheckoutApi(apiClient);
 export const couponApi = new CouponApi(apiClient);
 export const customerApi = new CustomerApi(apiClient);
+export const fraudApi = new FraudApi(apiClient);
 export const fulfillmentApi = new FulfillmentApi(apiClient);
 export const giftCertificateApi = new GiftCertificateApi(apiClient);
 export const itemApi = new ItemApi(apiClient);

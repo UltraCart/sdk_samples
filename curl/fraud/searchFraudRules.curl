@@ -1,0 +1,40 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+
+searchFraudRules returns the fraud rules that match the supplied criteria.  Every field in the
+JSON body is optional; supply only the ones you want to filter on.  Pagination and sort are passed
+as query parameters (_limit, _offset, _sort); _limit may not exceed 200.  This example searches
+for every rule whose action is "Decline Transaction".
+
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/fraud/rules/search?_limit=200&_offset=0" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100" \
+  -d $'{
+    "failure_action": "Decline Transaction"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+Content-Type: application/json; charset=UTF-8
+```
+
+**Response Body**
+```json
+{
+    "fraud_rules": [
+        {
+            "fraud_rule_oid": 2532451,
+            "rule_type": "address email",
+            "rule_group": "addressRules",
+            "failure_action": "Decline Transaction",
+            "auto_note": "Fraudulent order"
+        }
+    ],
+    "success": true,
+    "metadata": {}
+}
+```

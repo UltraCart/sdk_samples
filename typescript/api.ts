@@ -6,6 +6,7 @@ import {
     OauthApi,
     WebhookApi,
     CustomerApi,
+    FraudApi,
     ItemApi,
     FulfillmentApi,
     AutoOrderApi,
@@ -13,7 +14,7 @@ import {
     ChannelPartnerApi
 } from 'ultracart_rest_api_v2_typescript';
 
-let apiKey = '93debaee9cc581019851fe9010200100fc2f3ea91f359c019851fe9010200100';
+let apiKey = 'fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100';
 
 // export const couponApi = new CouponApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey, fetchApi: fetch }));
 // export const giftCertificateApi = new GiftCertificateApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey, fetchApi: fetch }));
@@ -24,6 +25,7 @@ export const channelPartnerApi = new ChannelPartnerApi(new Configuration({apiVer
 export const checkoutApi = new CheckoutApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey }));
 export const couponApi = new CouponApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey }));
 export const customerApi = new CustomerApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey }));
+export const fraudApi = new FraudApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey }));
 export const fulfillmentApi = new FulfillmentApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey }));
 export const giftCertificateApi = new GiftCertificateApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey }));
 export const itemApi = new ItemApi(new Configuration({apiVersion: '2017-03-01', apiKey: apiKey }));
