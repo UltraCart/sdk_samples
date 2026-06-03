@@ -1,0 +1,57 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+
+getFraudLookupValues returns the lookup values used when building fraud rules: the allowed
+rule types, rule groups, failure actions, user actions, ip range types, countries, and affiliates.
+Call this first when constructing a rule so you supply valid values.
+
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/fraud/lookup_values" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+Content-Type: application/json; charset=UTF-8
+```
+
+**Response Body**
+```json
+{
+    "fraud_lookup_values": {
+        "rule_types": [
+            "credit card single transaction exceeds",
+            "ip matches",
+            "address email",
+            "address not in country",
+            "credit card block prepaid",
+            "ip daily transaction count exceeds"
+        ],
+        "rule_groups": [
+            "exemptRules",
+            "creditCardRules",
+            "ipRules",
+            "addressRules",
+            "affiliateRules",
+            "itemRules",
+            "orderRules",
+            "browserRules"
+        ],
+        "failure_actions": [
+            "Flag For Review",
+            "Process Payment and Modify",
+            "Process Payment and Review",
+            "Decline Transaction",
+            "Exempt"
+        ],
+        "ip_range_types": [
+            "address",
+            "subnet"
+        ]
+    },
+    "success": true,
+    "metadata": {}
+}
+```

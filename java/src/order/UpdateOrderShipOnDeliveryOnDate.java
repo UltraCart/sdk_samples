@@ -2,7 +2,6 @@
 
 package order;
 
-import com.sun.istack.internal.Nullable;
 import com.ultracart.admin.v2.OrderApi;
 import com.ultracart.admin.v2.models.Order;
 import com.ultracart.admin.v2.models.OrderItem;
@@ -111,8 +110,7 @@ public class UpdateOrderShipOnDeliveryOnDate {
 
   }
 
-  @Nullable
-  public static Timestamp parseISO8601(@Nullable String dateString) {
+  public static Timestamp parseISO8601(String dateString) {
     if (dateString == null) return null;
     Timestamp result = null;
     // Try no millis first as this is what we typically output

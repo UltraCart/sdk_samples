@@ -36,6 +36,13 @@
   <ItemGroup>
     <Compile Include="affiliate\GetClicksByQuery.cs" />
     <Compile Include="affiliate\GetLedgersByQuery.cs" />
+    <Compile Include="fraud\Introduction.cs" />
+    <Compile Include="fraud\GetFraudLookupValues.cs" />
+    <Compile Include="fraud\SearchFraudRules.cs" />
+    <Compile Include="fraud\InsertFraudRule.cs" />
+    <Compile Include="fraud\DeleteFraudRule.cs" />
+    <Compile Include="fraud\DeclineEmail.cs" />
+    <Compile Include="fraud\EstablishFraudRulesFromOrder.cs" />
     <Compile Include="affiliate\Introduction.cs" />
     <Compile Include="auto_order\ConsolidateAutoOrders.cs" />
     <Compile Include="auto_order\EstablishAutoOrderByReferenceOrderId.cs" />

@@ -12,6 +12,7 @@
     </properties>
 
     <build>
+        <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -67,7 +68,7 @@
         <dependency>
             <groupId>com.ultracart</groupId>
             <artifactId>rest-sdk</artifactId>
-            <version>4.1.74</version>
+            <version>4.1.97</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>

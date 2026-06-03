@@ -51,9 +51,10 @@ public class OauthAccessToken {
         // Note: You'll need to implement your own method to get the code from query parameters
         String code = null; // HttpContext equivalent needs to be implemented
         String refreshToken = null;
+        String deviceCode = null; // only used for the device authorization grant
 
         OauthApi oauthApi = new OauthApi(Constants.API_KEY);
-        OauthTokenResponse apiResponse = oauthApi.oauthAccessToken(clientId, grantType, code, redirectUrl, refreshToken);
+        OauthTokenResponse apiResponse = oauthApi.oauthAccessToken(clientId, grantType, code, redirectUrl, refreshToken, deviceCode);
 
         // apiResponse is an OauthTokenResponse object
         String newRefreshToken = apiResponse.getRefreshToken();

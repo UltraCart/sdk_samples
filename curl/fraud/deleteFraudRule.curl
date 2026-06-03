@@ -1,0 +1,22 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+
+deleteFraudRule removes a fraud rule by its oid.  The oid is the fraud_rule_oid returned from
+insertFraudRule or searchFraudRules.  Replace 2706022 below with the oid you want to delete.  A
+successful delete returns 204 No Content with an empty body.
+
+```bash
+curl -X DELETE "https://secure.ultracart.com/rest/v2/fraud/rules/2706022" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100"
+```
+
+**Response Headers**
+```html
+Status: 204 No Content
+```
+
+**Response Body**
+```text
+(empty)
+```
