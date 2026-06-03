@@ -1,1 +1,28 @@
 comment.sh
+
+# Claude Code
+.claude/
+.claude.json
+.claude.local.json
+CLAUDE.md
+CLAUDE.local.md
+.claude.md
+.mcp.json
+
+# Dependencies
+node_modules/
+vendor/
+venv/
+
+# Build output and caches
+target/
+bin/
+obj/
+packages/
+__pycache__/
+*.pyc
+*.class
+
+# Editor / OS
+*.swp
+.DS_Store
