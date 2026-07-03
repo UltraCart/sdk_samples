@@ -1,0 +1,237 @@
+Bulk upsert **customers** end-to-end with plain curl, using `operation=upsert`.
+
+"upsert" creates a customer when none is found and otherwise replaces the
+existing one (a full-record replace, identical to `PUT /rest/v2/customer` — a
+field you omit is cleared, it is not a partial merge). Upsert is customer-only
+in v1; submitting `operation=upsert` to `/rest/v2/bulk/order` is a 400.
+
+Identity resolution per line:
+1. The `_merchant_record_id` marker from a prior landing wins (that customer is updated).
+2. No marker -> resolve by the line's `email`; still no match -> insert.
+On success each record reports `action` = `inserted` or `updated`.
+
+See bulkImportOrders.curl for the fully-commented base flow (upload URL, S3 PUT,
+bounded poll); this sample highlights only what differs for upsert.
+
+---
+
+**Step 1 — Build the NDJSON payload**
+
+Each line is what the per-record customer-create endpoint accepts, plus the
+top-level `_merchant_record_id`. When email is your natural key, using it as the
+`_merchant_record_id` makes the bulk dedupe and UC's email-uniqueness agree.
+Minimum viable customer line: `_merchant_record_id` and `email`. One minified
+JSON object per line, LF-separated, no array wrapper.
+
+```bash
+cat > customers.ndjson <<'EOF'
+{"_merchant_record_id":"jane@example.com","email":"jane@example.com","first_name":"Jane","last_name":"Doe","billing":[{"first_name":"Jane","last_name":"Doe","address1":"123 Main St","city":"Austin","state_region":"TX","postal_code":"78701","country_code":"US","default_billing":true}],"tags":["legacy-import"]}
+{"_merchant_record_id":"john@example.com","email":"john@example.com","first_name":"John","last_name":"Smith"}
+EOF
+```
+
+---
+
+**Step 2 — Request a presigned upload URL**
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/bulk/customer/upload-url" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100"
+```
+
+**Response Body**
+```json
+{
+    "upload_url": "https://uc-bulk-uploads.s3.amazonaws.com/bulk-jobs/DEMO/48210300-1c9d-4a77-b3e1-janeexampleco.ndjson?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature=EXAMPLESIGNATURE",
+    "s3_key": "bulk-jobs/DEMO/48210300-1c9d-4a77-b3e1-janeexampleco.ndjson",
+    "expires_at": "2026-07-03T15:37:00Z",
+    "max_records": 100000,
+    "success": true,
+    "metadata": {}
+}
+```
+
+---
+
+**Step 3 — Upload the NDJSON straight to the presigned URL**
+
+Plain HTTP PUT to S3 — no API key, not a REST call. Send the raw bytes with
+`--data-binary` so the newlines survive.
+
+**Request**
+```bash
+curl -X PUT "https://uc-bulk-uploads.s3.amazonaws.com/bulk-jobs/DEMO/48210300-1c9d-4a77-b3e1-janeexampleco.ndjson?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature=EXAMPLESIGNATURE" \
+  -H "Content-Type: application/x-ndjson" \
+  --data-binary @customers.ndjson
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+x-amz-request-id: 48210300A1C9D477
+ETag: "b3e1a7d4e5f6a8b9c0d1e2f3a4b5c6d7"
+Content-Length: 0
+Date: Fri, 03 Jul 2026 15:24:10 GMT
+```
+
+---
+
+**Step 4 — Submit the job (operation = upsert)**
+
+The only submit difference vs. insert is `operation: "upsert"`.
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/bulk/customer" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100" \
+  -d $'{
+    "s3_key": "bulk-jobs/DEMO/48210300-1c9d-4a77-b3e1-janeexampleco.ndjson",
+    "operation": "upsert"
+}'
+```
+
+**Response Body**
+```json
+{
+    "bulk_job": {
+        "job_id": "BULK-CUSTOMER-01JC48210300A1C",
+        "object": "customer",
+        "operation": "upsert",
+        "status": "queued",
+        "submitted_at": "2026-07-03T15:24:11Z",
+        "total_records": 2,
+        "processed_records": 0,
+        "queue_position": 1
+    },
+    "success": true,
+    "metadata": {}
+}
+```
+
+---
+
+**Step 5 — Poll until terminal**
+
+Same bounded poll as the order sample: GET the job by id until `status` is
+`succeeded`, `partial_success`, `failed`, or `cancelled`; cap the loop so it
+cannot hang.
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+JOB_ID="BULK-CUSTOMER-01JC48210300A1C"
+KEY="fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100"
+
+for i in $(seq 1 20); do
+  RESPONSE=$(curl -s -X GET "https://secure.ultracart.com/rest/v2/bulk/customer/$JOB_ID" \
+    -H "Accept: application/json" \
+    -H "X-UltraCart-Api-Version: 2017-03-01" \
+    -H "x-ultracart-simple-key: $KEY")
+  STATUS=$(printf '%s' "$RESPONSE" | grep -o '"status"[^,]*' | head -1 | sed 's/.*: *"\(.*\)"/\1/')
+  echo "  poll $i: status=$STATUS"
+  case "$STATUS" in
+    succeeded|partial_success|failed|cancelled) break ;;
+  esac
+  sleep 3
+done
+echo "$RESPONSE"
+```
+
+**Response Body** (final poll)
+```json
+{
+    "bulk_job": {
+        "job_id": "BULK-CUSTOMER-01JC48210300A1C",
+        "object": "customer",
+        "operation": "upsert",
+        "status": "partial_success",
+        "submitted_at": "2026-07-03T15:24:11Z",
+        "started_at": "2026-07-03T15:24:14Z",
+        "completed_at": "2026-07-03T15:24:19Z",
+        "total_records": 2,
+        "processed_records": 2,
+        "success_count": 1,
+        "fail_count": 1,
+        "duplicate_count": 0,
+        "results_summary_url": "https://uc-bulk-uploads.s3.amazonaws.com/bulk-jobs/DEMO/48210300-results.ndjson?X-Amz-Signature=EXAMPLESIGNATURE"
+    },
+    "success": true,
+    "metadata": {}
+}
+```
+
+---
+
+**Step 6a — List the successful records and read the `action` field**
+
+On upsert, each successful record tells you whether it created or replaced a
+customer via `action` (`inserted` | `updated`). `action` is present only on
+upsert successes — it is absent for insert-mode results and for failures. Page
+with `status=success`, following `next_cursor` until it is null.
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/bulk/customer/BULK-CUSTOMER-01JC48210300A1C/records?status=success&limit=100" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100"
+```
+
+**Response Body**
+```json
+{
+    "records": [
+        {
+            "merchant_record_id": "jane@example.com",
+            "line_number": 1,
+            "status": "success",
+            "action": "updated",
+            "uc_id": "DEMO-00482103"
+        }
+    ],
+    "next_cursor": null,
+    "success": true,
+    "metadata": {}
+}
+```
+
+---
+
+**Step 6b — List the failed records**
+
+When `fail_count > 0`, page the records filtered to `status=failed`. For upsert
+the notable code is `email_conflict`: the line's email already belongs to a
+different customer than the one the `_merchant_record_id` marker resolved to, so
+the record fails rather than moving the email. (`customer_email_already_exists`
+is the insert-mode analog when the marker was not the email.)
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/bulk/customer/BULK-CUSTOMER-01JC48210300A1C/records?status=failed&limit=100" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100"
+```
+
+**Response Body**
+```json
+{
+    "records": [
+        {
+            "merchant_record_id": "john@example.com",
+            "line_number": 2,
+            "status": "failed",
+            "error_code": "email_conflict",
+            "error_message": "Email john@example.com already belongs to a different customer than the _merchant_record_id marker resolved to."
+        }
+    ],
+    "next_cursor": null,
+    "success": true,
+    "metadata": {}
+}
+```

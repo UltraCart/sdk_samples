@@ -26,7 +26,23 @@ public class GetWebhookLogSummaries {
        int webhookOid = 123456789; // if you don't know this, use getWebhooks to find your webhook, then get its oid.
        String since = Instant.now().minus(10, ChronoUnit.DAYS).toString(); // get the last 10 days
        // Pay attention to whether limit or offset comes first in the method signature. UltraCart is not consistent with their ordering.
-       WebhookLogSummariesResponse apiResponse = webhookApi.getWebhookLogSummaries(webhookOid, limit, offset, since);
+       // The method also accepts optional server-side filters (request id, date range, status, success, event,
+       // order id, request body, duration); pass null for the ones you don't need. This sample only paginates
+       // and constrains to the last 10 days via "since".
+       WebhookLogSummariesResponse apiResponse = webhookApi.getWebhookLogSummaries(
+               webhookOid, // webhookOid
+               null,       // requestId
+               null,       // beginDate
+               null,       // endDate
+               null,       // status
+               null,       // success
+               null,       // event
+               null,       // orderId
+               null,       // request
+               null,       // duration
+               limit,      // limit
+               offset,     // offset
+               since);     // since
 
        if (apiResponse.getWebhookLogSummaries() != null) {
            return apiResponse.getWebhookLogSummaries();

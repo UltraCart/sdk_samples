@@ -1,6 +1,7 @@
 import {
     ApiClient,
     AutoOrderApi,
+    BulkApi,
     ChannelPartnerApi,
     CheckoutApi,
     CouponApi,
@@ -18,6 +19,7 @@ apiClient.authentications.ultraCartSimpleApiKey.apiKey = apiKey;
 // console.log('apiClient', apiClient);
 
 export const autoOrderApi = new AutoOrderApi(apiClient);
+export const bulkApi = new BulkApi(apiClient);
 export const channelPartnerApi = new ChannelPartnerApi(apiClient);
 export const checkoutApi = new CheckoutApi(apiClient);
 export const couponApi = new CouponApi(apiClient);
