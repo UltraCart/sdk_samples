@@ -2,6 +2,7 @@
 
 require_once 'constants.php';
 
+use ultracart\v2\api\BulkApi;
 use ultracart\v2\api\CustomerApi;
 use ultracart\v2\api\GiftCertificateApi;
 use ultracart\v2\api\OrderApi;
@@ -56,6 +57,12 @@ class Samples
     public static function getFraudApi(): FraudApi
     {
         return FraudApi::usingApiKey(Constants::API_KEY, Constants::MAX_RETRY_SECONDS,
+            Constants::VERIFY_SSL, Constants::DEBUG);
+    }
+
+    public static function getBulkApi(): BulkApi
+    {
+        return BulkApi::usingApiKey(Constants::API_KEY, Constants::MAX_RETRY_SECONDS,
             Constants::VERIFY_SSL, Constants::DEBUG);
     }
 

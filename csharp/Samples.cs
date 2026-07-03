@@ -5,6 +5,11 @@ namespace SdkSample
 {
     public class Samples
     {
+        public static BulkApi GetBulkApi()
+        {
+            return new BulkApi(Constants.ApiKey);
+        }
+
         public static GiftCertificateApi GetGiftCertificateApi()
         {
             return new GiftCertificateApi(Constants.ApiKey);

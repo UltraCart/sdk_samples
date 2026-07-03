@@ -1,0 +1,233 @@
+The bulk API is a throughput multiplier for the per-record REST endpoints: you
+upload an NDJSON file of records, submit one job, then poll it to completion.
+This sample imports **orders** (insert-only) end-to-end with plain curl. For
+create-or-update semantics see bulkUpsertCustomers.curl.
+
+Flow:
+1. Build an NDJSON payload (one order per line, each with a stable `_merchant_record_id`).
+2. Ask the Bulk API for a presigned S3 upload URL.
+3. PUT the NDJSON bytes straight to that URL (this step is NOT an UltraCart REST call — no auth header).
+4. Submit the job. Orders are insert-only; operation defaults to `insert`.
+5. Poll the job until it reaches a terminal status (bounded so it can't hang).
+6. Print the counts and list any failed records.
+
+---
+
+**Step 1 — Build the NDJSON payload**
+
+NDJSON = one minified JSON object per line, LF-separated, UTF-8, no BOM. Do NOT
+wrap the records in a JSON array and do NOT pretty-print — the worker parses the
+file line by line, so an array or a multi-line record fails the whole job with
+`payload_unparseable`. Each line is exactly what `POST /rest/v2/order` accepts,
+PLUS a top-level `_merchant_record_id` — the bulk-surface dedupe key. Use a
+STABLE value derived from your source system (e.g. the legacy order id), NOT a
+fresh UUID, so re-running a fixed file collapses to the original landing instead
+of re-inserting.
+
+```bash
+cat > orders.ndjson <<'EOF'
+{"_merchant_record_id":"legacy-order-1029384","merchant_order_id":"ORD-1029384","creation_dts":"2023-11-14T09:22:00Z","currency_code":"USD","total":79.50,"customer_profile":{"email":"jane@example.com"},"items":[{"merchant_item_id":"WIDGET-RED","quantity":2,"unit_cost":{"currency_code":"USD","value":35.00}}],"shipping":{"ship_to":{"first_name":"Jane","last_name":"Doe","address1":"123 Main St","city":"Austin","state_region":"TX","postal_code":"78701","country_code":"US"},"shipping_method":"Standard"}}
+{"_merchant_record_id":"legacy-order-1029385","merchant_order_id":"ORD-1029385","creation_dts":"2023-11-15T14:03:00Z","currency_code":"USD","total":35.00,"customer_profile":{"email":"john@example.com"},"items":[{"merchant_item_id":"WIDGET-BLUE","quantity":1,"unit_cost":{"currency_code":"USD","value":35.00}}]}
+EOF
+```
+
+Minimum viable order line: `_merchant_record_id`, `merchant_order_id`,
+`creation_dts`, `customer_profile.email`, `items[]` (>=1), `total`, `currency_code`.
+
+---
+
+**Step 2 — Request a presigned upload URL**
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/bulk/order/upload-url" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100"
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 07F7FA848E2892019A0DA4E00380011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 03 Jul 2026 15:22:00 GMT
+```
+
+**Response Body**
+```json
+{
+    "upload_url": "https://uc-bulk-uploads.s3.amazonaws.com/bulk-jobs/DEMO/9a0da4e0-0380-4f11-8c21-1029384abcd0.ndjson?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature=EXAMPLESIGNATURE",
+    "s3_key": "bulk-jobs/DEMO/9a0da4e0-0380-4f11-8c21-1029384abcd0.ndjson",
+    "expires_at": "2026-07-03T15:37:00Z",
+    "max_records": 100000,
+    "success": true,
+    "metadata": {}
+}
+```
+
+---
+
+**Step 3 — Upload the NDJSON straight to the presigned URL**
+
+A plain HTTP PUT to S3 — this does NOT carry your API key and does NOT go through
+the UltraCart REST API. Send the raw bytes with `--data-binary` so curl does not
+strip the newlines. Use the `upload_url` value returned in Step 2 verbatim (its
+signature is bound to the exact path/query).
+
+**Request**
+```bash
+curl -X PUT "https://uc-bulk-uploads.s3.amazonaws.com/bulk-jobs/DEMO/9a0da4e0-0380-4f11-8c21-1029384abcd0.ndjson?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature=EXAMPLESIGNATURE" \
+  -H "Content-Type: application/x-ndjson" \
+  --data-binary @orders.ndjson
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+x-amz-request-id: 9A0DA4E00380F11C
+ETag: "3f1c2b9e0a7d4e5f6a8b9c0d1e2f3a4b"
+Content-Length: 0
+Date: Fri, 03 Jul 2026 15:22:01 GMT
+```
+
+S3 returns an empty body on success; any non-2xx means re-request a URL and retry.
+
+---
+
+**Step 4 — Submit the job**
+
+The submit body carries the `s3_key` from Step 2 and the `operation`. Orders are
+insert-only, so `operation` defaults to `insert`; it is shown here for clarity.
+Submitting `operation=upsert` to `/bulk/order` is a 400 (upsert is customer-only).
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/bulk/order" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100" \
+  -d $'{
+    "s3_key": "bulk-jobs/DEMO/9a0da4e0-0380-4f11-8c21-1029384abcd0.ndjson",
+    "operation": "insert"
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 1B2C3D4E5F60718293A4B5C6D7E8F901
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Fri, 03 Jul 2026 15:22:02 GMT
+```
+
+**Response Body**
+```json
+{
+    "bulk_job": {
+        "job_id": "BULK-ORDER-01JC9A0DA4E00380F",
+        "object": "order",
+        "operation": "insert",
+        "status": "queued",
+        "submitted_at": "2026-07-03T15:22:02Z",
+        "total_records": 2,
+        "processed_records": 0,
+        "queue_position": 1
+    },
+    "success": true,
+    "metadata": {}
+}
+```
+
+---
+
+**Step 5 — Poll until terminal**
+
+Fetch the job by id until `status` is one of the terminal values —
+`succeeded`, `partial_success`, `failed`, or `cancelled`. Bound the loop
+(~20 tries with a short sleep) so it can never hang. Bulk endpoints sit behind
+their own rate-limit bucket, so polling does not consume your normal REST budget
+— but still poll politely.
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+JOB_ID="BULK-ORDER-01JC9A0DA4E00380F"
+KEY="fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100"
+
+for i in $(seq 1 20); do
+  RESPONSE=$(curl -s -X GET "https://secure.ultracart.com/rest/v2/bulk/order/$JOB_ID" \
+    -H "Accept: application/json" \
+    -H "X-UltraCart-Api-Version: 2017-03-01" \
+    -H "x-ultracart-simple-key: $KEY")
+  # Pull "status" out of the JSON without a JSON parser dependency.
+  STATUS=$(printf '%s' "$RESPONSE" | grep -o '"status"[^,]*' | head -1 | sed 's/.*: *"\(.*\)"/\1/')
+  echo "  poll $i: status=$STATUS"
+  case "$STATUS" in
+    succeeded|partial_success|failed|cancelled) break ;;
+  esac
+  sleep 3
+done
+echo "$RESPONSE"
+```
+
+**Response Body** (final poll)
+```json
+{
+    "bulk_job": {
+        "job_id": "BULK-ORDER-01JC9A0DA4E00380F",
+        "object": "order",
+        "operation": "insert",
+        "status": "partial_success",
+        "submitted_at": "2026-07-03T15:22:02Z",
+        "started_at": "2026-07-03T15:22:05Z",
+        "completed_at": "2026-07-03T15:22:11Z",
+        "total_records": 2,
+        "processed_records": 2,
+        "success_count": 1,
+        "fail_count": 1,
+        "duplicate_count": 0,
+        "results_summary_url": "https://uc-bulk-uploads.s3.amazonaws.com/bulk-jobs/DEMO/9a0da4e0-results.ndjson?X-Amz-Signature=EXAMPLESIGNATURE"
+    },
+    "success": true,
+    "metadata": {}
+}
+```
+
+---
+
+**Step 6 — List the failed records**
+
+When `fail_count > 0`, page the job's records filtered to `status=failed`.
+Each failed record reports the `line_number`, echoes the `merchant_record_id`,
+and carries an `error_code` / `error_message` (see the per-record error
+vocabulary in payloads.md — e.g. `invalid_currency`, `invalid_item`,
+`missing_required_field`). Follow `next_cursor` with `&cursor=` until it is null.
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/bulk/order/BULK-ORDER-01JC9A0DA4E00380F/records?status=failed&limit=100" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: fbfa455fa3bc2e019e456ffe06200100122d966fc28870019e456ffe08200100"
+```
+
+**Response Body**
+```json
+{
+    "records": [
+        {
+            "merchant_record_id": "legacy-order-1029385",
+            "line_number": 2,
+            "status": "failed",
+            "error_code": "invalid_item",
+            "error_message": "Item WIDGET-BLUE is not a valid SKU for this merchant."
+        }
+    ],
+    "next_cursor": null,
+    "success": true,
+    "metadata": {}
+}
+```
