@@ -1,0 +1,88 @@
+**Search orders by the key/value pairs recorded on a payment transaction.**
+
+The `payment_transaction_filters` field matches against the detail name/value pairs stored on each payment
+transaction (`payment.transactions[].details[]`), letting you reverse-lookup an order from a gateway/processor
+transaction id, or reconcile a chargeback. Rules: `query_target` must be `cache`; each filter `value` is required
+and matched exactly (no wildcards); `name` is optional (omit to match the value across any detail name); multiple
+filters are AND-ed against the same transaction; at most 10 filters. The example values below are illustrative.
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/order/orders/query\\ \
+?_limit=10&_offset=0&_expand=summary%2Cpayment%2Cpayment.transaction" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: <YOUR_ULTRACART_SIMPLE_KEY>" \
+  -d $'{
+    "query_target": "cache",
+    "payment_transaction_filters": [
+        {"name": "rotatingTransactionGatewayCode", "value": "NMI"},
+        {"name": "transactionid", "value": "12244247793"}
+    ]
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 00234A2DB61DBC0199BFED658A80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+```
+
+**Response Body**
+```json
+{
+    "orders": [
+        {
+            "merchant_id": "DEMO",
+            "order_id": "DEMO-0009104390",
+            "current_stage": "Completed Order",
+            "payment": {
+                "payment_method": "Credit Card",
+                "payment_status": "Processed",
+                "payment_dts": "2026-06-30T02:40:01-04:00",
+                "transactions": [
+                    {
+                        "transaction_gateway": "rotating",
+                        "transaction_timestamp": "2026-06-30T02:40:01-04:00",
+                        "successful": true,
+                        "details": [
+                            {"name": "authcode", "value": "100304"},
+                            {"name": "avsresponse", "value": "Y"},
+                            {"name": "orderid", "value": "DEMO-0009104390"},
+                            {"name": "response", "value": "1"},
+                            {"name": "response_code", "value": "100"},
+                            {"name": "responsetext", "value": "Approved"},
+                            {"name": "rotatingTransactionGatewayCode", "value": "NMI"},
+                            {"name": "rotatingTransactionGatewayName", "value": "Network Merchants Gateway"},
+                            {"name": "transactionid", "value": "12244247793"},
+                            {"name": "type", "value": "sale"}
+                        ]
+                    }
+                ]
+            },
+            "summary": {
+                "total": {
+                    "value": 77.00,
+                    "localized": 77.00,
+                    "localized_formatted": "$77.00"
+                }
+            }
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 1,
+            "offset": 0,
+            "limit": 10,
+            "more": false,
+            "next_offset": 0,
+            "total_records": 1
+        },
+        "payload_name": "orders"
+    }
+}
+```
