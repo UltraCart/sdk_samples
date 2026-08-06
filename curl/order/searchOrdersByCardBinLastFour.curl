@@ -1,0 +1,108 @@
+**Search orders by the card BIN (first six digits) plus the last four digits.**
+
+A dispute or chargeback record from your gateway rarely carries the UltraCart order id, but it almost always
+carries the card BIN, the last four digits, the transaction amount and the transaction date. Matching on date +
+total + last four alone tends to return many orders, especially for subscription merchants where rebills share the
+same amount. Adding the BIN pins the search to the specific card. Rules: `card_bin` and `card_last4` must be
+supplied together (6 digits and 4 digits, digits only); always send four digits in `card_last4` including for
+American Express; `payment_date_begin` and `payment_date_end` are required alongside the card fields; leave
+`query_target` unset, as the search is served from the cache and an explicit `origin` is rejected. A malformed
+card filter is a hard 400 rather than a silently ignored parameter. The example values below are illustrative.
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/order/orders/query\\ \
+?_limit=10&_offset=0&_expand=summary%2Cpayment%2Cbilling" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: <YOUR_ULTRACART_SIMPLE_KEY>" \
+  -d $'{
+    "card_bin": "427162",
+    "card_last4": "6258",
+    "payment_date_begin": "2026-07-14T00:00:00+00:00",
+    "payment_date_end": "2026-07-28T23:59:59+00:00",
+    "total": 49.95
+}'
+```
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 00234A2DB61DBC0199BFED658A80011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+```
+
+**Response Body**
+```json
+{
+    "orders": [
+        {
+            "merchant_id": "DEMO",
+            "order_id": "DEMO-0009142207",
+            "current_stage": "Completed Order",
+            "billing": {
+                "first_name": "Jane",
+                "last_name": "Smith",
+                "postal_code": "76537",
+                "country_code": "US",
+                "email": "jane.smith@example.com"
+            },
+            "payment": {
+                "payment_method": "Credit Card",
+                "payment_status": "Processed",
+                "payment_dts": "2026-07-21T14:32:07-04:00",
+                "credit_card": {
+                    "card_type": "VISA",
+                    "card_expiration_month": 2,
+                    "card_expiration_year": 2029
+                }
+            },
+            "summary": {
+                "total": {
+                    "value": 49.95,
+                    "localized": 49.95,
+                    "localized_formatted": "$49.95"
+                }
+            }
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "result_set": {
+            "count": 1,
+            "offset": 0,
+            "limit": 10,
+            "more": false,
+            "next_offset": 0,
+            "total_records": 1
+        },
+        "payload_name": "orders"
+    }
+}
+```
+
+**Error Response - card_bin supplied without card_last4**
+```json
+{
+    "error": {
+        "developer_message": "card_bin and card_last4 must be specified together.",
+        "user_message": "card_bin and card_last4 must be specified together."
+    },
+    "success": false,
+    "metadata": {}
+}
+```
+
+**Error Response - card fields supplied without a payment date range**
+```json
+{
+    "error": {
+        "developer_message": "card_bin and card_last4 require both payment_date_begin and payment_date_end.",
+        "user_message": "card_bin and card_last4 require both payment_date_begin and payment_date_end."
+    },
+    "success": false,
+    "metadata": {}
+}
+```
