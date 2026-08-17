@@ -1,0 +1,92 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104976/page_view_history" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+Returns the page views captured during the session that placed the order, along with the referrer that
+started that session.  A customer profile is not required, so this works for guest orders.  For the email
+engagement side of customer activity, see getOrderCustomerActivity.
+
+Note that `view_dts` is an ISO 8601 string here, while `ts` on getOrderCustomerActivity is unix
+milliseconds.  The two methods do not format dates the same way.
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: C41A9E75B3D0810199BFD48B4880011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 18:11:47 GMT
+```
+
+**Response Body**
+```json
+{
+    "page_views": [
+        {
+            "url": "https://www.example.com/",
+            "time_on_page": 24,
+            "view_dts": "2025-10-06T14:02:11-04:00",
+            "params": [
+                {
+                    "name": "utm_source",
+                    "value": "newsletter"
+                }
+            ]
+        },
+        {
+            "url": "https://www.example.com/products/doggie-bones",
+            "time_on_page": 96,
+            "view_dts": "2025-10-06T14:02:35-04:00",
+            "meta_data": [
+                {
+                    "name": "item_id",
+                    "value": "BONE"
+                }
+            ]
+        },
+        {
+            "url": "https://secure.ultracart.com/checkout/",
+            "time_on_page": 143,
+            "view_dts": "2025-10-06T14:04:11-04:00"
+        }
+    ],
+    "referrer": "https://www.google.com/",
+    "success": true,
+    "metadata": {}
+}
+```
+
+**Response Body \(order has no analytics session, such as a phone order\)**
+```json
+{
+    "page_views": [],
+    "success": true,
+    "metadata": {}
+}
+```
+
+**Error Response Headers**
+```html
+Status: 400 Bad Request
+X-UltraCart-Request-Id: D82BEA07C51FB60199BFCAF7C780011
+UC-REST-ERROR: Path parameter 'order_id' does not start with the merchant id.  Check your parameter value and call log.
+Content-Type: application/json; charset=UTF-8
+Connection: close
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 17:58:02 GMT
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "Path parameter 'order_id' does not start with the merchant id.  Check your parameter value and call log.",
+        "user_message": "Path parameter 'order_id' does not start with the merchant id.  Check your parameter value and call log."
+    },
+    "metadata": {}
+}
+```

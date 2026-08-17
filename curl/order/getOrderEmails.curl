@@ -1,0 +1,107 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104976/emails" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+Returns the delivery records for every email UltraCart sent regarding the order, oldest first.  Each
+record carries the subject and send time plus delivery, open, click and bounce status.  A customer profile
+is not required, so this works for guest orders.
+
+The `internal` flag marks messages sent to merchant staff rather than to the customer.  Filter those out
+if you only want what the customer actually received.
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 7B2E4C91FA6D330199BFD48B4880011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 18:15:29 GMT
+```
+
+**Response Body**
+```json
+{
+    "emails": [
+        {
+            "email": "support@ultracart.com",
+            "subject": "Order Confirmation DEMO-0009104976",
+            "message_id": "0100019bfd48b488-3c1a7e02-9d44-4f61-8b23-5e9c7a1d0f42-000000",
+            "send_dts": "2025-10-06T14:04:22-04:00",
+            "delivered": true,
+            "delivery_dts": "2025-10-06T14:04:25-04:00",
+            "opened": true,
+            "opened_dts": "2025-10-06T15:12:47-04:00",
+            "clicked": false,
+            "skipped": false,
+            "internal": false,
+            "smtp_response": "250 2.0.0 OK",
+            "reporting_mta": "a8-51.smtp-out.amazonses.com"
+        },
+        {
+            "email": "support@ultracart.com",
+            "subject": "Your order has shipped",
+            "message_id": "0100019bfd48b488-7f2b9c41-6e08-4a92-b715-2d3f8e6c9a07-000000",
+            "send_dts": "2025-10-07T09:31:04-04:00",
+            "delivered": true,
+            "delivery_dts": "2025-10-07T09:31:07-04:00",
+            "opened": true,
+            "opened_dts": "2025-10-07T10:02:18-04:00",
+            "clicked": true,
+            "clicked_dts": "2025-10-07T10:02:44-04:00",
+            "skipped": false,
+            "internal": false,
+            "smtp_response": "250 2.0.0 OK",
+            "reporting_mta": "a8-51.smtp-out.amazonses.com"
+        }
+    ],
+    "success": true,
+    "metadata": {}
+}
+```
+
+**Response Body \(bounced email\)**
+```json
+{
+    "emails": [
+        {
+            "email": "bad-address@example.com",
+            "subject": "Order Confirmation DEMO-0009104976",
+            "send_dts": "2025-10-06T14:04:22-04:00",
+            "delivered": false,
+            "bounce_dts": "2025-10-06T14:04:31-04:00",
+            "bounce_type": "Permanent",
+            "bounce_sub_type": "NoEmail",
+            "bounce_diagnostic_code": "smtp; 550 5.1.1 user unknown",
+            "internal": false
+        }
+    ],
+    "success": true,
+    "metadata": {}
+}
+```
+
+**Error Response Headers**
+```html
+Status: 400 Bad Request
+X-UltraCart-Request-Id: E93FDA26B70CC10199BFCAF7C780011
+UC-REST-ERROR: Path parameter 'order_id' does not start with the merchant id.  Check your parameter value and call log.
+Content-Type: application/json; charset=UTF-8
+Connection: close
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 18:01:15 GMT
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "Path parameter 'order_id' does not start with the merchant id.  Check your parameter value and call log.",
+        "user_message": "Path parameter 'order_id' does not start with the merchant id.  Check your parameter value and call log."
+    },
+    "metadata": {}
+}
+```

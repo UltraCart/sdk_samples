@@ -349,6 +349,8 @@
     <Compile Include="order\GetOrderByToken.cs" />
     <Compile Include="order\GetOrderCustomerActivity.cs" />
     <Compile Include="order\GetOrderEdiDocuments.cs" />
+    <Compile Include="order\GetOrderEmails.cs" />
+    <Compile Include="order\GetOrderPageViewHistory.cs" />
     <Compile Include="order\GetOrders.cs" />
     <Compile Include="order\GetOrdersBatch.cs" />
     <Compile Include="order\GetOrdersByQuery.cs" />
