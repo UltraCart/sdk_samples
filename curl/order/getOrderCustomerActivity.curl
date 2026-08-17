@@ -1,0 +1,107 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104976/customer_activity" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 976892e9c788c00199a693ade98001004b139b72bb4d470199a693ade9800100"
+```
+
+Returns the customer activity associated with the email address on the order.  A customer profile is not
+required, so this works for guest orders.  For the page views captured during the session that placed the
+order, see getOrderPageViewHistory.
+
+Note that `ts` on each activity is a unix timestamp in milliseconds, not an ISO 8601 string like most
+dates in this API.
+
+**Response Headers**
+```html
+Status: 200 OK
+X-UltraCart-Request-Id: 3F91CD07AB45E20199BFD48B4880011
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 18:04:22 GMT
+```
+
+**Response Body**
+```json
+{
+    "email": "support@ultracart.com",
+    "customer_activity": {
+        "activities": [
+            {
+                "type": "email",
+                "action": "email delivery",
+                "metric": "Email Delivered",
+                "uuid": "9f4c1b7e-3d82-4a61-9c05-7e2b8d1a4f36",
+                "ts": 1759857604000,
+                "subject": "Your order has shipped",
+                "channel": "www.example.com",
+                "storefront_oid": 179661
+            },
+            {
+                "type": "email",
+                "action": "email open",
+                "metric": "Email Open",
+                "uuid": "9f4c1b7e-3d82-4a61-9c05-7e2b8d1a4f36",
+                "ts": 1759861204000,
+                "subject": "Your order has shipped",
+                "channel": "www.example.com",
+                "storefront_oid": 179661
+            }
+        ],
+        "metrics": [
+            {
+                "name": "Revenue",
+                "type": "currency",
+                "last_30": 32.85,
+                "prior_30": 0.0,
+                "all_time": 145.72,
+                "last_30_formatted": "$32.85",
+                "prior_30_formatted": "$0.00",
+                "all_time_formatted": "$145.72"
+            }
+        ],
+        "memberships": [
+            {
+                "type": "list",
+                "uuid": "cfa823c7-b7c5-4584-bc4e-e67b0edd0236",
+                "name": "Newsletter Subscribers"
+            }
+        ],
+        "global_unsubscribed": false,
+        "spam_complaint": false
+    },
+    "success": true,
+    "metadata": {}
+}
+```
+
+**Response Body \(order has no email address\)**
+```json
+{
+    "success": true,
+    "metadata": {}
+}
+```
+
+**Error Response Headers**
+```html
+Status: 400 Bad Request
+X-UltraCart-Request-Id: B7EACF19E16FA60199BFCAF7C780011
+UC-REST-ERROR: Path parameter 'order_id' does not start with the merchant id.  Check your parameter value and call log.
+Content-Type: application/json; charset=UTF-8
+Connection: close
+Transfer-Encoding: chunked
+Date: Tue, 07 Oct 2025 17:52:11 GMT
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "Path parameter 'order_id' does not start with the merchant id.  Check your parameter value and call log.",
+        "user_message": "Path parameter 'order_id' does not start with the merchant id.  Check your parameter value and call log."
+    },
+    "metadata": {}
+}
+```
