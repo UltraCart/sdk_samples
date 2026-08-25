@@ -10,6 +10,7 @@ use ultracart\v2\api\ItemApi;
 use ultracart\v2\api\FulfillmentApi;
 use ultracart\v2\api\AutoOrderApi;
 use ultracart\v2\api\FraudApi;
+use ultracart\v2\api\AffiliateApi;
 
 class Samples
 {
@@ -63,6 +64,12 @@ class Samples
     public static function getBulkApi(): BulkApi
     {
         return BulkApi::usingApiKey(Constants::API_KEY, Constants::MAX_RETRY_SECONDS,
+            Constants::VERIFY_SSL, Constants::DEBUG);
+    }
+
+    public static function getAffiliateApi(): AffiliateApi
+    {
+        return AffiliateApi::usingApiKey(Constants::API_KEY, Constants::MAX_RETRY_SECONDS,
             Constants::VERIFY_SSL, Constants::DEBUG);
     }
 
