@@ -26,7 +26,7 @@ function insertSampleCustomer(string $email = null): int{
     /** @noinspection SpellCheckingInspection */
     $rand = str_shuffle('ABCDEFGH');
     if(is_null($email)){
-        $email = 'sample_' . $rand . ".test.com";
+        $email = createRandomEmail();
     }
     echo 'insertSampleCustomer will attempt to create customer ' . $email;
     $customer_api = Samples::getCustomerApi();
