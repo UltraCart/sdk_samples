@@ -13,7 +13,7 @@ export async function getAutoOrderCancelReasons(): Promise<void> {
   try {
     const apiResponse = await autoOrderApi.getAutoOrderCancelReasons();
 
-    const cancelReasons: AutoOrderCancelReason[] = apiResponse.cancel_reasons || [];
+    const cancelReasons: AutoOrderCancelReason[] = apiResponse.cancelReasons || [];
     cancelReasons.forEach((cancelReason) => {
       console.log(cancelReason);
     });

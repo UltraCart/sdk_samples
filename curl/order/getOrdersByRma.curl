@@ -1,0 +1,31 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+# getOrdersByRma: GET /order/orders/rma/{rma} (scope: order_read)
+# Returns the orders with an exact RMA match. Wildcards such as * are rejected with a 400.
+# Optional: _limit (max 1000), _offset, _sort, _expand.
+# This lookup is backed by the search index, so a just-assigned RMA may take a short time to appear.
+curl -X GET "https://secure.ultracart.com/rest/v2/order/orders/rma/RMA-12345\\ \
+?_limit=100&_offset=0&_expand=summary" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 55f7c4940f843d01a10c5d77f17001009dcc02345e79bd01a10c5d77f1700100"
+```
+
+**Response Body**
+```json
+{
+    "orders": [
+        {
+            "merchant_id": "DEMO",
+            "order_id": "DEMO-0009104390",
+            "current_stage": "Shipping Department",
+            "creation_dts": "2020-09-25T11:48:56-04:00",
+            "language_iso_code": "ENG"
+        }
+    ],
+    "success": true,
+    "metadata": {
+        "payload_name": "orders"
+    }
+}
+```

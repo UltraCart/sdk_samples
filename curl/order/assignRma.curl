@@ -1,0 +1,32 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+# assignRma: POST /order/orders/{order_id}/rma (scope: order_write)
+# Assigns an RMA number to an order. The rma value is required, max 30 characters, and trimmed.
+# Any existing RMA on the order is replaced and a merchant note is added. _expand is optional.
+curl -X POST "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104390/rma\\ \
+?_expand=summary" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 55f7c4940f843d01a10c5d77f17001009dcc02345e79bd01a10c5d77f1700100" \
+  -d $'{
+    "rma": "RMA-12345"
+}'
+```
+
+**Response Body**
+```json
+{
+    "order": {
+        "merchant_id": "DEMO",
+        "order_id": "DEMO-0009104390",
+        "current_stage": "Shipping Department",
+        "creation_dts": "2020-09-25T11:48:56-04:00",
+        "language_iso_code": "ENG"
+    },
+    "success": true,
+    "metadata": {
+        "payload_name": "order"
+    }
+}
+```
