@@ -51,6 +51,7 @@
     <Compile Include="auto_order\GetAutoOrder.cs" />
     <Compile Include="auto_order\GetAutoOrderByCode.cs" />
     <Compile Include="auto_order\GetAutoOrderByReferenceOrderId.cs" />
+    <Compile Include="auto_order\GetAutoOrderUpdateBillingUrl.cs" />
     <Compile Include="auto_order\GetAutoOrders.cs" />
     <Compile Include="auto_order\GetAutoOrdersBatch.cs" />
     <Compile Include="auto_order\GetAutoOrdersByQuery.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="oauth\OauthAuthorize.cs" />
     <Compile Include="oauth\OauthRevoke.cs" />
     <Compile Include="order\AdjustOrderTotal.cs" />
+    <Compile Include="order\AssignRma.cs" />
     <Compile Include="order\BlockRefundOnOrder.cs" />
     <Compile Include="order\CancelOrder.cs" />
     <Compile Include="order\DeleteOrder.cs" />
@@ -354,6 +356,8 @@
     <Compile Include="order\GetOrders.cs" />
     <Compile Include="order\GetOrdersBatch.cs" />
     <Compile Include="order\GetOrdersByQuery.cs" />
+    <Compile Include="order\GetOrdersByRma.cs" />
+    <Compile Include="order\GetUpdateBillingUrl.cs" />
     <Compile Include="order\InsertOrder.cs" />
     <Compile Include="order\Introduction.cs" />
     <Compile Include="order\Introduction_2.cs" />
@@ -628,8 +632,8 @@
     <Compile Include="workflow\UpdateWorkflowTask.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="com.ultracart.admin.v2, Version=4.1.130.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\com.ultracart.admin.v2.4.1.130\lib\net48\com.ultracart.admin.v2.dll</HintPath>
+    <Reference Include="com.ultracart.admin.v2, Version=4.1.183.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\com.ultracart.admin.v2.4.1.183\lib\net48\com.ultracart.admin.v2.dll</HintPath>
     </Reference>
     <Reference Include="JsonSubTypes, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176">
       <HintPath>packages\JsonSubTypes.1.7.0\lib\net40\JsonSubTypes.dll</HintPath>

@@ -1,0 +1,20 @@
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+# getUpdateBillingUrl: GET /order/orders/{order_id}/auto_order_update_billing_url (scope: order_write)
+# Returns a url the customer can use to update the billing information on their auto order.
+# The order must belong to an auto order (otherwise a 400 is returned). The original order or any rebill order works.
+# WARNING: the update billing url grants access to the customer's billing information.
+# Do not log it or expose it publicly; deliver it only to the customer.
+curl -X GET "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009103116/auto_order_update_billing_url" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 55f7c4940f843d01a10c5d77f17001009dcc02345e79bd01a10c5d77f1700100"
+```
+
+**Response Body**
+```json
+{
+    "update_billing_url": "https://secure.ultracart.com/...",
+    "success": true
+}
+```
