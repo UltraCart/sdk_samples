@@ -1,0 +1,152 @@
+**Scenario**
+
+An order is paid and sitting in the Shipping Department.  The warehouse has not printed a label yet, and the customer
+asks to cancel the order and get a full refund.
+
+The UltraCart part is a single call: `PUT /order/orders/{order_id}/refund` with `reject_after_refund=true`.  This is the
+API version of the "Complete Refund (then reject)" button in the backend.  It refunds the order to the original payment
+method and moves the order out of the Shipping Department into Rejected.  No separate cancel call is needed.
+
+1. `GET /order/orders/{order_id}`: confirm `current_stage` is `Shipping Department` and `shipping.tracking_numbers` is empty.
+2. `GET /order/orders/{order_id}/refundable`: confirm `refundable` is `true` (treat null as false).
+3. Cancel the order at your fulfillment provider.
+   - Using ShipStation with "Cancel in ShipStation on Full Refund" set to Yes on the distribution center's transport
+     mechanism?  Skip this step.  After the full refund in step 4, UltraCart automatically tells ShipStation to cancel
+     the order.  Test this end to end on a test order before relying on it.  If ShipStation refuses (a label already
+     exists), the refund has already happened.  UltraCart records the refusal as a warning in the distribution center log.
+   - Otherwise, cancel the order at your fulfillment provider **first**.  If it refuses because a label already exists,
+     stop and do not refund.
+4. `PUT /order/orders/{order_id}/refund`: full refund, then reject.
+
+Notes:
+- UltraCart will not re-send a Rejected order to the fulfillment center.  An order is only retransmitted if someone moves
+  it back into the Shipping Department with retransmit checked, or clicks Retransmit.
+- `POST /order/orders/{order_id}/cancel` is not used here.  It fails once an order is queued for or transmitted to a
+  fulfillment center, which is the case for an order waiting in the Shipping Department.
+- `auto_order_cancel=false` leaves the auto order (if the order came from one) alone.  Cancel it separately if needed.
+
+**Step 1. Retrieve the order \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104436?_expand=item,shipping,summary,auto_order" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 55f7c4940f843d01a10c5d77f17001009dcc02345e79bd01a10c5d77f1700100"
+```
+
+**Response Body** (abbreviated: check these fields)
+```json
+{
+    "order": {
+        "order_id": "DEMO-0009104436",
+        "current_stage": "Shipping Department",
+        "items": [ ... ],
+        "shipping": {
+            "tracking_numbers": [],
+            ...
+        },
+        "summary": { ... },
+        ...
+    },
+    "success": true
+}
+```
+
+**Step 2. Make sure the order is refundable**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104436/refundable" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 55f7c4940f843d01a10c5d77f17001009dcc02345e79bd01a10c5d77f1700100"
+```
+
+**Response Body** (abbreviated)
+```json
+{
+    "refundable": true,
+    "order_level_refund_reasons": [ ... ],
+    "success": true
+}
+```
+
+**Step 3. Unless ShipStation cancels the order for you (see above), cancel it at your fulfillment provider.  Stop here if it refuses.**
+
+**Step 4. Refund in full and reject**
+
+Send back the whole order from step 1 with the refunded fields set.  These are TOTAL amounts (positive numbers), not
+deltas.  For a full refund:
+- each item: `quantity_refunded` = `quantity`, `total_refunded` = `total_cost_with_discount`
+- `summary.tax_refunded` = `summary.tax`
+- `summary.shipping_handling_refunded` = `summary.shipping_handling_total`
+
+A refund reason may be required by your account (Home -> Configuration -> Order Management -> Refund/Reject Reasons).
+If so, also set `refund_reason` on the order.
+
+```bash
+curl -X PUT "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104436/refund\
+?reject_after_refund=true&skip_customer_notification=false&auto_order_cancel=false&manual_refund=false&reverse_affiliate_transactions=true&issue_store_credit=false&_expand=item,summary" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 55f7c4940f843d01a10c5d77f17001009dcc02345e79bd01a10c5d77f1700100" \
+  -d $'{
+    "order_id": "DEMO-0009104436",
+    "current_stage": "Shipping Department",
+    "items": [
+        {
+            "item_reference_oid": 127545010,
+            "merchant_item_id": "BONE",
+            "quantity": 1.0,
+            "quantity_refunded": 1.0,
+            "total_cost_with_discount": { "value": 17.95, "currency_code": "USD" },
+            "total_refunded": { "value": 17.95, "currency_code": "USD" },
+            ...
+        }
+    ],
+    "summary": {
+        "tax": { "value": 0.0, "currency_code": "USD" },
+        "tax_refunded": { "value": 0.0, "currency_code": "USD" },
+        "shipping_handling_total": { "value": 5.00, "currency_code": "USD" },
+        "shipping_handling_refunded": { "value": 5.00, "currency_code": "USD" },
+        ...
+    },
+    ...
+}'
+```
+
+| Query parameter | Value | Why |
+|---|---|---|
+| `reject_after_refund` | `true` | Moves the order out of the Shipping Department into Rejected |
+| `skip_customer_notification` | `false` | Let the customer know their refund is on the way |
+| `auto_order_cancel` | `false` | Leave the auto order (if any) alone |
+| `manual_refund` | `false` | Refund through the payment gateway, to the original payment method |
+| `reverse_affiliate_transactions` | `true` | No affiliate commission on a cancelled order |
+| `issue_store_credit` | `false` | Money back, not store credit |
+
+**Response Body** (abbreviated)
+```json
+{
+    "order": {
+        "order_id": "DEMO-0009104436",
+        "current_stage": "Rejected",
+        "summary": {
+            "total_refunded": { "value": 22.95, ... },
+            ...
+        },
+        ...
+    },
+    "success": true
+}
+```
+
+**Error Response Body**
+
+`Request to refund an invalid amount.` means the refund total came out as zero or less.
+```json
+{
+    "error": {
+        "developer_message": "Request to refund an invalid amount.",
+        "user_message": "Request to refund an invalid amount."
+    },
+    "success": false
+}
+```
