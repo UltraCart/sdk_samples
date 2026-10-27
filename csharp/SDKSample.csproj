@@ -365,6 +365,7 @@
     <Compile Include="order\Introduction_4.cs" />
     <Compile Include="order\IsRefundableOrder.cs" />
     <Compile Include="order\ProcessPayment.cs" />
+    <Compile Include="order\RefundAndRejectUnshippedOrder.cs" />
     <Compile Include="order\RefundOrder.cs" />
     <Compile Include="order\Replacement.cs" />
     <Compile Include="order\ResendReceipt.cs" />
