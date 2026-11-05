@@ -21,9 +21,8 @@ namespace SdkSample.item
          * Leave a list null to leave it unchanged.  Send an empty list to clear it.  Empty schedules and day counts turn
          * the MyAccount frequency change off for the item.
          *
-         * C# note: AutoOrderMyaccountFrequencyLastStepOnly is a bool that is not sent when false, and an unsent value
-         * means "leave unchanged".  So from C# you can turn last step only on, but setting it back to false is not sent.
-         * Clear it from the item editor or the Batch Item Update tool.
+         * C# note: AutoOrderMyaccountFrequencyLastStepOnly is a bool that is not sent when false.  That is fine here:
+         * when the schedules or day counts are sent without last step only, UltraCart treats last step only as false.
          *
          * Requirements:
          * - UltraCart support must enable "MyAccount - Advanced Auto Order Settings" on your account.  Without it,
@@ -78,7 +77,7 @@ namespace SdkSample.item
                 // Step 3. Set the frequencies a customer may switch to.  Everything else in AutoOrder is sent back as read.
                 autoOrder.AutoOrderMyaccountFrequencySchedules = new List<string> { "Monthly", "Every 2 Months", "Every 3 Months" };
                 autoOrder.AutoOrderMyaccountFrequencyDayCounts = new List<int> { 30, 60, 90 };
-                // autoOrder.AutoOrderMyaccountFrequencyLastStepOnly = true; // see the C# note above
+                autoOrder.AutoOrderMyaccountFrequencyLastStepOnly = false; // not sent when false; see the C# note above
 
                 // To turn the change off for this item instead:
                 // autoOrder.AutoOrderMyaccountFrequencySchedules = new List<string>();

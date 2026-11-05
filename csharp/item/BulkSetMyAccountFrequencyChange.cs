@@ -13,13 +13,13 @@ namespace SdkSample.item
          * Scenario: you have a list of automatic enrollment items and want customers to be able to change the frequency
          * of all of them from MyAccount.  This sets the same MyAccount frequency change settings on every item in the
          * list.  See UpdateItemMyAccountFrequencyChange for what the three properties mean, the requirements, and the
-         * C# note about AutoOrderMyaccountFrequencyLastStepOnly (it can be turned on from C# but not back off).
+         * C# note about AutoOrderMyaccountFrequencyLastStepOnly.
          *
          * It runs as a dry run by default: it reads each item and prints what it would change, without saving
          * anything.  Check the output, then set dryRun = false.
          *
          * Expansion: each item is read with _expand=auto_order (NOT auto_order.steps) and the same AutoOrder object is
-         * sent back with only the MyAccount properties changed.  An update writes every auto order setting from the
+         * sent back with only the three MyAccount properties changed.  An update writes every auto order setting from the
          * object it is given, and replaces the steps if steps are present, so never send a hand-built or partial
          * AutoOrder.
          *
@@ -39,6 +39,7 @@ namespace SdkSample.item
             // change_me: what customers may switch to.  Empty lists turn the change off for these items.
             List<string> schedules = new List<string> { "Monthly", "Every 2 Months", "Every 3 Months" };
             List<int> dayCounts = new List<int> { 30, 60, 90 };
+            bool lastStepOnly = false;
 
             string expand = "auto_order"; // NOT auto_order.steps
 
@@ -69,6 +70,7 @@ namespace SdkSample.item
                     string before = Describe(autoOrder);
                     autoOrder.AutoOrderMyaccountFrequencySchedules = new List<string>(schedules);
                     autoOrder.AutoOrderMyaccountFrequencyDayCounts = new List<int>(dayCounts);
+                    autoOrder.AutoOrderMyaccountFrequencyLastStepOnly = lastStepOnly;
                     string after = Describe(autoOrder);
 
                     if (before == after)
