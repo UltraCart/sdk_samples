@@ -1,0 +1,131 @@
+**Scenario**
+
+An item uses automatic enrollment: the customer is put on a fixed auto order schedule at checkout and does not pick a
+frequency.  You want customers to be able to change the frequency of that item from MyAccount, for example to Monthly,
+Every 2 Months, or every 30, 60 or 90 days.
+
+Three properties on `item.auto_order` control this:
+
+| Property | Type | Meaning |
+|---|---|---|
+| `auto_order_myaccount_frequency_schedules` | array of strings | Standard schedule names, e.g. `Monthly`, `Every 2 Months` |
+| `auto_order_myaccount_frequency_day_counts` | array of integers | Day counts, 1 to 365, at most 20, e.g. `[30, 60, 90]`.  10, 24, 28 and 45 are saved as the standard schedules `Every 10 Days` and so on. |
+| `auto_order_myaccount_frequency_last_step_only` | boolean | Only offer the change once the item is on its last auto order step |
+
+Omit a property to leave it unchanged.  Send an empty array to clear it.  Empty schedules and day counts turn the
+MyAccount frequency change off for the item.
+
+Requirements:
+- UltraCart support must enable "MyAccount - Advanced Auto Order Settings" on your account.  Without it, setting these
+  properties returns a 400.
+- The item must use automatic enrollment (`auto_order.auto_order_upsell` = `true`).  Otherwise a 400.
+- The change is only offered to a customer when the item's auto order steps repeat forever.  An item whose steps end
+  (for example "Monthly x5, then stop") never offers it, whatever is set here.  UltraCart checks this when the customer
+  asks, not when you save the item.
+
+Expansion matters here:
+- Read the item with `_expand=auto_order`.  That returns the whole `auto_order` section, including these properties.
+- Send that same `auto_order` object back.  When `auto_order` is present in an update, UltraCart writes every auto order
+  setting from it, so a partial or hand-built `auto_order` object would reset settings you did not mean to touch.
+- Do **not** use `_expand=auto_order.steps`.  If `steps` is present in the update it replaces the item's steps.
+  Leaving it out leaves the steps alone.
+
+What the customer sees: the allowed frequencies are offered on the auto order item in MyAccount.  A change takes effect
+after the next shipment; the next shipment date does not move.
+
+**Step 1. Read the item with its auto order section \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X GET "https://secure.ultracart.com/rest/v2/item/items/merchant_item_id/AUTOSHIP-30?_expand=auto_order&_placeholders=false" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 55f7c4940f843d01a10c5d77f17001009dcc02345e79bd01a10c5d77f1700100"
+```
+
+**Response Body** (abbreviated: check these fields)
+```json
+{
+    "item": {
+        "merchant_item_oid": 123456,
+        "merchant_item_id": "AUTOSHIP-30",
+        "auto_order": {
+            "auto_orderable": true,
+            "auto_order_upsell": true,
+            ...
+        },
+        ...
+    },
+    "success": true
+}
+```
+
+If `auto_order` is missing or `auto_order_upsell` is not `true`, the item does not use automatic enrollment.  Stop here.
+
+**Step 2. Save the item with the frequencies a customer may switch to**
+
+Send back the whole item from step 1 with the three properties added to `auto_order`.  Everything else in `auto_order`
+goes back exactly as it was read.
+
+```bash
+curl -X PUT "https://secure.ultracart.com/rest/v2/item/items/123456?_expand=auto_order&_placeholders=false" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 55f7c4940f843d01a10c5d77f17001009dcc02345e79bd01a10c5d77f1700100" \
+  -d $'{
+    "merchant_item_oid": 123456,
+    "merchant_item_id": "AUTOSHIP-30",
+    "auto_order": {
+        "auto_orderable": true,
+        "auto_order_upsell": true,
+        "auto_order_myaccount_frequency_schedules": ["Monthly", "Every 2 Months", "Every 3 Months"],
+        "auto_order_myaccount_frequency_day_counts": [30, 60, 90],
+        "auto_order_myaccount_frequency_last_step_only": false,
+        ...
+    },
+    ...
+}'
+```
+
+To turn the change off for the item, send `"auto_order_myaccount_frequency_schedules": []` and
+`"auto_order_myaccount_frequency_day_counts": []`.
+
+**Response Body** (abbreviated)
+```json
+{
+    "item": {
+        "merchant_item_oid": 123456,
+        "merchant_item_id": "AUTOSHIP-30",
+        "auto_order": {
+            "auto_order_upsell": true,
+            "auto_order_myaccount_frequency_schedules": ["Monthly", "Every 2 Months", "Every 3 Months"],
+            "auto_order_myaccount_frequency_day_counts": [30, 60, 90],
+            "auto_order_myaccount_frequency_last_step_only": false,
+            ...
+        },
+        ...
+    },
+    "success": true
+}
+```
+
+**Error Response Bodies**
+
+The account does not have the feature enabled:
+```json
+{
+    "error": {
+        "developer_message": "auto_order.auto_order_myaccount_frequency_* can not be set because the advanced auto order settings are not enabled on this account.  Please contact support.",
+        "user_message": "auto_order.auto_order_myaccount_frequency_* can not be set because the advanced auto order settings are not enabled on this account.  Please contact support."
+    },
+    "success": false
+}
+```
+
+Other 400s: the item does not use automatic enrollment, an unknown schedule name, a day count outside 1 to 365, or more
+than 20 day counts.
+
+**Many items**
+
+Repeat steps 1 and 2 for each item, one at a time, so each item gets its own result.  `PUT /item/items/batch` can take
+up to 20 items per call, but it saves them in order and stops at the first one that fails, leaving the earlier ones
+saved.  Without code, use the Batch Item Update tool (the MyAccount Frequency Change option).
