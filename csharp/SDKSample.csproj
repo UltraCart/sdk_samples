@@ -301,6 +301,7 @@
     <Compile Include="integration_log\GetIntegrationLogSummariesQuery.cs" />
     <Compile Include="integration_log\Introduction.cs" />
     <Compile Include="introduction.cs" />
+    <Compile Include="item\BulkSetMyAccountFrequencyChange.cs" />
     <Compile Include="item\DeleteDigitalItem.cs" />
     <Compile Include="item\DeleteItem.cs" />
     <Compile Include="item\DeleteReview.cs" />
@@ -327,6 +328,7 @@
     <Compile Include="item\UpdateDigitalItem.cs" />
     <Compile Include="item\UpdateItem.cs" />
     <Compile Include="item\UpdateItemMixMatchGroup.cs" />
+    <Compile Include="item\UpdateItemMyAccountFrequencyChange.cs" />
     <Compile Include="item\UpdateItems.cs" />
     <Compile Include="item\UpdateReview.cs" />
     <Compile Include="item\UploadTemporaryMultimedia.cs" />
