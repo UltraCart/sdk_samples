@@ -1,0 +1,41 @@
+`POST /order/orders/{order_id}/send_update_billing_email` emails the customer a link to update their billing information
+on an order that is in Accounts Receivable.  It is the API version of the "Send Billing Update" button on the Accounts
+Receivable Process Payment screen.  The email goes out within a minute.
+
+While the order is less than 7 days old, UltraCart sends a reminder every 2 days after this email.
+
+The call is refused with HTTP 400 when:
+- the order is not in Accounts Receivable
+- the order does not have a valid email address
+- the update billing email is turned off for the account
+- a StoreFront communication flow handles unprocessed payments for the order (the flow emails the customer instead)
+- this method already sent the email for the order in the last 24 hours
+
+Requires SDK 4.1.260 or later when called through an SDK.
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104436/send_update_billing_email" \
+  -H "Accept: application/json" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 55f7c4940f843d01a10c5d77f17001009dcc02345e79bd01a10c5d77f1700100"
+```
+
+**Response Body**
+```json
+{
+    "success": true,
+    "metadata": {}
+}
+```
+
+**Error Response Body** (HTTP 400)
+```json
+{
+    "error": {
+        "developer_message": "The update billing email was already sent for this order through the API in the last 24 hours.",
+        "user_message": "The update billing email was already sent for this order through the API in the last 24 hours."
+    },
+    "success": false
+}
+```

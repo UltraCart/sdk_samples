@@ -340,6 +340,7 @@
     <Compile Include="order\AssignRma.cs" />
     <Compile Include="order\BlockRefundOnOrder.cs" />
     <Compile Include="order\CancelOrder.cs" />
+    <Compile Include="order\CancelOrderWithOptions.cs" />
     <Compile Include="order\DeleteOrder.cs" />
     <Compile Include="order\DuplicateOrder.cs" />
     <Compile Include="order\Format.cs" />
@@ -372,8 +373,10 @@
     <Compile Include="order\Replacement.cs" />
     <Compile Include="order\ResendReceipt.cs" />
     <Compile Include="order\ResendShipmentConfirmation.cs" />
+    <Compile Include="order\RetryAccountsReceivableOrder.cs" />
     <Compile Include="order\SearchOrdersByCardBinLastFour.cs" />
     <Compile Include="order\SearchOrdersByPaymentTransaction.cs" />
+    <Compile Include="order\SendUpdateBillingEmail.cs" />
     <Compile Include="order\UnblockRefundOnOrder.cs" />
     <Compile Include="order\UpdateAccountsReceivableRetryConfig.cs" />
     <Compile Include="order\UpdateOrder.cs" />
