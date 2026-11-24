@@ -30,8 +30,6 @@ import {
  *   cascade to your other gateways, the same as choosing a gateway on the Accounts Receivable Process Payment screen.
  *   If the gateway does not support the card type, UltraCart's normal gateway selection is used; the transaction
  *   details show which gateway processed the charge.
- *   Use this for soft declines and gateway outages.  Re-running a hard decline (stolen card, closed account, do not
- *   honor) on another gateway can violate card network retry rules.
  * - Does rejecting the order cancel the customer's auto order?  Not for a rebill.  A rejected rebill leaves the auto
  *   order active, so it rebills on its next cycle.  Rejecting the auto order's original order cancels the auto order.
  * - Does the customer get an email when the order is rejected?  No.
