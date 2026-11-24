@@ -1,0 +1,49 @@
+`POST /order/orders/{order_id}/cancel_with_options` cancels an order, the same as `POST /order/orders/{order_id}/cancel`,
+with the options in a request body instead of query parameters.  An empty body `{}` behaves exactly like `cancel`.
+
+| Field | Type | Meaning |
+|---|---|---|
+| `reject_reason` | string | Stored on the order when it is rejected without a refund (Accounts Receivable, Pre-order, Quote or Hold), the same as the reject reason in the backend.  Reasons are configured at Home -> Configuration -> Order Management -> Refund/Reject Reasons |
+| `lock_self_ship_orders` | boolean | Prevent the order from shipping during the refund process |
+| `skip_refund_and_hold` | boolean | Skip the refund and move the order to the Held Orders department |
+
+Rejecting an order in Accounts Receivable:
+- The customer is not emailed.
+- A rejected auto order rebill leaves the auto order active, so it rebills on its next cycle.
+- Rejecting the auto order's original order cancels the auto order, because the first payment never succeeded.
+
+Restrictions (the same as `cancel`): completed orders, already rejected orders, orders transmitted to a fulfillment
+center and orders queued for distribution center transmission cannot be canceled.
+
+Requires SDK 4.1.260 or later when called through an SDK.
+
+**Request \[[Create API Key](https://ultracart.atlassian.net/wiki/spaces/ucdoc/pages/38688545/API+Simple+Key)\]**
+```bash
+curl -X POST "https://secure.ultracart.com/rest/v2/order/orders/DEMO-0009104436/cancel_with_options" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "X-UltraCart-Api-Version: 2017-03-01" \
+  -H "x-ultracart-simple-key: 55f7c4940f843d01a10c5d77f17001009dcc02345e79bd01a10c5d77f1700100" \
+  -d '{
+    "reject_reason": "Card declined"
+}'
+```
+
+**Response Body**
+```json
+{
+    "success": true,
+    "metadata": {}
+}
+```
+
+**Error Response Body**
+```json
+{
+    "error": {
+        "developer_message": "Order has already been completed.",
+        "user_message": "Order has already been completed."
+    },
+    "success": false
+}
+```
